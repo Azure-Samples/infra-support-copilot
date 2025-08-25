@@ -1,0 +1,47 @@
+[
+  {
+    "server_id": "SRV001",
+    "server_name": "auth-api-prod",
+    "environment": "Production",
+    "os_type": "Linux",
+    "status": "Active",
+    "owner_team": "Platform",
+    "description": "Production server for User Authentication API"
+  },
+  {
+    "server_id": "SRV002",
+    "server_name": "payment-gw-staging",
+    "environment": "Staging",
+    "os_type": "Windows",
+    "status": "Active",
+    "owner_team": "Payments",
+    "description": "Staging server for Payment Gateway integration"
+  },
+  {
+    "server_id": "SRV003",
+    "server_name": "email-svc-dev",
+    "environment": "Development",
+    "os_type": "Linux",
+    "status": "Active",
+    "owner_team": "Comms",
+    "description": "Development server for Email Notification Service"
+  },
+  {
+    "server_id": "SRV004",
+    "server_name": "analytics-pipeline-prod",
+    "environment": "Production",
+    "os_type": "Linux",
+    "status": "In Maintenance",
+    "owner_team": "Data",
+    "description": "Production server for Analytics Data Pipeline"
+  },
+  {
+    "server_id": "SRV005",
+    "server_name": "support-chatbot-legacy",
+    "environment": "Production",
+    "os_type": "Windows",
+    "status": "Decommissioned",
+    "owner_team": "Support",
+    "description": "Legacy server for deprecated Customer Support Chatbot"
+  }
+]

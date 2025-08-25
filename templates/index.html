@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support Chat</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/app.css">
+    <style>
+        /* Markdown styling for chat messages */
+        .message-content h1, .message-content h2, .message-content h3, 
+        .message-content h4, .message-content h5, .message-content h6,
+        .markdown-content h1, .markdown-content h2, .markdown-content h3, 
+        .markdown-content h4, .markdown-content h5, .markdown-content h6 {
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+        .message-content h1, .markdown-content h1 { font-size: 1.5rem; }
+        .message-content h2, .markdown-content h2 { font-size: 1.3rem; }
+        .message-content h3, .markdown-content h3 { font-size: 1.1rem; }
+        .message-content h4, .message-content h5, .message-content h6,
+        .markdown-content h4, .markdown-content h5, .markdown-content h6 { font-size: 1rem; }
+        
+        .message-content p, .markdown-content p { margin-bottom: 0.5rem; }
+        .message-content ul, .message-content ol,
+        .markdown-content ul, .markdown-content ol { 
+            margin-bottom: 0.5rem; 
+            padding-left: 1.5rem;
+        }
+        .message-content li, .markdown-content li { margin-bottom: 0.25rem; }
+        .message-content blockquote, .markdown-content blockquote {
+            border-left: 4px solid #dee2e6;
+            padding-left: 1rem;
+            margin: 0.5rem 0;
+            color: #6c757d;
+        }
+        .message-content code, .markdown-content code {
+            background-color: #f8f9fa;
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.25rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        .message-content pre, .markdown-content pre {
+            background-color: #f8f9fa;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            margin: 0.5rem 0;
+        }
+        .message-content pre code, .markdown-content pre code {
+            background-color: transparent;
+            padding: 0;
+        }
+        .message-content table, .markdown-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0.5rem 0;
+        }
+        .message-content th, .message-content td,
+        .markdown-content th, .markdown-content td {
+            border: 1px solid #dee2e6;
+            padding: 0.5rem;
+            text-align: left;
+        }
+        .message-content th, .markdown-content th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+        }
+        
+        /* Additional styling for citation modal markdown content */
+        .citation-content.markdown-content {
+            white-space: normal;
+            font-family: inherit;
+            line-height: 1.6;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="d-flex flex-column vh-100 w-100">        
+        <div class="flex-grow-1 overflow-auto bg-light w-100 px-3" id="chat-container" style="scroll-behavior: smooth;">
+            <div id="chat-history" class="mt-4"></div>
+            <div id="loading-indicator" class="d-none">
+                <div class="d-flex mb-4">
+                    <div class="card-footer border-0 d-flex align-items-start p-0" style="background: none;">
+                        <div class="avatar-badge assistant-avatar-badge me-2">AI</div>
+                    </div>
+                    <div class="card assistant-card" style="max-width: 60%;">
+                        <div class="card-body p-3">
+                            <div class="loading-indicator justify-content-center">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="border-top bg-white p-2">
+             <div id="error-container" class="alert alert-danger mt-3 d-none" role="alert">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="me-2" viewBox="0 0 16 16">
+                    <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                </svg>
+                <div id="error-message"></div>
+            </div>
+            
+            <form id="chat-form">
+                <div class="input-group rounded-pill overflow-hidden py-2">
+                    <div style="border: 2px solid #000; border-radius: 2rem; width: calc(100% - 60px); display: flex; align-items: center; background: #fff;">
+                        <input type="text" class="form-control border-0 py-2" 
+                            id="chat-input" 
+                            placeholder="Type your message..." 
+                            style="border-top-left-radius: 50rem; border-bottom-left-radius: 50rem; box-shadow: none; outline: none; background: transparent;" />
+                    </div>
+                    <button class="btn btn-link p-0" type="submit" id="send-button" style="border: none; background: none; margin-left: 10px;">
+                        <span style="display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: #b783fa; border-radius: 50%;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" viewBox="0 0 16 16">
+                                <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z"/>
+                            </svg>
+                        </span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="/static/js/chat.js"></script>
+</body>
+</html>

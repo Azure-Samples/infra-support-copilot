@@ -1,0 +1,5384 @@
+[
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "kmod-libs",
+    "CurrentVersion": "(none):25-20.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libnfnetlink",
+    "CurrentVersion": "(none):1.0.1-13.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "redhat-release-eula",
+    "CurrentVersion": "(none):8.10-0.3.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "dnf-plugin-subscription-manager",
+    "CurrentVersion": "(none):1.28.44-1.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libmount",
+    "CurrentVersion": "(none):2.32.1-46.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "os-prober",
+    "CurrentVersion": "(none):1.74-9.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "unbound-libs",
+    "CurrentVersion": "(none):1.16.2-5.9.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "c-ares",
+    "CurrentVersion": "(none):1.13.0-11.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "dependency-agent",
+    "CurrentVersion": "(none):9.10.18-4770",
+    "Publisher": "(none)"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "ipset-libs",
+    "CurrentVersion": "(none):7.1-1.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libcurl",
+    "CurrentVersion": "(none):7.61.1-34.el8_10.3",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "gnutls",
+    "CurrentVersion": "(none):3.6.16-8.el8_10.3",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "kernel",
+    "CurrentVersion": "(none):4.18.0-553.69.1.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libcap",
+    "CurrentVersion": "(none):2.48-6.el8_9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "python3-libs",
+    "CurrentVersion": "(none):3.6.8-70.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "python3-slip",
+    "CurrentVersion": "(none):0.6.4-13.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "fuse-common",
+    "CurrentVersion": "(none):3.3.0-19.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "grub2-common",
+    "CurrentVersion": "1:2.02-167.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "nss-util",
+    "CurrentVersion": "(none):3.101.0-11.el8_8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "iwl6000-firmware",
+    "CurrentVersion": "(none):9.221.4.1-131.el8_10.1",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "nss-sysinit",
+    "CurrentVersion": "(none):3.101.0-11.el8_8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "iwl6000g2a-firmware",
+    "CurrentVersion": "(none):18.168.6.1-131.el8_10.1",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "pcre",
+    "CurrentVersion": "(none):8.42-6.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "python3-subscription-manager-rhsm",
+    "CurrentVersion": "(none):1.28.44-1.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "firewalld",
+    "CurrentVersion": "(none):0.9.11-10.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "groff-base",
+    "CurrentVersion": "(none):1.22.3-18.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "iwl3160-firmware",
+    "CurrentVersion": "1:25.30.13.0-131.el8_10.1",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libgusb",
+    "CurrentVersion": "(none):0.3.0-1.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "rpm-libs",
+    "CurrentVersion": "(none):4.14.3-32.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "basesystem",
+    "CurrentVersion": "(none):11-5.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "cpio",
+    "CurrentVersion": "(none):2.12-11.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "mpfr",
+    "CurrentVersion": "(none):3.1.6-1.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "e2fsprogs-libs",
+    "CurrentVersion": "(none):1.45.6-6.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libibverbs",
+    "CurrentVersion": "(none):48.0-1.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libassuan",
+    "CurrentVersion": "(none):2.5.1-3.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "python3.11",
+    "CurrentVersion": "(none):3.11.13-1.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libaio",
+    "CurrentVersion": "(none):0.3.112-1.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libtool-ltdl",
+    "CurrentVersion": "(none):2.4.6-25.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "ncurses-libs",
+    "CurrentVersion": "(none):6.1-10.20180224.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "platform-python",
+    "CurrentVersion": "(none):3.6.8-70.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "brotli",
+    "CurrentVersion": "(none):1.0.6-3.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "device-mapper-persistent-data",
+    "CurrentVersion": "(none):0.9.0-7.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libpcap",
+    "CurrentVersion": "14:1.9.1-5.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "pkgconf-pkg-config",
+    "CurrentVersion": "(none):1.4.2-1.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "acl",
+    "CurrentVersion": "(none):2.2.53-3.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "dbus-daemon",
+    "CurrentVersion": "1:1.12.8-26.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "kmod",
+    "CurrentVersion": "(none):25-20.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "python3-six",
+    "CurrentVersion": "(none):1.11.0-8.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libtirpc",
+    "CurrentVersion": "(none):1.1.4-12.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "policycoreutils-python-utils",
+    "CurrentVersion": "(none):2.9-26.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libsss_autofs",
+    "CurrentVersion": "(none):2.9.4-5.el8_10.2",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libudisks2",
+    "CurrentVersion": "(none):2.9.0-16.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libnsl2",
+    "CurrentVersion": "(none):1.2.0-2.20180605git4a062cf.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "dnf-data",
+    "CurrentVersion": "(none):4.7.0-21.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "python3-firewall",
+    "CurrentVersion": "(none):0.9.11-10.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "squashfs-tools",
+    "CurrentVersion": "(none):4.3-21.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "fuse-libs",
+    "CurrentVersion": "(none):2.9.7-19.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "nss",
+    "CurrentVersion": "(none):3.101.0-11.el8_8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "lzo",
+    "CurrentVersion": "(none):2.08-14.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "platform-python-setuptools",
+    "CurrentVersion": "(none):39.2.0-9.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "plymouth",
+    "CurrentVersion": "(none):0.9.4-11.20200615git1e36e30.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libpipeline",
+    "CurrentVersion": "(none):1.5.0-2.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "selinux-policy-targeted",
+    "CurrentVersion": "(none):3.14.3-139.el8_10.1",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "lmdb-libs",
+    "CurrentVersion": "(none):0.9.24-2.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "which",
+    "CurrentVersion": "(none):2.21-20.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "dnf-plugins-core",
+    "CurrentVersion": "(none):4.0.21-25.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libbasicobjects",
+    "CurrentVersion": "(none):0.1.1-40.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libmetalink",
+    "CurrentVersion": "(none):0.1.3-7.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "shim-x64",
+    "CurrentVersion": "(none):15.8-4.el8_9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "glibc-gconv-extra",
+    "CurrentVersion": "(none):2.28-251.el8_10.25",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "lshw",
+    "CurrentVersion": "(none):B.02.19.2-6.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "openldap",
+    "CurrentVersion": "(none):2.4.46-21.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "python3-libcomps",
+    "CurrentVersion": "(none):0.1.18-1.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "NetworkManager-libnm",
+    "CurrentVersion": "1:1.40.16-19.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "NetworkManager-tui",
+    "CurrentVersion": "1:1.40.16-19.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "mdadm",
+    "CurrentVersion": "(none):4.2-16.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "iwl2000-firmware",
+    "CurrentVersion": "(none):18.168.6.1-131.el8_10.1",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libblockdev-loop",
+    "CurrentVersion": "(none):2.28-7.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "authselect-libs",
+    "CurrentVersion": "(none):1.2.6-2.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "curl",
+    "CurrentVersion": "(none):7.61.1-34.el8_10.3",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "python3-chardet",
+    "CurrentVersion": "(none):3.0.4-7.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "subscription-manager",
+    "CurrentVersion": "(none):1.28.44-1.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "gnupg2-smime",
+    "CurrentVersion": "(none):2.2.20-3.el8_6",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "gpg-pubkey",
+    "CurrentVersion": "(none):be1229cf-5631588c",
+    "Publisher": "Microsoft (Release signing) <gpgsecurity@microsoft.com>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "kernel-core",
+    "CurrentVersion": "(none):4.18.0-553.69.1.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "crypto-policies-scripts",
+    "CurrentVersion": "(none):20230731-1.git3177e06.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "dracut-squash",
+    "CurrentVersion": "(none):049-237.git20250603.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libgpg-error",
+    "CurrentVersion": "(none):1.31-1.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libkcapi",
+    "CurrentVersion": "(none):1.4.0-2.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "gobject-introspection",
+    "CurrentVersion": "(none):1.56.1-1.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libssh",
+    "CurrentVersion": "(none):0.9.6-14.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "p11-kit",
+    "CurrentVersion": "(none):0.23.22-2.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "parted",
+    "CurrentVersion": "(none):3.2-39.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libmodulemd",
+    "CurrentVersion": "(none):2.13.0-1.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "pciutils-libs",
+    "CurrentVersion": "(none):3.7.0-3.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libxslt",
+    "CurrentVersion": "(none):1.1.32-6.2.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "sssd-kcm",
+    "CurrentVersion": "(none):2.9.4-5.el8_10.2",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "ca-certificates",
+    "CurrentVersion": "(none):2024.2.69_v8.0.303-80.0.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "rhc",
+    "CurrentVersion": "1:0.2.5-1.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libblockdev-swap",
+    "CurrentVersion": "(none):2.28-7.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libpwquality",
+    "CurrentVersion": "(none):1.4.4-6.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "nss-softokn-freebl",
+    "CurrentVersion": "(none):3.101.0-11.el8_8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "rootfiles",
+    "CurrentVersion": "(none):8.1-22.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "chkconfig",
+    "CurrentVersion": "(none):1.19.2-1.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libgcab1",
+    "CurrentVersion": "(none):1.1-1.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "chrony",
+    "CurrentVersion": "(none):4.5-2.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libmnl",
+    "CurrentVersion": "(none):1.0.4-6.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libkcapi-hmaccalc",
+    "CurrentVersion": "(none):1.4.0-2.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "openssl-libs",
+    "CurrentVersion": "1:1.1.1k-14.el8_6",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "filesystem",
+    "CurrentVersion": "(none):3.8-6.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libsmartcols",
+    "CurrentVersion": "(none):2.32.1-46.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "lz4-libs",
+    "CurrentVersion": "(none):1.8.3-5.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "iwl105-firmware",
+    "CurrentVersion": "(none):18.168.6.1-131.el8_10.1",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "python3-iniparse",
+    "CurrentVersion": "(none):0.4-31.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "sssd-common",
+    "CurrentVersion": "(none):2.9.4-5.el8_10.2",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "cronie",
+    "CurrentVersion": "(none):1.5.2-10.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libteam",
+    "CurrentVersion": "(none):1.31-4.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "polkit",
+    "CurrentVersion": "(none):0.115-15.el8_10.2",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "grub2-tools-efi",
+    "CurrentVersion": "1:2.02-167.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "gawk",
+    "CurrentVersion": "(none):4.2.1-4.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "sg3_utils",
+    "CurrentVersion": "(none):1.44-6.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libtalloc",
+    "CurrentVersion": "(none):2.4.1-0.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "iptables-libs",
+    "CurrentVersion": "(none):1.8.5-11.el8_9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "yum",
+    "CurrentVersion": "(none):4.7.0-21.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libsigsegv",
+    "CurrentVersion": "(none):2.11-5.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "python3-dnf",
+    "CurrentVersion": "(none):4.7.0-21.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "python3-linux-procfs",
+    "CurrentVersion": "(none):0.7.3-1.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "volume_key-libs",
+    "CurrentVersion": "(none):0.3.11-6.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "audit",
+    "CurrentVersion": "(none):3.1.2-1.el8_10.1",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libtasn1",
+    "CurrentVersion": "(none):4.13-5.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "nspr",
+    "CurrentVersion": "(none):4.35.0-1.el8_8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "python3-dateutil",
+    "CurrentVersion": "1:2.6.1-6.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "python3-ethtool",
+    "CurrentVersion": "(none):0.14-5.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libpkgconf",
+    "CurrentVersion": "(none):1.4.2-1.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "microcode_ctl",
+    "CurrentVersion": "4:20250512-1.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "linux-firmware",
+    "CurrentVersion": "(none):20250626-131.gitb05fabcd.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "hostname",
+    "CurrentVersion": "(none):3.20-6.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libldb",
+    "CurrentVersion": "(none):2.8.0-1.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libsolv",
+    "CurrentVersion": "(none):0.7.20-6.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "openssl-pkcs11",
+    "CurrentVersion": "(none):0.4.10-3.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "xkeyboard-config",
+    "CurrentVersion": "(none):2.28-1.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "NetworkManager",
+    "CurrentVersion": "1:1.40.16-19.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "gpgme",
+    "CurrentVersion": "(none):1.13.1-12.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "python3-pip-wheel",
+    "CurrentVersion": "(none):9.0.3-24.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "grub2-efi-x64",
+    "CurrentVersion": "1:2.02-167.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libxml2",
+    "CurrentVersion": "(none):2.9.7-21.el8_10.3",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "kbd",
+    "CurrentVersion": "(none):2.0.4-11.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "plymouth-core-libs",
+    "CurrentVersion": "(none):0.9.4-11.20200615git1e36e30.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "iptables-ebtables",
+    "CurrentVersion": "(none):1.8.5-11.el8_9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "iwl2030-firmware",
+    "CurrentVersion": "(none):18.168.6.1-131.el8_10.1",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "packages-microsoft-prod",
+    "CurrentVersion": "(none):1.1-2",
+    "Publisher": "(none)"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "xz",
+    "CurrentVersion": "(none):5.2.4-4.el8_6",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "change_tracking_retail",
+    "CurrentVersion": "(none):0.1.03011.189-1",
+    "Publisher": "changeinventory@microsoft.com"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libfastjson",
+    "CurrentVersion": "(none):0.99.9-2.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "glibc",
+    "CurrentVersion": "(none):2.28-251.el8_10.25",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libnftnl",
+    "CurrentVersion": "(none):1.2.2-3.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "logrotate",
+    "CurrentVersion": "(none):3.14.0-6.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libbytesize",
+    "CurrentVersion": "(none):1.4-3.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libpsl",
+    "CurrentVersion": "(none):0.20.2-6.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "tuned",
+    "CurrentVersion": "(none):2.22.1-6.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "less",
+    "CurrentVersion": "(none):530-3.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "pam",
+    "CurrentVersion": "(none):1.3.1-37.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libblockdev",
+    "CurrentVersion": "(none):2.28-7.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libcap-ng",
+    "CurrentVersion": "(none):0.7.11-1.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "python3-systemd",
+    "CurrentVersion": "(none):234-8.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "crontabs",
+    "CurrentVersion": "(none):1.11-17.20190603git.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "krb5-libs",
+    "CurrentVersion": "(none):1.18.2-32.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "nftables",
+    "CurrentVersion": "1:1.0.4-7.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libedit",
+    "CurrentVersion": "(none):3.1-23.20170329cvs.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "open-vm-tools",
+    "CurrentVersion": "(none):12.3.5-2.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "tar",
+    "CurrentVersion": "2:1.30-10.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "cracklib-dicts",
+    "CurrentVersion": "(none):2.9.6-15.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "dracut-network",
+    "CurrentVersion": "(none):049-237.git20250603.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "lua-libs",
+    "CurrentVersion": "(none):5.3.4-12.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "lvm2-libs",
+    "CurrentVersion": "8:2.03.14-15.el8_10.2",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "nss-softokn",
+    "CurrentVersion": "(none):3.101.0-11.el8_8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "dosfstools",
+    "CurrentVersion": "(none):4.1-6.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "iwl5000-firmware",
+    "CurrentVersion": "(none):8.83.5.1_1-131.el8_10.1",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "kpartx",
+    "CurrentVersion": "(none):0.8.4-42.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libnetfilter_queue",
+    "CurrentVersion": "(none):1.0.4-3.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "kbd-misc",
+    "CurrentVersion": "(none):2.0.4-11.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "mde-netfilter",
+    "CurrentVersion": "(none):100.69.73-1",
+    "Publisher": "(none)"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "rpm",
+    "CurrentVersion": "(none):4.14.3-32.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "device-mapper-libs",
+    "CurrentVersion": "8:1.02.181-15.el8_10.2",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "dracut-config-rescue",
+    "CurrentVersion": "(none):049-237.git20250603.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libzstd",
+    "CurrentVersion": "(none):1.4.4-1.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "ncurses-base",
+    "CurrentVersion": "(none):6.1-10.20180224.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "elfutils-debuginfod-client",
+    "CurrentVersion": "(none):0.190-2.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libacl",
+    "CurrentVersion": "(none):2.2.53-3.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "langpacks-ja",
+    "CurrentVersion": "(none):1.0-12.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libini_config",
+    "CurrentVersion": "(none):1.3.1-40.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "checkpolicy",
+    "CurrentVersion": "(none):2.9-1.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "dmidecode",
+    "CurrentVersion": "1:3.5-1.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "python3-idna",
+    "CurrentVersion": "(none):2.5-7.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "python3-unbound",
+    "CurrentVersion": "(none):1.16.2-5.9.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "rpm-build-libs",
+    "CurrentVersion": "(none):4.14.3-32.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "cronie-anacron",
+    "CurrentVersion": "(none):1.5.2-10.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "gdbm-libs",
+    "CurrentVersion": "1:1.18-2.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "iwl100-firmware",
+    "CurrentVersion": "(none):39.31.5.1-131.el8_10.1",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "json-c",
+    "CurrentVersion": "(none):0.13.1-3.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libgcc",
+    "CurrentVersion": "(none):8.5.0-26.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libksba",
+    "CurrentVersion": "(none):1.3.5-9.el8_7",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "python3-libsemanage",
+    "CurrentVersion": "(none):2.9-12.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "authselect",
+    "CurrentVersion": "(none):1.2.6-2.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "firewalld-filesystem",
+    "CurrentVersion": "(none):0.9.11-10.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "systemd",
+    "CurrentVersion": "(none):239-82.el8_10.5",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "timedatex",
+    "CurrentVersion": "(none):0.5-3.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "iproute",
+    "CurrentVersion": "(none):6.2.0-6.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libunistring",
+    "CurrentVersion": "(none):0.9.9-3.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libblockdev-crypto",
+    "CurrentVersion": "(none):2.28-7.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "python3-setools",
+    "CurrentVersion": "(none):4.3.0-5.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "expat",
+    "CurrentVersion": "(none):2.2.5-17.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "elfutils-libelf",
+    "CurrentVersion": "(none):0.190-2.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "findutils",
+    "CurrentVersion": "1:4.6.0-23.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "hdparm",
+    "CurrentVersion": "(none):9.54-4.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "trousers-lib",
+    "CurrentVersion": "(none):0.3.15-2.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "kernel-modules",
+    "CurrentVersion": "(none):4.18.0-553.66.1.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "memstrack",
+    "CurrentVersion": "(none):0.2.5-2.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "mokutil",
+    "CurrentVersion": "1:0.3.0-12.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "popt",
+    "CurrentVersion": "(none):1.18-1.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "setup",
+    "CurrentVersion": "(none):2.12.2-9.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "gnupg2",
+    "CurrentVersion": "(none):2.2.20-3.el8_6",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "gpg-pubkey",
+    "CurrentVersion": "(none):fd431d51-4ae0493b",
+    "Publisher": "Red Hat  Inc. (release key 2) <security@redhat.com>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "sudo",
+    "CurrentVersion": "(none):1.9.5p2-1.el8_10.1",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "tpm2-tss",
+    "CurrentVersion": "(none):2.3.2-6.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "python39-libs",
+    "CurrentVersion": "(none):3.9.20-1.module+el8.10.0+22342+478c159e",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "snappy",
+    "CurrentVersion": "(none):1.1.8-3.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "efibootmgr",
+    "CurrentVersion": "(none):16-1.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "initscripts",
+    "CurrentVersion": "(none):10.00.18-1.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "util-linux",
+    "CurrentVersion": "(none):2.32.1-46.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "dbus-glib",
+    "CurrentVersion": "(none):0.110-2.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "procps-ng",
+    "CurrentVersion": "(none):3.3.15-14.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libdb-utils",
+    "CurrentVersion": "(none):5.3.28-42.el8_4",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "xmlsec1",
+    "CurrentVersion": "(none):1.2.25-8.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "ima-evm-utils",
+    "CurrentVersion": "(none):1.3.2-12.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "irqbalance",
+    "CurrentVersion": "2:1.9.2-1.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "teamd",
+    "CurrentVersion": "(none):1.31-4.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libidn2",
+    "CurrentVersion": "(none):2.2.0-1.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libselinux-utils",
+    "CurrentVersion": "(none):2.9-10.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "man-db",
+    "CurrentVersion": "(none):2.7.6.1-18.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "python3-magic",
+    "CurrentVersion": "(none):5.33-26.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "grub2-tools-minimal",
+    "CurrentVersion": "1:2.02-167.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libevent",
+    "CurrentVersion": "(none):2.1.8-5.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libblockdev-part",
+    "CurrentVersion": "(none):2.28-7.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libdhash",
+    "CurrentVersion": "(none):0.5.0-40.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "openssh-clients",
+    "CurrentVersion": "(none):8.0p1-25.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "python39-setuptools-wheel",
+    "CurrentVersion": "(none):50.3.2-6.module+el8.10.0+22183+c898c0c1",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "keyutils-libs",
+    "CurrentVersion": "(none):1.5.10-9.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "lvm2",
+    "CurrentVersion": "8:2.03.14-15.el8_10.2",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libutempter",
+    "CurrentVersion": "(none):1.1.6-14.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "python3-hawkey",
+    "CurrentVersion": "(none):0.63.0-21.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "yum-utils",
+    "CurrentVersion": "(none):4.0.21-25.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "dbus-tools",
+    "CurrentVersion": "1:1.12.8-26.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "device-mapper-event-libs",
+    "CurrentVersion": "8:1.02.181-15.el8_10.2",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "python3-slip-dbus",
+    "CurrentVersion": "(none):0.6.4-13.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "p11-kit-trust",
+    "CurrentVersion": "(none):0.23.22-2.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "python3-nftables",
+    "CurrentVersion": "1:1.0.4-7.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "selinux-policy",
+    "CurrentVersion": "(none):3.14.3-139.el8_10.1",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "slang",
+    "CurrentVersion": "(none):2.3.2-3.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "udisks2",
+    "CurrentVersion": "(none):2.9.0-16.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libbpf",
+    "CurrentVersion": "(none):0.5.0-1.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libnl3-cli",
+    "CurrentVersion": "(none):3.7.0-1.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "json-glib",
+    "CurrentVersion": "(none):1.4.4-1.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "readline",
+    "CurrentVersion": "(none):7.0-10.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "insights-client",
+    "CurrentVersion": "0:3.2.2-2.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "iputils",
+    "CurrentVersion": "(none):20180629-11.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "iwl5150-firmware",
+    "CurrentVersion": "(none):8.24.2.2-131.el8_10.1",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libblockdev-utils",
+    "CurrentVersion": "(none):2.28-7.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "crypto-policies",
+    "CurrentVersion": "(none):20230731-1.git3177e06.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "freetype",
+    "CurrentVersion": "(none):2.9.1-10.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libdrm",
+    "CurrentVersion": "(none):2.4.115-2.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "dbus-common",
+    "CurrentVersion": "1:1.12.8-26.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "python3-gpg",
+    "CurrentVersion": "(none):1.13.1-12.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "python3-cloud-what",
+    "CurrentVersion": "(none):1.28.44-1.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "cyrus-sasl-lib",
+    "CurrentVersion": "(none):2.1.27-6.el8_5",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libdaemon",
+    "CurrentVersion": "(none):0.14-15.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "dbus-libs",
+    "CurrentVersion": "1:1.12.8-26.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "xmlsec1-openssl",
+    "CurrentVersion": "(none):1.2.25-8.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libnfsidmap",
+    "CurrentVersion": "1:2.3.3-64.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "gpg-pubkey",
+    "CurrentVersion": "(none):d4082792-5b32db75",
+    "Publisher": "Red Hat  Inc. (auxiliary key) <security@redhat.com>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "gmp",
+    "CurrentVersion": "1:6.1.2-11.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libuuid",
+    "CurrentVersion": "(none):2.32.1-46.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "python3-dnf-plugins-core",
+    "CurrentVersion": "(none):4.0.21-25.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "coreutils-common",
+    "CurrentVersion": "(none):8.30-15.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "e2fsprogs",
+    "CurrentVersion": "(none):1.45.6-6.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libpng",
+    "CurrentVersion": "2:1.6.34-5.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libtdb",
+    "CurrentVersion": "(none):1.4.9-0.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "python3-requests",
+    "CurrentVersion": "(none):2.20.0-6.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "device-mapper-event",
+    "CurrentVersion": "8:1.02.181-15.el8_10.2",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libffi",
+    "CurrentVersion": "(none):3.1-24.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "pcre2",
+    "CurrentVersion": "(none):10.32-3.el8_6",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "pkgconf-m4",
+    "CurrentVersion": "(none):1.4.2-1.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "iprutils",
+    "CurrentVersion": "(none):2.4.19-1.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libsss_sudo",
+    "CurrentVersion": "(none):2.9.4-5.el8_10.2",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "vim-minimal",
+    "CurrentVersion": "2:8.0.1763-19.el8_6.4",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "librepo",
+    "CurrentVersion": "(none):1.14.2-5.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "numactl-libs",
+    "CurrentVersion": "(none):2.0.16-4.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "elfutils-default-yama-scope",
+    "CurrentVersion": "(none):0.190-2.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "mozjs60",
+    "CurrentVersion": "(none):60.9.0-4.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "python3-perf",
+    "CurrentVersion": "(none):4.18.0-553.69.1.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "file-libs",
+    "CurrentVersion": "(none):5.33-26.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "lsscsi",
+    "CurrentVersion": "(none):0.32-3.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "efivar-libs",
+    "CurrentVersion": "(none):37-4.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "xz-libs",
+    "CurrentVersion": "(none):5.2.4-4.el8_6",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libusbx",
+    "CurrentVersion": "(none):1.0.23-4.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "bash",
+    "CurrentVersion": "(none):4.4.20-5.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libcomps",
+    "CurrentVersion": "(none):0.1.18-1.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libverto",
+    "CurrentVersion": "(none):0.3.2-2.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libxmlb",
+    "CurrentVersion": "(none):0.1.15-1.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "pinentry",
+    "CurrentVersion": "(none):1.1.0-2.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "python3-decorator",
+    "CurrentVersion": "(none):4.2.1-2.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "tzdata",
+    "CurrentVersion": "(none):2025b-1.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "glib2",
+    "CurrentVersion": "(none):2.56.4-166.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libsmbios",
+    "CurrentVersion": "(none):2.4.1-2.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "python3-pysocks",
+    "CurrentVersion": "(none):1.6.8-3.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "python3-setuptools-wheel",
+    "CurrentVersion": "(none):39.2.0-9.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "python3-urllib3",
+    "CurrentVersion": "(none):1.24.2-8.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "kexec-tools",
+    "CurrentVersion": "(none):2.0.26-14.el8_10.2",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "passwd",
+    "CurrentVersion": "(none):0.80-4.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "biosdevname",
+    "CurrentVersion": "(none):0.7.3-2.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libnetfilter_conntrack",
+    "CurrentVersion": "(none):1.0.6-5.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "rpm-plugin-selinux",
+    "CurrentVersion": "(none):4.14.3-32.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libestr",
+    "CurrentVersion": "(none):0.1.10-3.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libxkbcommon",
+    "CurrentVersion": "(none):0.9.1-1.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "python39-setuptools",
+    "CurrentVersion": "(none):50.3.2-6.module+el8.10.0+22183+c898c0c1",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "bzip2-libs",
+    "CurrentVersion": "(none):1.0.6-28.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "cracklib",
+    "CurrentVersion": "(none):2.9.6-15.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libreport-filesystem",
+    "CurrentVersion": "(none):2.9.5-15.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "python39-pip",
+    "CurrentVersion": "(none):20.2.4-9.module+el8.10.0+21329+8d76b841",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libattr",
+    "CurrentVersion": "(none):2.4.48-3.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libcom_err",
+    "CurrentVersion": "(none):1.45.6-6.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "cryptsetup-libs",
+    "CurrentVersion": "(none):2.3.7-7.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "info",
+    "CurrentVersion": "(none):6.5-7.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "NetworkManager-team",
+    "CurrentVersion": "1:1.40.16-19.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libsecret",
+    "CurrentVersion": "(none):0.18.6-1.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "python3-syspurpose",
+    "CurrentVersion": "(none):1.28.44-1.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "systemd-pam",
+    "CurrentVersion": "(none):239-82.el8_10.5",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "wget",
+    "CurrentVersion": "(none):1.19.5-12.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "xfsprogs",
+    "CurrentVersion": "(none):5.0.0-12.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libyaml",
+    "CurrentVersion": "(none):0.1.7-5.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "polkit-libs",
+    "CurrentVersion": "(none):0.115-15.el8_10.2",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "dnf",
+    "CurrentVersion": "(none):4.7.0-21.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "hardlink",
+    "CurrentVersion": "1:1.3-6.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "nettle",
+    "CurrentVersion": "(none):3.4.1-7.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "python39-pip-wheel",
+    "CurrentVersion": "(none):20.2.4-9.module+el8.10.0+21329+8d76b841",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "shared-mime-info",
+    "CurrentVersion": "(none):1.9-4.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "virt-what",
+    "CurrentVersion": "(none):1.25-4.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libdnf",
+    "CurrentVersion": "(none):0.63.0-21.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libnl3",
+    "CurrentVersion": "(none):3.7.0-1.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "python3-inotify",
+    "CurrentVersion": "(none):0.9.6-13.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "python3-libdnf",
+    "CurrentVersion": "(none):0.63.0-21.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "ipset",
+    "CurrentVersion": "(none):7.1-1.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libtevent",
+    "CurrentVersion": "(none):0.16.0-0.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "file",
+    "CurrentVersion": "(none):5.33-26.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "grub2-tools-extra",
+    "CurrentVersion": "1:2.02-167.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "grubby",
+    "CurrentVersion": "(none):8.40-49.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libstdc++",
+    "CurrentVersion": "(none):8.5.0-26.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "openssh-server",
+    "CurrentVersion": "(none):8.0p1-25.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "python3-libselinux",
+    "CurrentVersion": "(none):2.9-10.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "dracut",
+    "CurrentVersion": "(none):049-237.git20250603.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "efi-filesystem",
+    "CurrentVersion": "(none):3-3.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "coreutils",
+    "CurrentVersion": "(none):8.30-15.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "python3-librepo",
+    "CurrentVersion": "(none):1.14.2-5.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libsemanage",
+    "CurrentVersion": "(none):2.9-12.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "publicsuffix-list-dafsa",
+    "CurrentVersion": "(none):20180723-1.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "kernel-tools",
+    "CurrentVersion": "(none):4.18.0-553.69.1.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libarchive",
+    "CurrentVersion": "(none):3.3.3-5.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "librhsm",
+    "CurrentVersion": "(none):0.0.3-5.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "subscription-manager-rhsm-certificates",
+    "CurrentVersion": "(none):20220623-1.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libsepol",
+    "CurrentVersion": "(none):2.9-3.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "platform-python-pip",
+    "CurrentVersion": "(none):9.0.3-24.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "polkit-pkla-compat",
+    "CurrentVersion": "(none):0.1-12.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "rpm-plugin-systemd-inhibit",
+    "CurrentVersion": "(none):4.14.3-32.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "audit-libs",
+    "CurrentVersion": "(none):3.1.2-1.el8_10.1",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "rsyslog",
+    "CurrentVersion": "(none):8.2102.0-15.el8_10.1",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libssh-config",
+    "CurrentVersion": "(none):0.9.6-14.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "policycoreutils",
+    "CurrentVersion": "(none):2.9-26.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "python3-rpm",
+    "CurrentVersion": "(none):4.14.3-32.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "usermode",
+    "CurrentVersion": "(none):1.113-2.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "jansson",
+    "CurrentVersion": "(none):2.14-1.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libblockdev-mdraid",
+    "CurrentVersion": "(none):2.28-7.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libfdisk",
+    "CurrentVersion": "(none):2.32.1-46.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "python3-audit",
+    "CurrentVersion": "(none):3.1.2-1.el8_10.1",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "python3.11-pip-wheel",
+    "CurrentVersion": "(none):22.3.1-5.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "python39",
+    "CurrentVersion": "(none):3.9.20-1.module+el8.10.0+22342+478c159e",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "elfutils-libs",
+    "CurrentVersion": "(none):0.190-2.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libcroco",
+    "CurrentVersion": "(none):0.6.12-4.el8_2.1",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libblkid",
+    "CurrentVersion": "(none):2.32.1-46.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "python3-pyyaml",
+    "CurrentVersion": "(none):3.12-12.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "gettext-libs",
+    "CurrentVersion": "(none):0.19.8.1-17.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libmspack",
+    "CurrentVersion": "(none):0.7-0.3.alpha.el8.4",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "newt",
+    "CurrentVersion": "(none):0.52.20-11.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "npth",
+    "CurrentVersion": "(none):1.5-4.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "device-mapper",
+    "CurrentVersion": "8:1.02.181-15.el8_10.2",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libsss_idmap",
+    "CurrentVersion": "(none):2.9.4-5.el8_10.2",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "sed",
+    "CurrentVersion": "(none):4.5-5.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libuser",
+    "CurrentVersion": "(none):0.62-26.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "plymouth-scripts",
+    "CurrentVersion": "(none):0.9.4-11.20200615git1e36e30.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "psmisc",
+    "CurrentVersion": "(none):23.1-5.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "python3-pyudev",
+    "CurrentVersion": "(none):0.21.0-7.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "gdbm",
+    "CurrentVersion": "1:1.18-2.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "iwl6050-firmware",
+    "CurrentVersion": "(none):41.28.5.1-131.el8_10.1",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "kernel-tools-libs",
+    "CurrentVersion": "(none):4.18.0-553.69.1.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "redhat-release",
+    "CurrentVersion": "(none):8.10-0.3.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "pigz",
+    "CurrentVersion": "(none):2.4-4.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "python3-dbus",
+    "CurrentVersion": "(none):1.2.4-15.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "python3-dmidecode",
+    "CurrentVersion": "(none):3.12.3-2.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "python3.11-libs",
+    "CurrentVersion": "(none):3.11.13-1.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "sssd-client",
+    "CurrentVersion": "(none):2.9.4-5.el8_10.2",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libnghttp2",
+    "CurrentVersion": "(none):1.33.0-6.el8_10.1",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "pciutils",
+    "CurrentVersion": "(none):3.7.0-3.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "gettext",
+    "CurrentVersion": "(none):0.19.8.1-17.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "grub2-tools",
+    "CurrentVersion": "1:2.02-167.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libsss_certmap",
+    "CurrentVersion": "(none):2.9.4-5.el8_10.2",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "azuremonitoragent",
+    "CurrentVersion": "(none):1.35.6-986",
+    "Publisher": "(none)"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "gdisk",
+    "CurrentVersion": "(none):1.0.3-11.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "zlib",
+    "CurrentVersion": "(none):1.2.11-25.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libselinux",
+    "CurrentVersion": "(none):2.9-10.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "ncurses",
+    "CurrentVersion": "(none):6.1-10.20180224.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "mdatp",
+    "CurrentVersion": "(none):101.25062.0003-1",
+    "Publisher": "(none)"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "pkgconf",
+    "CurrentVersion": "(none):1.4.2-1.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "python3-libxml2",
+    "CurrentVersion": "(none):2.9.7-21.el8_10.3",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libndp",
+    "CurrentVersion": "(none):1.7-7.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "fuse",
+    "CurrentVersion": "(none):2.9.7-19.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libatasmart",
+    "CurrentVersion": "(none):0.19-14.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libgudev",
+    "CurrentVersion": "(none):232-4.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libseccomp",
+    "CurrentVersion": "(none):2.5.2-1.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "prefixdevname",
+    "CurrentVersion": "(none):0.1.0-6.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "sg3_utils-libs",
+    "CurrentVersion": "(none):1.44-6.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "glibc-common",
+    "CurrentVersion": "(none):2.28-251.el8_10.25",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "iptables",
+    "CurrentVersion": "(none):1.8.5-11.el8_9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "trousers",
+    "CurrentVersion": "(none):0.3.15-2.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "azcmagent",
+    "CurrentVersion": "(none):1.54.03104-480",
+    "Publisher": "Azure Connected Machine Agent <hybridrpft@microsoft.com>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "glibc-langpack-ja",
+    "CurrentVersion": "(none):2.28-251.el8_10.25",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "mpdecimal",
+    "CurrentVersion": "(none):2.5.1-3.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "openssh",
+    "CurrentVersion": "(none):8.0p1-25.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "python3-gobject-base",
+    "CurrentVersion": "(none):3.28.3-2.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "gzip",
+    "CurrentVersion": "(none):1.9-13.el8_5",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libgomp",
+    "CurrentVersion": "(none):8.5.0-26.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libss",
+    "CurrentVersion": "(none):1.45.6-6.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libsysfs",
+    "CurrentVersion": "(none):2.1.0-25.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "dbus",
+    "CurrentVersion": "1:1.12.8-26.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "iwl135-firmware",
+    "CurrentVersion": "(none):18.168.6.1-131.el8_10.1",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "iwl7260-firmware",
+    "CurrentVersion": "1:25.30.13.0-131.el8_10.1",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "sqlite-libs",
+    "CurrentVersion": "(none):3.26.0-20.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "python3-policycoreutils",
+    "CurrentVersion": "(none):2.9-26.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "fwupd",
+    "CurrentVersion": "(none):1.7.8-2.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libpciaccess",
+    "CurrentVersion": "(none):0.14-1.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libpath_utils",
+    "CurrentVersion": "(none):0.2.1-40.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "iwl1000-firmware",
+    "CurrentVersion": "1:39.31.5.1-131.el8_10.1",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libblockdev-fs",
+    "CurrentVersion": "(none):2.28-7.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "shadow-utils",
+    "CurrentVersion": "2:4.6-22.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "systemd-libs",
+    "CurrentVersion": "(none):239-82.el8_10.5",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libsss_nss_idmap",
+    "CurrentVersion": "(none):2.9.4-5.el8_10.2",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libxcrypt",
+    "CurrentVersion": "(none):4.1.1-6.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libdb",
+    "CurrentVersion": "(none):5.3.28-42.el8_4",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "openssl",
+    "CurrentVersion": "1:1.1.1k-14.el8_6",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "python3.11-setuptools-wheel",
+    "CurrentVersion": "(none):65.5.1-4.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "sssd-nfs-idmap",
+    "CurrentVersion": "(none):2.9.4-5.el8_10.2",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "grep",
+    "CurrentVersion": "(none):3.1-6.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libgcrypt",
+    "CurrentVersion": "(none):1.8.5-7.el8_6",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "bubblewrap",
+    "CurrentVersion": "(none):0.4.0-2.el8_10",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libcollection",
+    "CurrentVersion": "(none):0.7.0-40.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "kbd-legacy",
+    "CurrentVersion": "(none):2.0.4-11.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "libref_array",
+    "CurrentVersion": "(none):0.1.5-40.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "diffutils",
+    "CurrentVersion": "(none):3.6-6.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "ethtool",
+    "CurrentVersion": "2:5.13-2.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "systemd-udev",
+    "CurrentVersion": "(none):239-82.el8_10.5",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "ntp-rhel8-01.ms.lab.com",
+    "SoftwareName": "hwdata",
+    "CurrentVersion": "(none):0.314-8.22.el8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-WorkVM02",
+    "SoftwareName": "Git",
+    "CurrentVersion": "2.50.1",
+    "Publisher": "The Git Development Community"
+  },
+  {
+    "Computer": "Hub-WorkVM02",
+    "SoftwareName": "Tera Term \u30d0\u30fc\u30b8\u30e7\u30f3 5.4.0",
+    "CurrentVersion": "5.4.0",
+    "Publisher": "TeraTerm Project"
+  },
+  {
+    "Computer": "Hub-WorkVM02",
+    "SoftwareName": "Microsoft Edge",
+    "CurrentVersion": "139.0.3405.86",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-WorkVM02",
+    "SoftwareName": "Mozilla Firefox (x64 ja)",
+    "CurrentVersion": "137.0.2",
+    "Publisher": "Mozilla"
+  },
+  {
+    "Computer": "Hub-WorkVM02",
+    "SoftwareName": "Sqlcmd Tools",
+    "CurrentVersion": "1.8.2",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-WorkVM02",
+    "SoftwareName": "vs_ssmsprotocolselectormsires",
+    "CurrentVersion": "17.14.36015",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-WorkVM02",
+    "SoftwareName": "vs_minshellmsires",
+    "CurrentVersion": "17.14.36015",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-WorkVM02",
+    "SoftwareName": "vs_vswebprotocolselectormsi",
+    "CurrentVersion": "17.14.36015",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-WorkVM02",
+    "SoftwareName": "Microsoft OLE DB Driver for SQL Server",
+    "CurrentVersion": "18.7.4.0",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-WorkVM02",
+    "SoftwareName": "Microsoft Visual C++ 2022 X64 Minimum Runtime - 14.44.35208",
+    "CurrentVersion": "14.44.35208",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-WorkVM02",
+    "SoftwareName": "Microsoft Visual C++ 2022 X86 Minimum Runtime - 14.44.35208",
+    "CurrentVersion": "14.44.35208",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-WorkVM02",
+    "SoftwareName": "Microsoft Visual Studio Setup WMI Provider",
+    "CurrentVersion": "3.12.2140.44225",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-WorkVM02",
+    "SoftwareName": "vs_filehandler_x86",
+    "CurrentVersion": "17.14.36024",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-WorkVM02",
+    "SoftwareName": "vs_minshellinteropsharedmsi",
+    "CurrentVersion": "17.14.36015",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-WorkVM02",
+    "SoftwareName": "vs_minshellx64msi",
+    "CurrentVersion": "17.14.36015",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-WorkVM02",
+    "SoftwareName": "DiagnosticsHub_CollectionService",
+    "CurrentVersion": "17.12.35318",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-WorkVM02",
+    "SoftwareName": "Microsoft Visual C++ 2022 X64 Additional Runtime - 14.44.35208",
+    "CurrentVersion": "14.44.35208",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-WorkVM02",
+    "SoftwareName": "Microsoft Visual C++ 2022 X86 Additional Runtime - 14.44.35208",
+    "CurrentVersion": "14.44.35208",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-WorkVM02",
+    "SoftwareName": "Mozilla Maintenance Service",
+    "CurrentVersion": "137.0.2",
+    "Publisher": "Mozilla"
+  },
+  {
+    "Computer": "Hub-WorkVM02",
+    "SoftwareName": "vs_communitymsires",
+    "CurrentVersion": "17.14.36015",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-WorkVM02",
+    "SoftwareName": "vs_filehandler_amd64",
+    "CurrentVersion": "17.14.36024",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-WorkVM02",
+    "SoftwareName": "vs_githubprotocolhandlermsi",
+    "CurrentVersion": "17.14.36015",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-WorkVM02",
+    "SoftwareName": "Microsoft .NET Runtime - 8.0.13 (x64)",
+    "CurrentVersion": "8.0.13.34516",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-WorkVM02",
+    "SoftwareName": "Microsoft Azure CLI (64-bit)",
+    "CurrentVersion": "2.75.0",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-WorkVM02",
+    "SoftwareName": "vs_FileTracker_Singleton",
+    "CurrentVersion": "17.14.36015",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-WorkVM02",
+    "SoftwareName": "vs_communitysharedmsi",
+    "CurrentVersion": "17.14.36025",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-WorkVM02",
+    "SoftwareName": "Dependency Agent",
+    "CurrentVersion": "9.10.18",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-WorkVM02",
+    "SoftwareName": "Microsoft Edge WebView2 Runtime",
+    "CurrentVersion": "138.0.3351.121",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-WorkVM02",
+    "SoftwareName": "Microsoft Visual Studio Setup Configuration",
+    "CurrentVersion": "3.12.2140.44225",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-WorkVM02",
+    "SoftwareName": "Microsoft Visual Studio Tools for Applications 2019 x64 Hosting Support",
+    "CurrentVersion": "16.0.35907",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-WorkVM02",
+    "SoftwareName": "Microsoft Visual Studio Tools for Applications 2019 x86 Hosting Support",
+    "CurrentVersion": "16.0.35907",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-WorkVM02",
+    "SoftwareName": "vs_minshellinteropx64msi",
+    "CurrentVersion": "17.14.36015",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-WorkVM02",
+    "SoftwareName": "Google Chrome",
+    "CurrentVersion": "139.0.7258.127",
+    "Publisher": "Google LLC"
+  },
+  {
+    "Computer": "Hub-WorkVM02",
+    "SoftwareName": "Windows Admin Center (v2)",
+    "CurrentVersion": "2.4.1.2",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-WorkVM02",
+    "SoftwareName": "vs_communityx64msi",
+    "CurrentVersion": "17.14.36025",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-WorkVM02",
+    "SoftwareName": "vs_minshellsharedmsi",
+    "CurrentVersion": "17.14.36024",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-WorkVM02",
+    "SoftwareName": "Microsoft .NET Host - 8.0.13 (x64)",
+    "CurrentVersion": "64.52.27977",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-WorkVM02",
+    "SoftwareName": "Microsoft ODBC Driver 17 for SQL Server",
+    "CurrentVersion": "17.10.6.1",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-WorkVM02",
+    "SoftwareName": "Microsoft Visual C++ 2015-2022 Redistributable (x64) - 14.44.35208",
+    "CurrentVersion": "14.44.35208.0",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-WorkVM02",
+    "SoftwareName": "Microsoft Visual Studio Code",
+    "CurrentVersion": "1.102.1",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-WorkVM02",
+    "SoftwareName": "Microsoft Visual Studio Installer",
+    "CurrentVersion": "3.14.2075.50697",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-WorkVM02",
+    "SoftwareName": "vs_ssmsprotocolselectormsi",
+    "CurrentVersion": "17.14.36015",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-WorkVM02",
+    "SoftwareName": "Microsoft .NET Host FX Resolver - 8.0.13 (x64)",
+    "CurrentVersion": "64.52.27977",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-WorkVM02",
+    "SoftwareName": "Microsoft Visual C++ 2015-2022 Redistributable (x86) - 14.44.35208",
+    "CurrentVersion": "14.44.35208.0",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-WorkVM02",
+    "SoftwareName": "Microsoft Azure Storage Explorer version 1.38.0",
+    "CurrentVersion": "1.38.0",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-WorkVM02",
+    "SoftwareName": "PowerShell 7-x64",
+    "CurrentVersion": "7.5.2.0",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-WorkVM02",
+    "SoftwareName": "Microsoft Visual Studio Tools for Applications 2019",
+    "CurrentVersion": "16.0.35907",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-WorkVM02",
+    "SoftwareName": "Windows Subsystem for Linux",
+    "CurrentVersion": "2.4.13.0",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-WorkVM02",
+    "SoftwareName": "SQL Server Management Studio 21",
+    "CurrentVersion": "21.2.5",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-WorkVM02",
+    "SoftwareName": "vs_CoreEditorFonts",
+    "CurrentVersion": "17.7.40001",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-WorkVM02",
+    "SoftwareName": "vs_vswebprotocolselectormsires",
+    "CurrentVersion": "17.14.36015",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Onp-SqlsVM01",
+    "SoftwareName": "Microsoft Visual C++ 2022 X86 Additional Runtime - 14.44.35211",
+    "CurrentVersion": "14.44.35211",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Onp-SqlsVM01",
+    "SoftwareName": "SQL Server 2022 Shared Management Objects Extensions",
+    "CurrentVersion": "16.0.1000.6",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Onp-SqlsVM01",
+    "SoftwareName": "Microsoft SQL Server 2022 (64-bit)",
+    "CurrentVersion": "Installed",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Onp-SqlsVM01",
+    "SoftwareName": "SQL Server 2022 Database Engine Shared",
+    "CurrentVersion": "16.0.1000.6",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Onp-SqlsVM01",
+    "SoftwareName": "SQL Server 2022 XEvent",
+    "CurrentVersion": "16.0.1000.6",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Onp-SqlsVM01",
+    "SoftwareName": "Microsoft ODBC Driver 17 for SQL Server",
+    "CurrentVersion": "17.10.6.1",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Onp-SqlsVM01",
+    "SoftwareName": "Microsoft Edge",
+    "CurrentVersion": "139.0.3405.86",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Onp-SqlsVM01",
+    "SoftwareName": "vs_minshellsharedmsi",
+    "CurrentVersion": "17.14.36024",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Onp-SqlsVM01",
+    "SoftwareName": "Microsoft Visual C++ 2022 X86 Minimum Runtime - 14.44.35211",
+    "CurrentVersion": "14.44.35211",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Onp-SqlsVM01",
+    "SoftwareName": "vs_minshellinteropsharedmsi",
+    "CurrentVersion": "17.14.36015",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Onp-SqlsVM01",
+    "SoftwareName": "SQL Server 2022 Batch Parser",
+    "CurrentVersion": "16.0.1000.6",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Onp-SqlsVM01",
+    "SoftwareName": "Microsoft VSS Writer for SQL Server 2022",
+    "CurrentVersion": "16.0.1000.6",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Onp-SqlsVM01",
+    "SoftwareName": "VMware Tools",
+    "CurrentVersion": "12.4.5.23787635",
+    "Publisher": "VMware  Inc."
+  },
+  {
+    "Computer": "Onp-SqlsVM01",
+    "SoftwareName": "vs_filehandler_amd64",
+    "CurrentVersion": "17.14.36024",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Onp-SqlsVM01",
+    "SoftwareName": "SQL Server 2022 SQL Diagnostics",
+    "CurrentVersion": "16.0.1000.6",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Onp-SqlsVM01",
+    "SoftwareName": "vs_vswebprotocolselectormsires",
+    "CurrentVersion": "17.14.36015",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Onp-SqlsVM01",
+    "SoftwareName": "SQL Server 2022 Shared Management Objects",
+    "CurrentVersion": "16.0.1000.6",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Onp-SqlsVM01",
+    "SoftwareName": "SQL Server Management Studio 21",
+    "CurrentVersion": "21.4.8",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Onp-SqlsVM01",
+    "SoftwareName": "vs_vswebprotocolselectormsi",
+    "CurrentVersion": "17.14.36015",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Onp-SqlsVM01",
+    "SoftwareName": "vs_githubprotocolhandlermsi",
+    "CurrentVersion": "17.14.36015",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Onp-SqlsVM01",
+    "SoftwareName": "Microsoft SQL Server 2022 RsFx Driver",
+    "CurrentVersion": "16.0.1000.6",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Onp-SqlsVM01",
+    "SoftwareName": "SQL Server 2022 \u7528\u30d6\u30e9\u30a6\u30b6\u30fc",
+    "CurrentVersion": "16.0.1000.6",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Onp-SqlsVM01",
+    "SoftwareName": "Microsoft Visual Studio Setup WMI Provider",
+    "CurrentVersion": "3.12.2140.44225",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Onp-SqlsVM01",
+    "SoftwareName": "vs_communitymsires",
+    "CurrentVersion": "17.14.36015",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Onp-SqlsVM01",
+    "SoftwareName": "Microsoft Visual C++ 2022 X64 Minimum Runtime - 14.44.35211",
+    "CurrentVersion": "14.44.35211",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Onp-SqlsVM01",
+    "SoftwareName": "SQL Server 2022 Connection Info",
+    "CurrentVersion": "16.0.1000.6",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Onp-SqlsVM01",
+    "SoftwareName": "Microsoft SQL Server Extension",
+    "CurrentVersion": "1.1.3119.307",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Onp-SqlsVM01",
+    "SoftwareName": "vs_communityx64msi",
+    "CurrentVersion": "17.14.36025",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Onp-SqlsVM01",
+    "SoftwareName": "Microsoft Visual C++ 2022 X64 Additional Runtime - 14.44.35211",
+    "CurrentVersion": "14.44.35211",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Onp-SqlsVM01",
+    "SoftwareName": "vs_minshellx64msi",
+    "CurrentVersion": "17.14.36301",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Onp-SqlsVM01",
+    "SoftwareName": "Microsoft Visual C++ 2015-2022 Redistributable (x86) - 14.44.35211",
+    "CurrentVersion": "14.44.35211.0",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Onp-SqlsVM01",
+    "SoftwareName": "Microsoft Visual Studio Setup Configuration",
+    "CurrentVersion": "3.12.2140.44225",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Onp-SqlsVM01",
+    "SoftwareName": "vs_ssmsprotocolselectormsi",
+    "CurrentVersion": "17.14.36015",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Onp-SqlsVM01",
+    "SoftwareName": "SQL Server 2022 DMF",
+    "CurrentVersion": "16.0.1000.6",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Onp-SqlsVM01",
+    "SoftwareName": "Microsoft Visual C++ 2015-2022 Redistributable (x64) - 14.44.35211",
+    "CurrentVersion": "14.44.35211.0",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Onp-SqlsVM01",
+    "SoftwareName": "Microsoft Visual Studio Installer",
+    "CurrentVersion": "3.14.2084.208",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Onp-SqlsVM01",
+    "SoftwareName": "SQL Server 2022 Database Engine Services",
+    "CurrentVersion": "16.0.1000.6",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Onp-SqlsVM01",
+    "SoftwareName": "vs_ssmsprotocolselectormsires",
+    "CurrentVersion": "17.14.36015",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Onp-SqlsVM01",
+    "SoftwareName": "vs_CoreEditorFonts",
+    "CurrentVersion": "17.7.40001",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Onp-SqlsVM01",
+    "SoftwareName": "SQL Server 2022 Common Files",
+    "CurrentVersion": "16.0.1000.6",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Onp-SqlsVM01",
+    "SoftwareName": "vs_communitysharedmsi",
+    "CurrentVersion": "17.14.36025",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Onp-SqlsVM01",
+    "SoftwareName": "DiagnosticsHub_CollectionService",
+    "CurrentVersion": "17.12.35318",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Onp-SqlsVM01",
+    "SoftwareName": "vs_minshellinteropx64msi",
+    "CurrentVersion": "17.14.36015",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Onp-SqlsVM01",
+    "SoftwareName": "Microsoft OLE DB Driver for SQL Server",
+    "CurrentVersion": "18.7.4.0",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Onp-SqlsVM01",
+    "SoftwareName": "Microsoft SQL Server 2022 (64-bit)",
+    "CurrentVersion": "Installed",
+    "Publisher": ""
+  },
+  {
+    "Computer": "Onp-SqlsVM01",
+    "SoftwareName": "vs_filehandler_x86",
+    "CurrentVersion": "17.14.36024",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Onp-SqlsVM01",
+    "SoftwareName": "Azure Connected Machine Agent",
+    "CurrentVersion": "1.55.03132.2414",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Onp-SqlsVM01",
+    "SoftwareName": "vs_FileTracker_Singleton",
+    "CurrentVersion": "17.14.36015",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Onp-SqlsVM01",
+    "SoftwareName": "vs_minshellmsires",
+    "CurrentVersion": "17.14.36015",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Onp-SqlsVM01",
+    "SoftwareName": "Microsoft Edge WebView2 Runtime",
+    "CurrentVersion": "139.0.3405.86",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Onp-SqlsVM01",
+    "SoftwareName": "Microsoft SQL Server 2022 Setup (English)",
+    "CurrentVersion": "16.0.1145.1",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "python3-pyyaml",
+    "CurrentVersion": "(none):5.4.1-6.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "systemd-rpm-macros",
+    "CurrentVersion": "(none):252-46.el9_5.2",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "shared-mime-info",
+    "CurrentVersion": "(none):2.1-5.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "azuremonitoragent",
+    "CurrentVersion": "(none):1.35.4-971",
+    "Publisher": "(none)"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "rsyslog-relp",
+    "CurrentVersion": "(none):8.2310.0-4.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libffi",
+    "CurrentVersion": "(none):3.4.2-8.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "kpatch-dnf",
+    "CurrentVersion": "(none):0.9.7_0.4-2.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libnl3",
+    "CurrentVersion": "(none):3.9.0-1.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "linux-firmware-whence",
+    "CurrentVersion": "(none):20240905-146.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "perl-Math-BigInt",
+    "CurrentVersion": "1:1.9998.18-460.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "lsof",
+    "CurrentVersion": "(none):4.94.0-3.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "vim-common",
+    "CurrentVersion": "2:8.2.2637-21.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "perl-Class-Struct",
+    "CurrentVersion": "0:0.66-481.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "cronie",
+    "CurrentVersion": "(none):1.5.7-11.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "perl-mro",
+    "CurrentVersion": "0:1.23-481.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "hypervkvpd",
+    "CurrentVersion": "(none):0-0.43.20190303git.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "procps-ng",
+    "CurrentVersion": "(none):3.3.17-14.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "glibc-common",
+    "CurrentVersion": "(none):2.34-125.el9_5.8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "python3-linux-procfs",
+    "CurrentVersion": "(none):0.7.3-1.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "ipset-libs",
+    "CurrentVersion": "(none):7.11-8.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "rsyslog-gssapi",
+    "CurrentVersion": "(none):8.2310.0-4.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libtdb",
+    "CurrentVersion": "(none):1.4.10-1.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "dosfstools",
+    "CurrentVersion": "(none):4.2-3.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "python-unversioned-command",
+    "CurrentVersion": "(none):3.9.21-1.el9_5",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libbrotli",
+    "CurrentVersion": "(none):1.0.9-6.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "squid",
+    "CurrentVersion": "7:5.5-14.el9_5.3",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "librsvg2",
+    "CurrentVersion": "(none):2.50.7-3.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "dnf-plugins-core",
+    "CurrentVersion": "(none):4.3.0-20.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libselinux",
+    "CurrentVersion": "(none):3.6-1.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "gawk",
+    "CurrentVersion": "(none):5.1.0-6.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "nspr",
+    "CurrentVersion": "(none):4.35.0-14.el9_2",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "npth",
+    "CurrentVersion": "(none):1.6-8.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "adcli",
+    "CurrentVersion": "(none):0.9.2-1.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "perl-Symbol",
+    "CurrentVersion": "0:1.08-481.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libacl",
+    "CurrentVersion": "(none):2.3.1-4.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "prefixdevname",
+    "CurrentVersion": "(none):0.1.0-8.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "lsscsi",
+    "CurrentVersion": "(none):0.32-6.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "setroubleshoot-plugins",
+    "CurrentVersion": "(none):3.3.14-4.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "perl-Text-Tabs+Wrap",
+    "CurrentVersion": "(none):2013.0523-460.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "systemd-udev",
+    "CurrentVersion": "(none):252-46.el9_5.2",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "polkit-pkla-compat",
+    "CurrentVersion": "(none):0.1-21.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "udisks2",
+    "CurrentVersion": "(none):2.9.4-11.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "selinux-policy-targeted",
+    "CurrentVersion": "(none):38.1.45-3.el9_5",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libcap",
+    "CurrentVersion": "(none):2.48-9.el9_2",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "gdbm-libs",
+    "CurrentVersion": "1:1.23-1.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libtraceevent",
+    "CurrentVersion": "(none):1.5.3-3.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libteam",
+    "CurrentVersion": "(none):1.31-16.el9_1",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "iptables-libs",
+    "CurrentVersion": "(none):1.8.10-4.el9_4",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "jitterentropy",
+    "CurrentVersion": "(none):3.5.0-1.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libblockdev-loop",
+    "CurrentVersion": "(none):2.28-10.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libgomp",
+    "CurrentVersion": "(none):11.5.0-5.el9_5",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libwbclient",
+    "CurrentVersion": "0:4.20.2-2.el9_5",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libss",
+    "CurrentVersion": "(none):1.46.5-5.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "newt",
+    "CurrentVersion": "(none):0.52.21-11.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "logrotate",
+    "CurrentVersion": "(none):3.18.0-8.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "perl-SelectSaver",
+    "CurrentVersion": "0:1.02-481.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "python3-idna",
+    "CurrentVersion": "(none):2.10-7.el9_4.1",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "WALinuxAgent",
+    "CurrentVersion": "(none):2.7.0.6-10.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "ed",
+    "CurrentVersion": "(none):1.14.2-12.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "gpg-pubkey",
+    "CurrentVersion": "(none):be1229cf-5631588c",
+    "Publisher": "Microsoft (Release signing) <gpgsecurity@microsoft.com>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "fuse-libs",
+    "CurrentVersion": "(none):2.9.9-16.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "gnutls",
+    "CurrentVersion": "(none):3.8.3-4.el9_4",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "python3-systemd",
+    "CurrentVersion": "(none):234-19.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libgudev",
+    "CurrentVersion": "(none):237-1.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "webkit2gtk3-jsc",
+    "CurrentVersion": "(none):2.48.1-1.el9_5",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libpwquality",
+    "CurrentVersion": "(none):1.4.4-8.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libblockdev",
+    "CurrentVersion": "(none):2.28-10.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libsolv",
+    "CurrentVersion": "(none):0.7.24-3.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "perl-PathTools",
+    "CurrentVersion": "(none):3.78-461.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "pcre2-syntax",
+    "CurrentVersion": "(none):10.40-6.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "dos2unix",
+    "CurrentVersion": "(none):7.4.2-4.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "smartmontools",
+    "CurrentVersion": "1:7.2-9.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "filesystem",
+    "CurrentVersion": "(none):3.16-5.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "dhcp-client",
+    "CurrentVersion": "12:4.4.2-19.b1.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "grub2-tools-minimal",
+    "CurrentVersion": "1:2.06-94.el9_5",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "elfutils-default-yama-scope",
+    "CurrentVersion": "(none):0.191-4.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "perl-Digest-MD5",
+    "CurrentVersion": "(none):2.58-4.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libssh",
+    "CurrentVersion": "(none):0.10.4-13.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "python3-jsonpointer",
+    "CurrentVersion": "(none):2.0-4.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "udisks2-iscsi",
+    "CurrentVersion": "(none):2.9.4-11.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "sssd-kcm",
+    "CurrentVersion": "(none):2.9.5-4.el9_5.1",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libipa_hbac",
+    "CurrentVersion": "(none):2.9.5-4.el9_5.1",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "grub2-pc-modules",
+    "CurrentVersion": "1:2.06-94.el9_5",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "python3-gpg",
+    "CurrentVersion": "(none):1.15.1-6.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "perl-Carp",
+    "CurrentVersion": "(none):1.50-460.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "basesystem",
+    "CurrentVersion": "(none):11-13.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libfido2",
+    "CurrentVersion": "(none):1.13.0-2.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libecap",
+    "CurrentVersion": "(none):1.0.1-10.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "util-linux",
+    "CurrentVersion": "(none):2.37.4-20.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libnetfilter_queue",
+    "CurrentVersion": "(none):1.0.5-1.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libconfig",
+    "CurrentVersion": "(none):1.7.2-9.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "cracklib",
+    "CurrentVersion": "(none):2.9.6-27.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "nftables",
+    "CurrentVersion": "1:1.0.9-3.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "samba-common",
+    "CurrentVersion": "0:4.20.2-2.el9_5",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "emacs-filesystem",
+    "CurrentVersion": "1:27.2-11.el9_5.1",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libunistring",
+    "CurrentVersion": "(none):0.9.10-15.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "python3-libs",
+    "CurrentVersion": "(none):3.9.21-1.el9_5",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "abattis-cantarell-fonts",
+    "CurrentVersion": "(none):0.301-4.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "file",
+    "CurrentVersion": "(none):5.39-16.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "python3-jsonschema",
+    "CurrentVersion": "(none):3.2.0-13.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "ledmon",
+    "CurrentVersion": "(none):1.0.0-1.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "ima-evm-utils",
+    "CurrentVersion": "(none):1.5-2.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "json-c",
+    "CurrentVersion": "(none):0.14-11.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "langpacks-en",
+    "CurrentVersion": "(none):3.0-16.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libcap-ng",
+    "CurrentVersion": "(none):0.8.2-7.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "lvm2",
+    "CurrentVersion": "9:2.03.24-2.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "yum-utils",
+    "CurrentVersion": "(none):4.3.0-20.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "dmidecode",
+    "CurrentVersion": "1:3.6-1.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "geolite2-country",
+    "CurrentVersion": "(none):20191217-6.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "json-glib",
+    "CurrentVersion": "(none):1.6.6-1.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "nmap-ncat",
+    "CurrentVersion": "3:7.92-3.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "openssh-server",
+    "CurrentVersion": "(none):8.7p1-43.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "quota-nls",
+    "CurrentVersion": "1:4.09-2.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "cairo-gobject",
+    "CurrentVersion": "(none):1.17.4-7.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "cryptsetup-libs",
+    "CurrentVersion": "(none):2.7.2-3.el9_5",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libuv",
+    "CurrentVersion": "1:1.42.0-2.el9_4",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "python3-markupsafe",
+    "CurrentVersion": "(none):1.1.1-12.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "slang",
+    "CurrentVersion": "(none):2.3.2-11.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "unzip",
+    "CurrentVersion": "(none):6.0-57.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "acl",
+    "CurrentVersion": "(none):2.3.1-4.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libselinux-utils",
+    "CurrentVersion": "(none):3.6-1.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libstemmer",
+    "CurrentVersion": "(none):0-18.585svn.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "lua-libs",
+    "CurrentVersion": "(none):5.4.4-4.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "python3-decorator",
+    "CurrentVersion": "(none):4.4.2-6.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "dbus-common",
+    "CurrentVersion": "1:1.12.20-8.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "grubby",
+    "CurrentVersion": "(none):8.40-64.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "glibc",
+    "CurrentVersion": "(none):2.34-125.el9_5.8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libcom_err",
+    "CurrentVersion": "(none):1.46.5-5.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libsysfs",
+    "CurrentVersion": "(none):2.1.1-10.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "sssd-krb5-common",
+    "CurrentVersion": "(none):2.9.5-4.el9_5.1",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "cockpit-ws",
+    "CurrentVersion": "(none):323.1-1.el9_5",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "geolite2-city",
+    "CurrentVersion": "(none):20191217-6.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "dbus-broker",
+    "CurrentVersion": "(none):28-7.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libgpg-error",
+    "CurrentVersion": "(none):1.42-5.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libnftnl",
+    "CurrentVersion": "(none):1.2.6-4.el9_4",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libssh-config",
+    "CurrentVersion": "(none):0.10.4-13.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "perl-Scalar-List-Utils",
+    "CurrentVersion": "4:1.56-462.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "python3-pytz",
+    "CurrentVersion": "(none):2021.1-5.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "hypervvssd",
+    "CurrentVersion": "(none):0-0.43.20190303git.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libgusb",
+    "CurrentVersion": "(none):0.3.8-2.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "perl-subs",
+    "CurrentVersion": "0:1.03-481.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libpipeline",
+    "CurrentVersion": "(none):1.5.3-4.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libmaxminddb",
+    "CurrentVersion": "(none):1.5.2-4.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "python3-subscription-manager-rhsm",
+    "CurrentVersion": "(none):1.29.42-1.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "snappy",
+    "CurrentVersion": "(none):1.1.8-8.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "xz",
+    "CurrentVersion": "(none):5.2.5-8.el9_0",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "jq",
+    "CurrentVersion": "(none):1.6-17.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "kernel-core",
+    "CurrentVersion": "(none):5.14.0-503.40.1.el9_5",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "gobject-introspection",
+    "CurrentVersion": "(none):1.68.0-11.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "kmod",
+    "CurrentVersion": "(none):28-10.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libatasmart",
+    "CurrentVersion": "(none):0.19-22.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libreport-filesystem",
+    "CurrentVersion": "(none):2.15.2-6.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "lzo",
+    "CurrentVersion": "(none):2.10-7.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "popt",
+    "CurrentVersion": "(none):1.18-8.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "bind-license",
+    "CurrentVersion": "32:9.16.23-24.el9_5.3",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "fontconfig",
+    "CurrentVersion": "(none):2.14.0-2.el9_1",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libtool-ltdl",
+    "CurrentVersion": "(none):2.4.6-46.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "subscription-manager-rhsm-certificates",
+    "CurrentVersion": "(none):20220623-1.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "tracer-common",
+    "CurrentVersion": "(none):1.1-2.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "firewalld",
+    "CurrentVersion": "(none):1.3.4-7.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libblockdev-lvm",
+    "CurrentVersion": "(none):2.28-10.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libusbx",
+    "CurrentVersion": "(none):1.0.26-1.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libblockdev-swap",
+    "CurrentVersion": "(none):2.28-10.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libedit",
+    "CurrentVersion": "(none):3.1-38.20210216cvs.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libproxy-webkitgtk4",
+    "CurrentVersion": "(none):0.4.15-35.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "perl-Exporter",
+    "CurrentVersion": "(none):5.74-461.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "kernel-tools-libs",
+    "CurrentVersion": "(none):5.14.0-503.40.1.el9_5",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libgcrypt",
+    "CurrentVersion": "(none):1.10.0-11.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libjcat",
+    "CurrentVersion": "(none):0.1.6-3.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "perl-libs",
+    "CurrentVersion": "4:5.32.1-481.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "device-mapper-multipath-libs",
+    "CurrentVersion": "(none):0.8.7-32.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "dracut-network",
+    "CurrentVersion": "(none):057-70.git20240819.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "glibc-gconv-extra",
+    "CurrentVersion": "(none):2.34-125.el9_5.8",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "lshw",
+    "CurrentVersion": "(none):B.02.19.2-10.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libXft",
+    "CurrentVersion": "(none):2.3.3-8.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "ncurses",
+    "CurrentVersion": "(none):6.2-10.20210508.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "selinux-policy",
+    "CurrentVersion": "(none):38.1.45-3.el9_5",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "bzip2-libs",
+    "CurrentVersion": "(none):1.0.8-10.el9_5",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "dbus",
+    "CurrentVersion": "1:1.12.20-8.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "nettle",
+    "CurrentVersion": "(none):3.9.1-1.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "perl-Socket",
+    "CurrentVersion": "4:2.031-4.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "sscg",
+    "CurrentVersion": "(none):3.0.0-7.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libdnf",
+    "CurrentVersion": "(none):0.69.0-12.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libverto",
+    "CurrentVersion": "(none):0.3.2-3.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libtevent",
+    "CurrentVersion": "(none):0.16.1-1.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "perl-Time-Local",
+    "CurrentVersion": "2:1.300-7.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "python3-babel",
+    "CurrentVersion": "(none):2.9.1-2.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "python3-libxml2",
+    "CurrentVersion": "(none):2.9.13-6.el9_5.2",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "quota",
+    "CurrentVersion": "1:4.09-2.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "gsettings-desktop-schemas",
+    "CurrentVersion": "(none):40.0-6.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "less",
+    "CurrentVersion": "(none):590-5.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libattr",
+    "CurrentVersion": "(none):2.5.1-3.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libcap-ng-python3",
+    "CurrentVersion": "(none):0.8.2-7.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libidn2",
+    "CurrentVersion": "(none):2.3.0-7.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libseccomp",
+    "CurrentVersion": "(none):2.5.2-2.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "fonts-filesystem",
+    "CurrentVersion": "1:2.0.5-7.el9.1",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "kbd-misc",
+    "CurrentVersion": "(none):2.4.0-10.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "firewalld-filesystem",
+    "CurrentVersion": "(none):1.3.4-7.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "psacct",
+    "CurrentVersion": "(none):6.6.4-12.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "rpm-plugin-systemd-inhibit",
+    "CurrentVersion": "(none):4.16.1.3-34.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "cockpit-packagekit",
+    "CurrentVersion": "(none):323.1-1.el9_5",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "elfutils-debuginfod-client",
+    "CurrentVersion": "(none):0.191-4.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "ipcalc",
+    "CurrentVersion": "(none):1.0.0-5.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libproxy",
+    "CurrentVersion": "(none):0.4.15-35.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "policycoreutils",
+    "CurrentVersion": "(none):3.6-2.1.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "vdo",
+    "CurrentVersion": "(none):8.2.2.2-1.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "PackageKit-glib",
+    "CurrentVersion": "(none):1.2.6-1.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "binutils-gold",
+    "CurrentVersion": "(none):2.35.2-54.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "sg3_utils-libs",
+    "CurrentVersion": "(none):1.47-9.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "shadow-utils",
+    "CurrentVersion": "2:4.9-9.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "systemd-libs",
+    "CurrentVersion": "(none):252-46.el9_5.2",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "usbutils",
+    "CurrentVersion": "(none):017-1.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "openssh",
+    "CurrentVersion": "(none):8.7p1-43.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "rpm-plugin-audit",
+    "CurrentVersion": "(none):4.16.1.3-34.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libeconf",
+    "CurrentVersion": "(none):0.4.1-4.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "perl-Pod-Perldoc",
+    "CurrentVersion": "(none):3.28.01-461.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "python3-chardet",
+    "CurrentVersion": "(none):4.0.0-5.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "crypto-policies",
+    "CurrentVersion": "(none):20240828-2.git626aa59.el9_5",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "gdk-pixbuf2",
+    "CurrentVersion": "(none):2.42.6-4.el9_4",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libpcap",
+    "CurrentVersion": "14:1.10.0-4.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "nss-util",
+    "CurrentVersion": "(none):3.101.0-7.el9_2",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "python3-psutil",
+    "CurrentVersion": "(none):5.8.0-12.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "rsyslog",
+    "CurrentVersion": "(none):8.2310.0-4.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "device-mapper",
+    "CurrentVersion": "9:1.02.198-2.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libbytesize",
+    "CurrentVersion": "(none):2.5-3.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "grub2-pc",
+    "CurrentVersion": "1:2.06-94.el9_5",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "sssd-ad",
+    "CurrentVersion": "(none):2.9.5-4.el9_5.1",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "device-mapper-event-libs",
+    "CurrentVersion": "9:1.02.198-2.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "python3-libselinux",
+    "CurrentVersion": "(none):3.6-1.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "python3-rpm",
+    "CurrentVersion": "(none):4.16.1.3-34.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "vim-enhanced",
+    "CurrentVersion": "2:8.2.2637-21.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "glib2",
+    "CurrentVersion": "(none):2.68.4-14.el9_4.1",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "mde-netfilter",
+    "CurrentVersion": "(none):100.69.73-1",
+    "Publisher": "(none)"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "python3-policycoreutils",
+    "CurrentVersion": "(none):3.6-2.1.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "tcpdump",
+    "CurrentVersion": "14:4.99.0-9.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "cloud-init",
+    "CurrentVersion": "(none):23.4-19.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "elfutils-libs",
+    "CurrentVersion": "(none):0.191-4.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "iproute",
+    "CurrentVersion": "(none):6.2.0-6.el9_4",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "perl-IO",
+    "CurrentVersion": "0:1.43-481.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "WALinuxAgent-udev",
+    "CurrentVersion": "(none):2.7.0.6-10.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "binutils",
+    "CurrentVersion": "(none):2.35.2-54.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "time",
+    "CurrentVersion": "(none):1.9-18.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "util-linux-core",
+    "CurrentVersion": "(none):2.37.4-20.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "hwdata",
+    "CurrentVersion": "(none):0.348-9.15.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "python3-hawkey",
+    "CurrentVersion": "(none):0.69.0-12.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "cyrus-sasl-gssapi",
+    "CurrentVersion": "(none):2.1.27-21.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libthai",
+    "CurrentVersion": "(none):0.1.28-8.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "pciutils-libs",
+    "CurrentVersion": "(none):3.7.0-5.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "perl-parent",
+    "CurrentVersion": "1:0.238-460.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "redhat-release-eula",
+    "CurrentVersion": "(none):9.5-0.6.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "tar",
+    "CurrentVersion": "2:1.34-7.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "NetworkManager-team",
+    "CurrentVersion": "1:1.48.10-5.el9_5",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "bind-libs",
+    "CurrentVersion": "32:9.16.23-24.el9_5.3",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libtalloc",
+    "CurrentVersion": "(none):2.4.2-1.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "lz4-libs",
+    "CurrentVersion": "(none):1.9.3-5.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "perl-Text-ParseWords",
+    "CurrentVersion": "(none):3.30-460.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "virt-what",
+    "CurrentVersion": "(none):1.25-10.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "cyrus-sasl-plain",
+    "CurrentVersion": "(none):2.1.27-21.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libpsl",
+    "CurrentVersion": "(none):0.21.1-5.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "pciutils",
+    "CurrentVersion": "(none):3.7.0-5.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "perl-File-Temp",
+    "CurrentVersion": "1:0.231.100-4.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "python3-perf",
+    "CurrentVersion": "(none):5.14.0-503.40.1.el9_5",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "python3-pysocks",
+    "CurrentVersion": "(none):1.7.1-12.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "rng-tools",
+    "CurrentVersion": "(none):6.16-7.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "clevis-luks",
+    "CurrentVersion": "(none):20-200.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "passwd",
+    "CurrentVersion": "(none):0.80-12.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "gpg-pubkey",
+    "CurrentVersion": "(none):fd431d51-4ae0493b",
+    "Publisher": "Red Hat  Inc. (release key 2) <security@redhat.com>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "keyutils",
+    "CurrentVersion": "(none):1.6.3-1.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libdatrie",
+    "CurrentVersion": "(none):0.2.13-4.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libmodulemd",
+    "CurrentVersion": "(none):2.13.0-2.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "sssd-krb5",
+    "CurrentVersion": "(none):2.9.5-4.el9_5.1",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "authselect-libs",
+    "CurrentVersion": "(none):1.2.6-2.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "elfutils-libelf",
+    "CurrentVersion": "(none):0.191-4.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "perl-File-Path",
+    "CurrentVersion": "(none):2.18-4.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "systemd-pam",
+    "CurrentVersion": "(none):252-46.el9_5.2",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "glib-networking",
+    "CurrentVersion": "(none):2.68.3-3.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "kmod-kvdo",
+    "CurrentVersion": "(none):8.2.4.15-141.el9_5",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "libxcb",
+    "CurrentVersion": "(none):1.13.1-9.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "perl-IO-Socket-IP",
+    "CurrentVersion": "(none):0.41-5.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "python3-pyrsistent",
+    "CurrentVersion": "(none):0.17.3-8.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "python3-setuptools",
+    "CurrentVersion": "(none):53.0.0-13.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "samba-client-libs",
+    "CurrentVersion": "0:4.20.2-2.el9_5",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "xfsdump",
+    "CurrentVersion": "(none):3.1.12-4.el9_3",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "diffutils",
+    "CurrentVersion": "(none):3.7-12.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "ipset",
+    "CurrentVersion": "(none):7.11-8.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "perl-Net-SSLeay",
+    "CurrentVersion": "(none):1.94-1.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "realmd",
+    "CurrentVersion": "(none):0.17.1-2.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "checkpolicy",
+    "CurrentVersion": "(none):3.6-1.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "os-prober",
+    "CurrentVersion": "(none):1.77-10.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "policycoreutils-python-utils",
+    "CurrentVersion": "(none):3.6-2.1.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "xz-libs",
+    "CurrentVersion": "(none):5.2.5-8.el9_0",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "zip",
+    "CurrentVersion": "(none):3.0-35.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Hub-SlogVM01",
+    "SoftwareName": "at",
+    "CurrentVersion": "(none):3.1.23-11.el9",
+    "Publisher": "Red Hat  Inc. <http://bugzilla.redhat.com/bugzilla>"
+  },
+  {
+    "Computer": "Onp-AdcsVM01",
+    "SoftwareName": "Azure Connected Machine Agent",
+    "CurrentVersion": "1.47.02843.1892",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Onp-AdcsVM01",
+    "SoftwareName": "Microsoft Visual C++ 2022 X86 Minimum Runtime - 14.36.32532",
+    "CurrentVersion": "14.36.32532",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Onp-AdcsVM01",
+    "SoftwareName": "Microsoft Visual C++ 2022 X86 Additional Runtime - 14.36.32532",
+    "CurrentVersion": "14.36.32532",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Onp-AdcsVM01",
+    "SoftwareName": "Microsoft Visual C++ 2022 X64 Additional Runtime - 14.36.32532",
+    "CurrentVersion": "14.36.32532",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Onp-AdcsVM01",
+    "SoftwareName": "Microsoft Edge WebView2 Runtime",
+    "CurrentVersion": "138.0.3351.121",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Onp-AdcsVM01",
+    "SoftwareName": "Microsoft Visual C++ 2015-2022 Redistributable (x86) - 14.36.32532",
+    "CurrentVersion": "14.36.32532.0",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Onp-AdcsVM01",
+    "SoftwareName": "Microsoft Edge",
+    "CurrentVersion": "139.0.3405.86",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Onp-AdcsVM01",
+    "SoftwareName": "Microsoft Visual C++ 2015-2022 Redistributable (x64) - 14.36.32532",
+    "CurrentVersion": "14.36.32532.0",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Onp-AdcsVM01",
+    "SoftwareName": "Microsoft Visual C++ 2022 X64 Minimum Runtime - 14.36.32532",
+    "CurrentVersion": "14.36.32532",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Onp-AdcsVM01",
+    "SoftwareName": "Windows Admin Center (v2)",
+    "CurrentVersion": "2.5.0.12",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Onp-AdcsVM01",
+    "SoftwareName": "Dependency Agent",
+    "CurrentVersion": "9.10.18",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Onp-AdcsVM01",
+    "SoftwareName": "VMware Tools",
+    "CurrentVersion": "12.4.5.23787635",
+    "Publisher": "VMware  Inc."
+  },
+  {
+    "Computer": "Hub-AddcVM01",
+    "SoftwareName": "Microsoft .NET Runtime - 6.0.32 (x64)",
+    "CurrentVersion": "6.0.32.33814",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-AddcVM01",
+    "SoftwareName": "Microsoft Visual C++ 2013 Redistributable (x64) - 12.0.40660",
+    "CurrentVersion": "12.0.40660.0",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-AddcVM01",
+    "SoftwareName": "Microsoft Visual C++ 2015-2022 Redistributable (x64) - 14.38.33130",
+    "CurrentVersion": "14.38.33130.0",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-AddcVM01",
+    "SoftwareName": "Windows Admin Center (v2)",
+    "CurrentVersion": "2.5.0.12",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-AddcVM01",
+    "SoftwareName": "Microsoft Visual C++ 2022 X64 Additional Runtime - 14.38.33130",
+    "CurrentVersion": "14.38.33130",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-AddcVM01",
+    "SoftwareName": "Microsoft .NET 6.0.32 - Windows Server Hosting",
+    "CurrentVersion": "6.0.32.24314",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-AddcVM01",
+    "SoftwareName": "Microsoft .NET Host - 6.0.32 (x86)",
+    "CurrentVersion": "48.128.16743",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-AddcVM01",
+    "SoftwareName": "Microsoft ASP.NET Core 6.0.32 Shared Framework (x86)",
+    "CurrentVersion": "6.0.32.24314",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-AddcVM01",
+    "SoftwareName": "Microsoft Edge",
+    "CurrentVersion": "139.0.3405.86",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-AddcVM01",
+    "SoftwareName": "Microsoft ASP.NET Core 6.0.32 - Shared Framework (x86)",
+    "CurrentVersion": "6.0.32.24314",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-AddcVM01",
+    "SoftwareName": "Microsoft ASP.NET Core 6.0.32 Hosting Bundle Options",
+    "CurrentVersion": "6.0.32.24314",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-AddcVM01",
+    "SoftwareName": "Microsoft .NET Host FX Resolver - 6.0.32 (x86)",
+    "CurrentVersion": "48.128.16743",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-AddcVM01",
+    "SoftwareName": "Microsoft Visual C++ 2022 X64 Minimum Runtime - 14.38.33130",
+    "CurrentVersion": "14.38.33130",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-AddcVM01",
+    "SoftwareName": "Dependency Agent",
+    "CurrentVersion": "9.10.18",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-AddcVM01",
+    "SoftwareName": "Microsoft .NET Host - 6.0.32 (x64)",
+    "CurrentVersion": "48.128.16743",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-AddcVM01",
+    "SoftwareName": "Microsoft .NET Host FX Resolver - 6.0.32 (x64)",
+    "CurrentVersion": "48.128.16743",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-AddcVM01",
+    "SoftwareName": "Microsoft .NET Runtime - 6.0.32 (x86)",
+    "CurrentVersion": "48.128.16743",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-AddcVM01",
+    "SoftwareName": "Microsoft Visual C++ 2013 x64 Minimum Runtime - 12.0.40660",
+    "CurrentVersion": "12.0.40660",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-AddcVM01",
+    "SoftwareName": "Microsoft ASP.NET Core 6.0.32 - Shared Framework (x64)",
+    "CurrentVersion": "6.0.32.24314",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-AddcVM01",
+    "SoftwareName": "Microsoft ASP.NET Core 6.0.32 Shared Framework (x64)",
+    "CurrentVersion": "6.0.32.24314",
+    "Publisher": "Microsoft Corporation"
+  },
+  {
+    "Computer": "Hub-AddcVM01",
+    "SoftwareName": "Microsoft Visual C++ 2013 x64 Additional Runtime - 12.0.40660",
+    "CurrentVersion": "12.0.40660",
+    "Publisher": "Microsoft Corporation"
+  }
+]

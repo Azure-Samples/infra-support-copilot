@@ -1,0 +1,555 @@
+[
+  {
+    "id": "/subscriptions/8f6373c8-1684-4965-b4b4-2a64e6d41d3b/resourceGroups/Arc01-Southeast-Work-RG/providers/Microsoft.HybridCompute/machines/ntp-rhel8-01.ms.lab.com",
+    "name": "ntp-rhel8-01.ms.lab.com",
+    "type": "microsoft.hybridcompute/machines",
+    "tenantId": "b21220c9-8507-4fc3-b7f4-8d4c63265d26",
+    "kind": "",
+    "location": "southeastasia",
+    "resourceGroup": "arc01-southeast-work-rg",
+    "subscriptionId": "8f6373c8-1684-4965-b4b4-2a64e6d41d3b",
+    "managedBy": "",
+    "sku": null,
+    "plan": null,
+    "properties": {
+      "provisioningState": "Succeeded",
+      "osType": "linux",
+      "storageProfile": {
+        "disks": [
+          {
+            "name": "/dev/sda",
+            "id": "/dev/sda",
+            "path": "/dev/sda",
+            "maxSizeInBytes": 17179869184,
+            "generatedId": "RootDisk",
+            "diskType": "disk",
+            "usedSpaceInBytes": 340188
+          },
+          {
+            "name": "/dev/sr0",
+            "id": "/dev/sr0",
+            "path": "/dev/sr0",
+            "maxSizeInBytes": 1073741312,
+            "generatedId": "DataDisk0",
+            "diskType": "rom"
+          },
+          {
+            "name": "/dev/mapper/rhel-root",
+            "id": "/dev/mapper/rhel-root",
+            "path": "/dev/mapper/rhel-root",
+            "maxSizeInBytes": 13753122816,
+            "generatedId": "DataDisk1",
+            "diskType": "lvm",
+            "usedSpaceInBytes": 9763684
+          },
+          {
+            "name": "/dev/mapper/rhel-swap",
+            "id": "/dev/mapper/rhel-swap",
+            "path": "/dev/mapper/rhel-swap",
+            "maxSizeInBytes": 1719664640,
+            "generatedId": "DataDisk2",
+            "diskType": "lvm"
+          }
+        ]
+      },
+      "networkProfile": {
+        "networkInterfaces": [
+          {
+            "name": "ens192",
+            "id": "2",
+            "macAddress": "00:0c:29:d9:3f:22",
+            "ipAddresses": [
+              {
+                "address": "192.168.3.105",
+                "subnet": {
+                  "addressPrefix": "192.168.3.0/24"
+                },
+                "ipAddressVersion": "IPv4"
+              }
+            ]
+          }
+        ]
+      },
+      "status": "Connected",
+      "hardwareProfile": {
+        "totalPhysicalMemoryInBytes": 3843174400,
+        "numberOfCpuSockets": 2,
+        "processors": [
+          {
+            "name": "Intel(R) Xeon(R) CPU E5-2690 v3 @ 2.60GHz",
+            "numberOfCores": 1
+          },
+          {
+            "name": "Intel(R) Xeon(R) CPU E5-2690 v3 @ 2.60GHz",
+            "numberOfCores": 1
+          }
+        ]
+      },
+      "displayName": "ntp-rhel8-01.ms.lab.com",
+      "osProfile": {
+        "computerName": "ntp-rhel8-01.ms.lab.com",
+        "linuxConfiguration": {
+          "patchSettings": {
+            "assessmentMode": "AutomaticByPlatform"
+          }
+        }
+      },
+      "osVersion": "4.18.0-553.69.1.el8_10.x86_64",
+      "vmId": "a4257faf-a7ea-40af-a5b9-a74b5f04bec5",
+      "osName": "linux",
+      "agentConfiguration": {
+        "guestConfigurationEnabled": "true",
+        "incomingConnectionsPorts": [],
+        "extensionsAllowList": [],
+        "extensionsBlockList": [],
+        "extensionsEnabled": "true",
+        "proxyBypass": [],
+        "configMode": "full",
+        "proxyUrl": ""
+      },
+      "detectedProperties": {
+        "architecture": "amd64",
+        "totalPhysicalMemoryInBytes": "3843174400",
+        "totalPhysicalMemoryInGigabytes": "3",
+        "serialNumber": "unknown",
+        "logicalCoreCount": "2",
+        "mssqldiscovered": "false",
+        "processorCount": "2",
+        "processorNames": "Intel(R) Xeon(R) CPU E5-2690 v3 @ 2.60GHz",
+        "cloudprovider": "N/A",
+        "smbiosAssetTag": "No Asset Tag",
+        "manufacturer": "VMware, Inc.",
+        "productType": "unknown",
+        "vmuuidEsu2012": "",
+        "pgsqldiscovered": "false",
+        "mysqldiscovered": "false",
+        "coreCount": "1",
+        "model": "VMware7,1"
+      },
+      "lastStatusChange": "2025-08-12T07:25:04.274Z",
+      "clientPublicKey": "MIIBCgKCAQEAzVaF5v4nOP+PukR7NegL/YdsndY4LtNsYA6QV1OEaJ/owSpyPmq0naCFu7NEpUjyAbWcmeefFv9/8x2aO/S3QCgiFWkbMR2hkrgZ+kynkqv9r4I8nlbX6VVKWO5rBCOS4/FwXvicGSUaEKqny+dZcodjrVhOPZqB9LJVR3dDVfLDx+cnhg+hmX4UKuv/AxkYUfJhLgakbgMNahlwuyraSsanZ2iCmdjblAOPCde22skyIWSMaA/kIgZUDNewzbZ9vXKWarVcoWpsSwHAe9PoCH/S5Cehn2G3HKjh3JzTedH3rHB1vNDIzO6l7UkewoMyqp45a2aUW23Zlxln+Gov/wIDAQAB",
+      "mssqlDiscovered": "false",
+      "serviceStatuses": {
+        "guestConfigurationService": {
+          "status": "active",
+          "startupType": "enabled"
+        },
+        "extensionService": {
+          "status": "active",
+          "startupType": "enabled"
+        }
+      },
+      "licenseProfile": {
+        "esuProfile": {
+          "licenseAssignmentState": "NotAssigned",
+          "esuEligibility": "Ineligible",
+          "serverType": "Unknown",
+          "esuKeyState": "Inactive"
+        }
+      },
+      "cloudMetadata": {
+        "provider": "N/A"
+      },
+      "firmwareProfile": {
+        "type": "EFI",
+        "serialNumber": "unknown"
+      },
+      "agentVersion": "1.54.03104.480",
+      "agentUpgrade": {
+        "enableAutomaticUpgrade": false
+      },
+      "errorDetails": [],
+      "machineFqdn": "ntp-rhel8-01.ms.lab.com",
+      "domainName": "unknown",
+      "osEdition": "unknown",
+      "dnsFqdn": "ntp-rhel8-01.ms.lab.com",
+      "adFqdn": "unknown",
+      "vmUuid": "d2f24d56-906b-ee7f-861d-ce75dfd93f22",
+      "osSku": "Red Hat Enterprise Linux 8.10 (Ootpa)"
+    },
+    "tags": {
+      "ArcSQLServerExtensionDeployment": "Disabled",
+      "AUM-schedule01": "yes",
+      "\u30b5\u30fc\u30d0\u30fc\u540d": "\u53d6\u5f15AP#1"
+    },
+    "identity": {
+      "principalId": "2d00b763-0ff4-4dc1-8235-31b47310f0c9",
+      "tenantId": "b21220c9-8507-4fc3-b7f4-8d4c63265d26",
+      "type": "SystemAssigned"
+    },
+    "zones": null,
+    "extendedLocation": null
+  },
+  {
+    "id": "/subscriptions/8f6373c8-1684-4965-b4b4-2a64e6d41d3b/resourceGroups/Arc01-Southeast-Work-RG/providers/Microsoft.HybridCompute/machines/Onp-AdcsVM01",
+    "name": "Onp-AdcsVM01",
+    "type": "microsoft.hybridcompute/machines",
+    "tenantId": "b21220c9-8507-4fc3-b7f4-8d4c63265d26",
+    "kind": "",
+    "location": "southeastasia",
+    "resourceGroup": "arc01-southeast-work-rg",
+    "subscriptionId": "8f6373c8-1684-4965-b4b4-2a64e6d41d3b",
+    "managedBy": "",
+    "sku": null,
+    "plan": null,
+    "properties": {
+      "provisioningState": "Succeeded",
+      "osType": "windows",
+      "networkProfile": {
+        "networkInterfaces": [
+          {
+            "name": "Ethernet0",
+            "id": "11",
+            "macAddress": "00:50:56:ad:ad:30",
+            "ipAddresses": [
+              {
+                "address": "192.168.3.121",
+                "subnet": {
+                  "addressPrefix": "192.168.3.0/24"
+                },
+                "ipAddressVersion": "IPv4"
+              }
+            ]
+          }
+        ]
+      },
+      "storageProfile": {
+        "disks": [
+          {
+            "name": "VMware Virtual disk SCSI Disk Device",
+            "id": "\\\\.\\PHYSICALDRIVE0",
+            "path": "\\\\.\\PHYSICALDRIVE0",
+            "maxSizeInBytes": 137436203520,
+            "generatedId": "\\\\.\\PHYSICALDRIVE0",
+            "diskType": "Fixed hard disk media",
+            "usedSpaceInBytes": 137436203520
+          }
+        ]
+      },
+      "hardwareProfile": {
+        "totalPhysicalMemoryInBytes": 17179869184,
+        "numberOfCpuSockets": 1,
+        "processors": [
+          {
+            "name": "Intel(R) Xeon(R) CPU E5-2690 v3 @ 2.60GHz",
+            "numberOfCores": 4
+          }
+        ]
+      },
+      "status": "Connected",
+      "displayName": "Onp-AdcsVM01",
+      "osProfile": {
+        "computerName": "Onp-AdcsVM01",
+        "windowsConfiguration": {
+          "patchSettings": {
+            "status": {
+              "hotpatchEnablementStatus": "Enabled"
+            },
+            "assessmentMode": "AutomaticByPlatform",
+            "enableHotpatching": true
+          }
+        }
+      },
+      "osVersion": "10.0.26100.4851",
+      "vmId": "961cf9ab-d289-4f39-a25d-798f715c2f2e",
+      "agentConfiguration": {
+        "guestConfigurationEnabled": "true",
+        "incomingConnectionsPorts": [
+          "6516"
+        ],
+        "extensionsAllowList": [],
+        "extensionsBlockList": [],
+        "extensionsEnabled": "true",
+        "proxyBypass": [],
+        "configMode": "full",
+        "proxyUrl": ""
+      },
+      "osName": "windows",
+      "detectedProperties": {
+        "architecture": "amd64",
+        "totalPhysicalMemoryInBytes": "17179869184",
+        "totalPhysicalMemoryInGigabytes": "16",
+        "serialNumber": "None",
+        "logicalCoreCount": "4",
+        "mssqldiscovered": "false",
+        "processorCount": "1",
+        "processorNames": "Intel(R) Xeon(R) CPU E5-2690 v3 @ 2.60GHz",
+        "cloudprovider": "N/A",
+        "smbiosAssetTag": "No Asset Tag",
+        "productType": "8",
+        "manufacturer": "VMware, Inc.",
+        "vmuuidEsu2012": "A8242D42-CCD2-7166-8AAA-A62976068DEE",
+        "coreCount": "4",
+        "model": "VMware20,1",
+        "virtualizationBasedSecurityStatus": "VbsEnabledSecureKernelRunning"
+      },
+      "lastStatusChange": "2025-08-12T18:15:51.761Z",
+      "clientPublicKey": "MIIBCgKCAQEAxasLgo5Rx9bI+r/QJf8RqDZL2ud7bISYtpGhGPHu7YjD/TuZkzlT0t0mY9bLdkLgfvvSeAM5Py9WsV00PTzPhGD9KCH4awScfs8R3dpzfBfSKvUjMi8+nMwZnLEkm4uWpNdCMbprXILZLgVwaBig++DkaFTfZx7uZFjB6S7ocPemsTgLfhY5su5u3+cwoIjV9JPJ29u5BDi3447TdT4f8nfhBWRCCMOZJOAURurEpkU8XwCpZwqr8VNv9BTaCjMoSRhN9/RXEUb8gt4T7O9WapLYLEgJgTOuzPxO9W29pH/WvTKuoEXIF/O9aCMEdKf04nO7KILwVrscVEyBAmhx+wIDAQAB",
+      "licenseProfile": {
+        "licenseStatus": "Licensed",
+        "esuProfile": {
+          "licenseAssignmentState": "NotAssigned",
+          "esuEligibility": "Ineligible",
+          "serverType": "Datacenter",
+          "esuKeyState": "Inactive"
+        },
+        "licenseChannel": "Volume:MAK",
+        "productProfile": {
+          "productType": "WindowsServer",
+          "productFeatures": [
+            {
+              "name": "WindowsServerAzureArcMgmt",
+              "subscriptionStatus": "Enabled",
+              "billingStartDate": "2024-12-13T06:44:18.174Z",
+              "enrollmentDate": "2024-12-13T06:44:18.174Z"
+            },
+            {
+              "name": "Hotpatch",
+              "subscriptionStatus": "Enabled",
+              "billingStartDate": "2025-02-01T00:00:00Z",
+              "enrollmentDate": "2024-12-16T04:13:24.159Z"
+            }
+          ]
+        },
+        "softwareAssurance": {
+          "softwareAssuranceCustomer": true
+        }
+      },
+      "mssqlDiscovered": "false",
+      "serviceStatuses": {
+        "guestConfigurationService": {
+          "status": "running",
+          "startupType": "automatic"
+        },
+        "extensionService": {
+          "status": "running",
+          "startupType": "automatic"
+        }
+      },
+      "agentUpgrade": {
+        "enableAutomaticUpgrade": false
+      },
+      "cloudMetadata": {
+        "provider": "N/A"
+      },
+      "errorDetails": [],
+      "firmwareProfile": {
+        "type": "EFI",
+        "serialNumber": "None"
+      },
+      "agentVersion": "1.47.02843.1892",
+      "domainName": "ssdc.shisadom.com",
+      "machineFqdn": "Onp-AdcsVM01",
+      "osInstallDate": "2024-12-11T16:34:08Z",
+      "osEdition": "serverdatacenter",
+      "dnsFqdn": "Onp-AdcsVM01.ssdc.shisadom.com",
+      "vmUuid": "A8242D42-CCD2-7166-8AAA-A62976068DEE",
+      "adFqdn": "Onp-AdcsVM01.ssdc.shisadom.com",
+      "osSku": "Windows Server 2025 Datacenter"
+    },
+    "tags": {
+      "AUM-schedule01": "yes"
+    },
+    "identity": {
+      "principalId": "52deca7f-8618-4a12-b4a0-9d9bf748928f",
+      "tenantId": "b21220c9-8507-4fc3-b7f4-8d4c63265d26",
+      "type": "SystemAssigned"
+    },
+    "zones": null,
+    "extendedLocation": null
+  },
+  {
+    "id": "/subscriptions/8f6373c8-1684-4965-b4b4-2a64e6d41d3b/resourceGroups/Arc01-Southeast-Work-RG/providers/Microsoft.HybridCompute/machines/Onp-SqlsVM01",
+    "name": "Onp-SqlsVM01",
+    "type": "microsoft.hybridcompute/machines",
+    "tenantId": "b21220c9-8507-4fc3-b7f4-8d4c63265d26",
+    "kind": "",
+    "location": "japaneast",
+    "resourceGroup": "arc01-southeast-work-rg",
+    "subscriptionId": "8f6373c8-1684-4965-b4b4-2a64e6d41d3b",
+    "managedBy": "",
+    "sku": null,
+    "plan": null,
+    "properties": {
+      "provisioningState": "Succeeded",
+      "displayName": "Onp-SqlsVM01",
+      "osType": "windows",
+      "storageProfile": {
+        "disks": [
+          {
+            "name": "VMware Virtual disk SCSI Disk Device",
+            "id": "\\\\.\\PHYSICALDRIVE1",
+            "path": "\\\\.\\PHYSICALDRIVE1",
+            "maxSizeInBytes": 64420392960,
+            "generatedId": "\\\\.\\PHYSICALDRIVE1",
+            "diskType": "Fixed hard disk media"
+          },
+          {
+            "name": "VMware Virtual disk SCSI Disk Device",
+            "id": "\\\\.\\PHYSICALDRIVE0",
+            "path": "\\\\.\\PHYSICALDRIVE0",
+            "maxSizeInBytes": 137436203520,
+            "generatedId": "\\\\.\\PHYSICALDRIVE0",
+            "diskType": "Fixed hard disk media"
+          },
+          {
+            "name": "VMware Virtual disk SCSI Disk Device",
+            "id": "\\\\.\\PHYSICALDRIVE3",
+            "path": "\\\\.\\PHYSICALDRIVE3",
+            "maxSizeInBytes": 137436203520,
+            "generatedId": "\\\\.\\PHYSICALDRIVE3",
+            "diskType": "Fixed hard disk media"
+          },
+          {
+            "name": "VMware Virtual disk SCSI Disk Device",
+            "id": "\\\\.\\PHYSICALDRIVE2",
+            "path": "\\\\.\\PHYSICALDRIVE2",
+            "maxSizeInBytes": 34356994560,
+            "generatedId": "\\\\.\\PHYSICALDRIVE2",
+            "diskType": "Fixed hard disk media"
+          }
+        ]
+      },
+      "networkProfile": {
+        "networkInterfaces": [
+          {
+            "name": "Ethernet0",
+            "id": "10",
+            "macAddress": "00:50:56:ad:5f:23",
+            "ipAddresses": [
+              {
+                "address": "192.168.3.123",
+                "subnet": {
+                  "addressPrefix": "192.168.3.0/24"
+                },
+                "ipAddressVersion": "IPv4"
+              }
+            ]
+          }
+        ]
+      },
+      "status": "Connected",
+      "hardwareProfile": {
+        "totalPhysicalMemoryInBytes": 17179869184,
+        "numberOfCpuSockets": 1,
+        "processors": [
+          {
+            "name": "Intel(R) Xeon(R) CPU E5-2690 v3 @ 2.60GHz",
+            "numberOfCores": 4
+          }
+        ]
+      },
+      "osProfile": {
+        "computerName": "Onp-SqlsVM01",
+        "windowsConfiguration": {
+          "patchSettings": {
+            "assessmentMode": "AutomaticByPlatform"
+          }
+        }
+      },
+      "osVersion": "10.0.26100.4946",
+      "vmId": "b807b887-bee3-4983-b26d-a1d6d6d3f603",
+      "osName": "windows",
+      "agentConfiguration": {
+        "guestConfigurationEnabled": "true",
+        "incomingConnectionsPorts": [
+          "17426"
+        ],
+        "extensionsBlockList": [],
+        "extensionsAllowList": [],
+        "extensionsEnabled": "true",
+        "proxyBypass": [],
+        "configMode": "full",
+        "proxyUrl": ""
+      },
+      "detectedProperties": {
+        "architecture": "amd64",
+        "totalPhysicalMemoryInBytes": "17179869184",
+        "totalPhysicalMemoryInGigabytes": "16",
+        "serialNumber": "None",
+        "logicalCoreCount": "4",
+        "serverType": "SQL Server;Server;Workstation",
+        "mssqldiscovered": "true",
+        "processorCount": "1",
+        "processorNames": "Intel(R) Xeon(R) CPU E5-2690 v3 @ 2.60GHz",
+        "cloudprovider": "N/A",
+        "smbiosAssetTag": "No Asset Tag",
+        "productType": "8",
+        "manufacturer": "VMware, Inc.",
+        "vmuuidEsu2012": "B42D2D42-690C-ED04-B6CD-431E79E7549E",
+        "pgsqldiscovered": "false",
+        "mysqldiscovered": "false",
+        "coreCount": "4",
+        "model": "VMware20,1",
+        "virtualizationBasedSecurityStatus": "VbsEnabledSecureKernelNotRunning"
+      },
+      "lastStatusChange": "2025-08-13T03:02:44.8453996Z",
+      "mssqlDiscovered": "true",
+      "serviceStatuses": {
+        "guestConfigurationService": {
+          "status": "running",
+          "startupType": "automatic"
+        },
+        "extensionService": {
+          "status": "running",
+          "startupType": "automatic"
+        }
+      },
+      "clientPublicKey": "MIIBCgKCAQEAtWzSEAMxOwqM7JUUIysXA7O0ERESPtPNvB1RAMTBjBvDBP9khZ1nD8VntlbNGhUJVtvZxK6BrNyY1G7GXe6ycsi8z3AjLv2qV0J50Mh2U/uVL67yxci1Uhn8QBj1yga9ocZ5lNQh6WKbWH/P0Bgerc3XWXqfDGex12mNaPmWmZsZ5PAQY+mDYW68MCAj7Bqjsfr2TKZWXZJw3a7iajmrZ6VN9lqM9bEUSpTZTTfPAmOTcqy5MCVpqz0TH9QEloErJVVVK71d/B8p8C/ORvQk19duoRnIwAK0laRrGgC1TKOxQLl656Yn4q8+3mbK/Uy9vwtETP2pF52e9MLMGyAMpwIDAQAB",
+      "licenseProfile": {
+        "licenseStatus": "Licensed",
+        "licenseChannel": "Volume:MAK",
+        "esuProfile": {
+          "licenseAssignmentState": "NotAssigned",
+          "serverType": "Datacenter",
+          "esuEligibility": "Ineligible",
+          "esuKeyState": "Inactive"
+        },
+        "productProfile": {
+          "productType": "WindowsServer",
+          "productFeatures": [
+            {
+              "name": "WindowsServerAzureArcMgmt",
+              "subscriptionStatus": "Enabled",
+              "billingStartDate": "2025-08-12T02:15:43.9075017Z",
+              "enrollmentDate": "2025-08-12T02:15:43.9075119Z"
+            }
+          ]
+        },
+        "softwareAssurance": {
+          "softwareAssuranceCustomer": true
+        }
+      },
+      "cloudMetadata": {
+        "provider": "N/A"
+      },
+      "agentVersion": "1.55.03132.2414",
+      "agentUpgrade": {
+        "enableAutomaticUpgrade": false
+      },
+      "errorDetails": [],
+      "firmwareProfile": {
+        "type": "EFI",
+        "serialNumber": "None"
+      },
+      "domainName": "ssdc.shisadom.com",
+      "machineFqdn": "Onp-SqlsVM01",
+      "osInstallDate": "2025-04-28T01:55:21Z",
+      "osEdition": "serverdatacenter",
+      "dnsFqdn": "Onp-SqlsVM01.ssdc.shisadom.com",
+      "vmUuid": "B42D2D42-690C-ED04-B6CD-431E79E7549E",
+      "adFqdn": "Onp-SqlsVM01.ssdc.shisadom.com",
+      "osSku": "Windows Server 2025 Datacenter"
+    },
+    "tags": {
+      "AUM-schedule01": "yes"
+    },
+    "identity": {
+      "principalId": "f883830f-66b6-4c3a-9b97-5092226e0d51",
+      "tenantId": "b21220c9-8507-4fc3-b7f4-8d4c63265d26",
+      "type": "SystemAssigned"
+    },
+    "zones": null,
+    "extendedLocation": null
+  }
+]

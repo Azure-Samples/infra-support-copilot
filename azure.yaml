@@ -1,0 +1,42 @@
+name: rag-multi-index
+metadata:
+  template: rag-multi-index@0.0.1
+infra:
+  path: ./infra
+services:
+  web:
+    project: .
+    language: python
+    host: appservice
+pipeline:
+  variables:
+    - AZURE_SUBSCRIPTION_ID
+    - AZURE_ENV_NAME
+    - CLIENT_PUBLIC_IP
+    - AZURE_OPENAI_ENDPOINT
+    - AZURE_OPENAI_GPT_DEPLOYMENT
+    - AZURE_OPENAI_EMBEDDING_DEPLOYMENT
+    - AZURE_OPENAI_API_VERSION
+    - AZURE_SEARCH_SERVICE_URL
+    - AZURE_SEARCH_INDEX_NAME_INVENTORIES
+    - AZURE_SEARCH_INDEX_NAME_INCIDENTS
+    - AZURE_STORAGE_ACCOUNT_NAME
+    - AZURE_SEARCH_SERVICE_NAME
+    - AZURE_SQL_SERVER
+    - AZURE_SQL_DATABASE_NAME
+    - USE_AAD
+    - SYSTEM_PROMPT
+    - AZURE_APP_SERVICE_NAME
+hooks:
+  preprovision:
+    windows:
+      shell: pwsh
+      run: -NoProfile -ExecutionPolicy Bypass -File .\scripts\set_up_environment.ps1 -ForceSqlcmd
+      interactive: true
+      continueOnError: false
+  postprovision:
+    windows:
+      shell: pwsh
+      run: ./scripts/set_up_environment.ps1
+      interactive: true
+      continueOnError: false

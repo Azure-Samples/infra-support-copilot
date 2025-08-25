@@ -1,0 +1,430 @@
+[
+  {
+    "id": "/subscriptions/656fc812-2dc4-4124-978c-6c3d70c63ca4/resourceGroups/Work02-Southeast-Work-RG/providers/Microsoft.Network/networkInterfaces/work02-apvm01973",
+    "name": "work02-apvm01973",
+    "type": "microsoft.network/networkinterfaces",
+    "tenantId": "b21220c9-8507-4fc3-b7f4-8d4c63265d26",
+    "kind": "Regular",
+    "location": "southeastasia",
+    "resourceGroup": "work02-southeast-work-rg",
+    "subscriptionId": "656fc812-2dc4-4124-978c-6c3d70c63ca4",
+    "managedBy": "",
+    "sku": null,
+    "plan": null,
+    "properties": {
+      "provisioningState": "Succeeded",
+      "defaultOutboundConnectivityEnabled": false,
+      "disableTcpStateTracking": false,
+      "enableAcceleratedNetworking": true,
+      "vnetEncryptionSupported": false,
+      "primary": true,
+      "resourceGuid": "7e7c0a17-124f-44d2-978a-d53af8a35a75",
+      "enableIPForwarding": false,
+      "ipConfigurations": [
+        {
+          "type": "Microsoft.Network/networkInterfaces/ipConfigurations",
+          "properties": {
+            "provisioningState": "Succeeded",
+            "privateIPAllocationMethod": "Dynamic",
+            "privateIPAddressVersion": "IPv4",
+            "primary": true,
+            "privateIPAddress": "10.102.0.4",
+            "subnet": {
+              "id": "/subscriptions/656fc812-2dc4-4124-978c-6c3d70c63ca4/resourceGroups/Work02-Southeast-Work-RG/providers/Microsoft.Network/virtualNetworks/Work02-Southeast-VNET/subnets/Work02-Southeast-VNET-vmsubnet"
+            }
+          },
+          "name": "ipconfig1",
+          "id": "/subscriptions/656fc812-2dc4-4124-978c-6c3d70c63ca4/resourceGroups/Work02-Southeast-Work-RG/providers/Microsoft.Network/networkInterfaces/work02-apvm01973/ipConfigurations/ipconfig1",
+          "etag": "W/\"61185dbd-abe9-44e0-a674-46cf9e0dbc18\""
+        }
+      ],
+      "tapConfigurations": [],
+      "hostedWorkloads": [],
+      "allowPort25Out": true,
+      "macAddress": "60-45-BD-20-28-A4",
+      "auxiliaryMode": "None",
+      "dnsSettings": {
+        "internalDomainNameSuffix": "f2jk4rpkp53utd4nnhux1owzlb.ix.internal.cloudapp.net",
+        "appliedDnsServers": [],
+        "dnsServers": []
+      },
+      "auxiliarySku": "None",
+      "virtualMachine": {
+        "id": "/subscriptions/656fc812-2dc4-4124-978c-6c3d70c63ca4/resourceGroups/Work02-Southeast-Work-RG/providers/Microsoft.Compute/virtualMachines/Work02-ApVM01"
+      },
+      "nicType": "Standard"
+    },
+    "tags": null,
+    "identity": null,
+    "zones": null,
+    "extendedLocation": null
+  },
+  {
+    "id": "/subscriptions/656fc812-2dc4-4124-978c-6c3d70c63ca4/resourceGroups/Work02-Southeast-Work-RG/providers/Microsoft.Network/networkInterfaces/work02-apvm02414",
+    "name": "work02-apvm02414",
+    "type": "microsoft.network/networkinterfaces",
+    "tenantId": "b21220c9-8507-4fc3-b7f4-8d4c63265d26",
+    "kind": "Regular",
+    "location": "southeastasia",
+    "resourceGroup": "work02-southeast-work-rg",
+    "subscriptionId": "656fc812-2dc4-4124-978c-6c3d70c63ca4",
+    "managedBy": "",
+    "sku": null,
+    "plan": null,
+    "properties": {
+      "provisioningState": "Succeeded",
+      "defaultOutboundConnectivityEnabled": false,
+      "enableAcceleratedNetworking": true,
+      "disableTcpStateTracking": false,
+      "resourceGuid": "3c7f7b76-22b5-47d5-b22f-03038b0a2d07",
+      "vnetEncryptionSupported": false,
+      "primary": true,
+      "enableIPForwarding": false,
+      "ipConfigurations": [
+        {
+          "properties": {
+            "provisioningState": "Succeeded",
+            "privateIPAllocationMethod": "Dynamic",
+            "privateIPAddressVersion": "IPv4",
+            "primary": true,
+            "privateIPAddress": "10.102.0.5",
+            "subnet": {
+              "id": "/subscriptions/656fc812-2dc4-4124-978c-6c3d70c63ca4/resourceGroups/Work02-Southeast-Work-RG/providers/Microsoft.Network/virtualNetworks/Work02-Southeast-VNET/subnets/Work02-Southeast-VNET-vmsubnet"
+            }
+          },
+          "id": "/subscriptions/656fc812-2dc4-4124-978c-6c3d70c63ca4/resourceGroups/Work02-Southeast-Work-RG/providers/Microsoft.Network/networkInterfaces/work02-apvm02414/ipConfigurations/ipconfig1",
+          "name": "ipconfig1",
+          "type": "Microsoft.Network/networkInterfaces/ipConfigurations",
+          "etag": "W/\"cf36f4e4-f7a0-4ab0-b601-cbcc423701b0\""
+        }
+      ],
+      "tapConfigurations": [],
+      "hostedWorkloads": [],
+      "macAddress": "00-0D-3A-A3-B3-4F",
+      "allowPort25Out": true,
+      "auxiliaryMode": "None",
+      "dnsSettings": {
+        "internalDomainNameSuffix": "f2jk4rpkp53utd4nnhux1owzlb.ix.internal.cloudapp.net",
+        "appliedDnsServers": [],
+        "dnsServers": []
+      },
+      "auxiliarySku": "None",
+      "virtualMachine": {
+        "id": "/subscriptions/656fc812-2dc4-4124-978c-6c3d70c63ca4/resourceGroups/Work02-Southeast-Work-RG/providers/Microsoft.Compute/virtualMachines/Work02-ApVM02"
+      },
+      "nicType": "Standard"
+    },
+    "tags": null,
+    "identity": null,
+    "zones": null,
+    "extendedLocation": null
+  },
+  {
+    "id": "/subscriptions/656fc812-2dc4-4124-978c-6c3d70c63ca4/resourceGroups/Work02-Southeast-Work-RG/providers/Microsoft.Network/networkInterfaces/work02-dbvm01623",
+    "name": "work02-dbvm01623",
+    "type": "microsoft.network/networkinterfaces",
+    "tenantId": "b21220c9-8507-4fc3-b7f4-8d4c63265d26",
+    "kind": "Regular",
+    "location": "southeastasia",
+    "resourceGroup": "work02-southeast-work-rg",
+    "subscriptionId": "656fc812-2dc4-4124-978c-6c3d70c63ca4",
+    "managedBy": "",
+    "sku": null,
+    "plan": null,
+    "properties": {
+      "provisioningState": "Succeeded",
+      "defaultOutboundConnectivityEnabled": false,
+      "enableAcceleratedNetworking": true,
+      "disableTcpStateTracking": false,
+      "resourceGuid": "9c9228f7-391b-4365-b887-04811e2382b7",
+      "vnetEncryptionSupported": false,
+      "primary": true,
+      "enableIPForwarding": false,
+      "ipConfigurations": [
+        {
+          "properties": {
+            "provisioningState": "Succeeded",
+            "privateIPAllocationMethod": "Dynamic",
+            "privateIPAddressVersion": "IPv4",
+            "primary": true,
+            "privateIPAddress": "10.102.0.6",
+            "subnet": {
+              "id": "/subscriptions/656fc812-2dc4-4124-978c-6c3d70c63ca4/resourceGroups/Work02-Southeast-Work-RG/providers/Microsoft.Network/virtualNetworks/Work02-Southeast-VNET/subnets/Work02-Southeast-VNET-vmsubnet"
+            }
+          },
+          "id": "/subscriptions/656fc812-2dc4-4124-978c-6c3d70c63ca4/resourceGroups/Work02-Southeast-Work-RG/providers/Microsoft.Network/networkInterfaces/work02-dbvm01623/ipConfigurations/ipconfig1",
+          "name": "ipconfig1",
+          "type": "Microsoft.Network/networkInterfaces/ipConfigurations",
+          "etag": "W/\"a1feb5b7-b897-4c7d-880d-ec6a0e0349f1\""
+        }
+      ],
+      "tapConfigurations": [],
+      "hostedWorkloads": [],
+      "macAddress": "00-0D-3A-A2-77-68",
+      "allowPort25Out": true,
+      "auxiliaryMode": "None",
+      "dnsSettings": {
+        "internalDomainNameSuffix": "f2jk4rpkp53utd4nnhux1owzlb.ix.internal.cloudapp.net",
+        "appliedDnsServers": [],
+        "dnsServers": []
+      },
+      "auxiliarySku": "None",
+      "virtualMachine": {
+        "id": "/subscriptions/656fc812-2dc4-4124-978c-6c3d70c63ca4/resourceGroups/work02-southeast-work-rg/providers/Microsoft.Compute/virtualMachines/Work02-DbVM01"
+      },
+      "nicType": "Standard"
+    },
+    "tags": null,
+    "identity": null,
+    "zones": null,
+    "extendedLocation": null
+  },
+  {
+    "id": "/subscriptions/6e054861-6086-4cb9-9ebb-3ee2ad50a04f/resourceGroups/Hub-Southeast-Work-RG/providers/Microsoft.Network/networkInterfaces/hub-addcvm0170",
+    "name": "hub-addcvm0170",
+    "type": "microsoft.network/networkinterfaces",
+    "tenantId": "b21220c9-8507-4fc3-b7f4-8d4c63265d26",
+    "kind": "Regular",
+    "location": "southeastasia",
+    "resourceGroup": "hub-southeast-work-rg",
+    "subscriptionId": "6e054861-6086-4cb9-9ebb-3ee2ad50a04f",
+    "managedBy": "",
+    "sku": null,
+    "plan": null,
+    "properties": {
+      "provisioningState": "Succeeded",
+      "defaultOutboundConnectivityEnabled": false,
+      "resourceGuid": "4f12b44f-2eed-4f20-a5ad-b194cc1b075e",
+      "enableAcceleratedNetworking": true,
+      "disableTcpStateTracking": false,
+      "vnetEncryptionSupported": false,
+      "ipConfigurations": [
+        {
+          "properties": {
+            "provisioningState": "Succeeded",
+            "privateIPAddressVersion": "IPv4",
+            "privateIPAllocationMethod": "Static",
+            "subnet": {
+              "id": "/subscriptions/6e054861-6086-4cb9-9ebb-3ee2ad50a04f/resourceGroups/Hub-Southeast-Work-RG/providers/Microsoft.Network/virtualNetworks/Hub-Southeast-VNET/subnets/Hub-Southeast-VNET-pesubnet"
+            },
+            "privateIPAddress": "10.100.1.100",
+            "primary": true
+          },
+          "name": "ipconfig1",
+          "type": "Microsoft.Network/networkInterfaces/ipConfigurations",
+          "id": "/subscriptions/6e054861-6086-4cb9-9ebb-3ee2ad50a04f/resourceGroups/Hub-Southeast-Work-RG/providers/Microsoft.Network/networkInterfaces/hub-addcvm0170/ipConfigurations/ipconfig1",
+          "etag": "W/\"addfe0c3-719f-4273-8423-ebad4e9b642f\""
+        }
+      ],
+      "enableIPForwarding": false,
+      "primary": true,
+      "tapConfigurations": [],
+      "hostedWorkloads": [],
+      "allowPort25Out": true,
+      "dnsSettings": {
+        "appliedDnsServers": [],
+        "internalDomainNameSuffix": "t5deset3qonubeotdm2wzvirre.ix.internal.cloudapp.net",
+        "dnsServers": []
+      },
+      "auxiliaryMode": "None",
+      "auxiliarySku": "None",
+      "macAddress": "60-45-BD-1E-C6-C6",
+      "virtualMachine": {
+        "id": "/subscriptions/6e054861-6086-4cb9-9ebb-3ee2ad50a04f/resourceGroups/HUB-SOUTHEAST-WORK-RG/providers/Microsoft.Compute/virtualMachines/Hub-AddcVM01"
+      },
+      "nicType": "Standard"
+    },
+    "tags": null,
+    "identity": null,
+    "zones": null,
+    "extendedLocation": null
+  },
+  {
+    "id": "/subscriptions/6e054861-6086-4cb9-9ebb-3ee2ad50a04f/resourceGroups/Hub-Southeast-Work-RG/providers/Microsoft.Network/networkInterfaces/hub-workvm01121",
+    "name": "hub-workvm01121",
+    "type": "microsoft.network/networkinterfaces",
+    "tenantId": "b21220c9-8507-4fc3-b7f4-8d4c63265d26",
+    "kind": "Regular",
+    "location": "southeastasia",
+    "resourceGroup": "hub-southeast-work-rg",
+    "subscriptionId": "6e054861-6086-4cb9-9ebb-3ee2ad50a04f",
+    "managedBy": "",
+    "sku": null,
+    "plan": null,
+    "properties": {
+      "provisioningState": "Succeeded",
+      "defaultOutboundConnectivityEnabled": false,
+      "enableAcceleratedNetworking": true,
+      "disableTcpStateTracking": false,
+      "vnetEncryptionSupported": false,
+      "resourceGuid": "787ded95-7e7b-4865-bd4a-a64edd465e7e",
+      "enableIPForwarding": false,
+      "primary": true,
+      "ipConfigurations": [
+        {
+          "properties": {
+            "provisioningState": "Succeeded",
+            "privateIPAllocationMethod": "Dynamic",
+            "privateIPAddressVersion": "IPv4",
+            "primary": true,
+            "privateIPAddress": "10.100.0.5",
+            "subnet": {
+              "id": "/subscriptions/6e054861-6086-4cb9-9ebb-3ee2ad50a04f/resourceGroups/Hub-Southeast-Work-RG/providers/Microsoft.Network/virtualNetworks/Hub-Southeast-VNET/subnets/Hub-Southeast-VNET-vmsubnet"
+            }
+          },
+          "id": "/subscriptions/6e054861-6086-4cb9-9ebb-3ee2ad50a04f/resourceGroups/Hub-Southeast-Work-RG/providers/Microsoft.Network/networkInterfaces/hub-workvm01121/ipConfigurations/ipconfig1",
+          "name": "ipconfig1",
+          "type": "Microsoft.Network/networkInterfaces/ipConfigurations",
+          "etag": "W/\"ccbfb80f-27d9-48d0-9ef2-fe08b660ba0e\""
+        }
+      ],
+      "tapConfigurations": [],
+      "hostedWorkloads": [],
+      "allowPort25Out": true,
+      "auxiliaryMode": "None",
+      "auxiliarySku": "None",
+      "dnsSettings": {
+        "internalDomainNameSuffix": "t5deset3qonubeotdm2wzvirre.ix.internal.cloudapp.net",
+        "appliedDnsServers": [
+          "10.100.1.100"
+        ],
+        "dnsServers": [
+          "10.100.1.100"
+        ]
+      },
+      "nicType": "Standard",
+      "virtualMachine": {
+        "id": "/subscriptions/6e054861-6086-4cb9-9ebb-3ee2ad50a04f/resourceGroups/hub-southeast-work-rg/providers/Microsoft.Compute/virtualMachines/Hub-WorkVM01"
+      },
+      "macAddress": "00-0D-3A-08-74-14"
+    },
+    "tags": null,
+    "identity": null,
+    "zones": null,
+    "extendedLocation": null
+  },
+  {
+    "id": "/subscriptions/6e054861-6086-4cb9-9ebb-3ee2ad50a04f/resourceGroups/Hub-Southeast-Work-RG/providers/Microsoft.Network/networkInterfaces/hub-workvm0292",
+    "name": "hub-workvm0292",
+    "type": "microsoft.network/networkinterfaces",
+    "tenantId": "b21220c9-8507-4fc3-b7f4-8d4c63265d26",
+    "kind": "Regular",
+    "location": "southeastasia",
+    "resourceGroup": "hub-southeast-work-rg",
+    "subscriptionId": "6e054861-6086-4cb9-9ebb-3ee2ad50a04f",
+    "managedBy": "",
+    "sku": null,
+    "plan": null,
+    "properties": {
+      "provisioningState": "Succeeded",
+      "defaultOutboundConnectivityEnabled": false,
+      "resourceGuid": "24e93d75-0d7c-4e3c-acfd-3f735165e30c",
+      "enableAcceleratedNetworking": true,
+      "disableTcpStateTracking": false,
+      "vnetEncryptionSupported": false,
+      "ipConfigurations": [
+        {
+          "properties": {
+            "provisioningState": "Succeeded",
+            "privateIPAddressVersion": "IPv4",
+            "privateIPAllocationMethod": "Dynamic",
+            "subnet": {
+              "id": "/subscriptions/6e054861-6086-4cb9-9ebb-3ee2ad50a04f/resourceGroups/Hub-Southeast-Work-RG/providers/Microsoft.Network/virtualNetworks/Hub-Southeast-VNET/subnets/Hub-Southeast-VNET-vmsubnet"
+            },
+            "privateIPAddress": "10.100.0.6",
+            "primary": true
+          },
+          "name": "ipconfig1",
+          "type": "Microsoft.Network/networkInterfaces/ipConfigurations",
+          "id": "/subscriptions/6e054861-6086-4cb9-9ebb-3ee2ad50a04f/resourceGroups/Hub-Southeast-Work-RG/providers/Microsoft.Network/networkInterfaces/hub-workvm0292/ipConfigurations/ipconfig1",
+          "etag": "W/\"26e3d070-87a7-4587-b234-30cc4a247e2d\""
+        }
+      ],
+      "enableIPForwarding": false,
+      "primary": true,
+      "tapConfigurations": [],
+      "hostedWorkloads": [],
+      "allowPort25Out": true,
+      "dnsSettings": {
+        "appliedDnsServers": [
+          "10.100.1.100"
+        ],
+        "internalDomainNameSuffix": "t5deset3qonubeotdm2wzvirre.ix.internal.cloudapp.net",
+        "dnsServers": [
+          "10.100.1.100"
+        ]
+      },
+      "auxiliaryMode": "None",
+      "auxiliarySku": "None",
+      "macAddress": "60-45-BD-1F-49-33",
+      "virtualMachine": {
+        "id": "/subscriptions/6e054861-6086-4cb9-9ebb-3ee2ad50a04f/resourceGroups/HUB-SOUTHEAST-WORK-RG/providers/Microsoft.Compute/virtualMachines/Hub-WorkVM02"
+      },
+      "nicType": "Standard"
+    },
+    "tags": null,
+    "identity": null,
+    "zones": null,
+    "extendedLocation": null
+  },
+  {
+    "id": "/subscriptions/6e054861-6086-4cb9-9ebb-3ee2ad50a04f/resourceGroups/Mgmt-Southeast-Mgmt-RG/providers/Microsoft.Network/networkInterfaces/hub-slogvm01619",
+    "name": "hub-slogvm01619",
+    "type": "microsoft.network/networkinterfaces",
+    "tenantId": "b21220c9-8507-4fc3-b7f4-8d4c63265d26",
+    "kind": "Regular",
+    "location": "southeastasia",
+    "resourceGroup": "mgmt-southeast-mgmt-rg",
+    "subscriptionId": "6e054861-6086-4cb9-9ebb-3ee2ad50a04f",
+    "managedBy": "",
+    "sku": null,
+    "plan": null,
+    "properties": {
+      "provisioningState": "Succeeded",
+      "defaultOutboundConnectivityEnabled": false,
+      "enableAcceleratedNetworking": true,
+      "disableTcpStateTracking": false,
+      "primary": true,
+      "vnetEncryptionSupported": false,
+      "resourceGuid": "ac34c7c2-94b2-48af-8066-f6dfa4e891f0",
+      "enableIPForwarding": false,
+      "ipConfigurations": [
+        {
+          "properties": {
+            "provisioningState": "Succeeded",
+            "privateIPAllocationMethod": "Dynamic",
+            "privateIPAddressVersion": "IPv4",
+            "primary": true,
+            "privateIPAddress": "10.100.0.4",
+            "subnet": {
+              "id": "/subscriptions/6e054861-6086-4cb9-9ebb-3ee2ad50a04f/resourceGroups/Hub-Southeast-Work-RG/providers/Microsoft.Network/virtualNetworks/Hub-Southeast-VNET/subnets/Hub-Southeast-VNET-vmsubnet"
+            }
+          },
+          "id": "/subscriptions/6e054861-6086-4cb9-9ebb-3ee2ad50a04f/resourceGroups/Mgmt-Southeast-Mgmt-RG/providers/Microsoft.Network/networkInterfaces/hub-slogvm01619/ipConfigurations/ipconfig1",
+          "name": "ipconfig1",
+          "type": "Microsoft.Network/networkInterfaces/ipConfigurations",
+          "etag": "W/\"ec622c86-2502-4733-a7b6-2fbe5026b02b\""
+        }
+      ],
+      "tapConfigurations": [],
+      "hostedWorkloads": [],
+      "allowPort25Out": true,
+      "auxiliaryMode": "None",
+      "dnsSettings": {
+        "appliedDnsServers": [],
+        "internalDomainNameSuffix": "t5deset3qonubeotdm2wzvirre.ix.internal.cloudapp.net",
+        "dnsServers": []
+      },
+      "auxiliarySku": "None",
+      "virtualMachine": {
+        "id": "/subscriptions/6e054861-6086-4cb9-9ebb-3ee2ad50a04f/resourceGroups/mgmt-southeast-mgmt-rg/providers/Microsoft.Compute/virtualMachines/Hub-SlogVM01"
+      },
+      "macAddress": "60-45-BD-22-4B-9E",
+      "nicType": "Standard"
+    },
+    "tags": null,
+    "identity": null,
+    "zones": null,
+    "extendedLocation": null
+  }
+]

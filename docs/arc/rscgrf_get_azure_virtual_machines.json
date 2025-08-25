@@ -1,0 +1,801 @@
+[
+  {
+    "id": "/subscriptions/656fc812-2dc4-4124-978c-6c3d70c63ca4/resourceGroups/Work02-Southeast-Work-RG/providers/Microsoft.Compute/virtualMachines/Work02-ApVM01",
+    "name": "Work02-ApVM01",
+    "type": "microsoft.compute/virtualmachines",
+    "tenantId": "b21220c9-8507-4fc3-b7f4-8d4c63265d26",
+    "kind": "",
+    "location": "southeastasia",
+    "resourceGroup": "work02-southeast-work-rg",
+    "subscriptionId": "656fc812-2dc4-4124-978c-6c3d70c63ca4",
+    "managedBy": "",
+    "sku": null,
+    "plan": null,
+    "properties": {
+      "provisioningState": "Succeeded",
+      "priority": "Spot",
+      "timeCreated": "2025-08-08T04:42:03.234Z",
+      "storageProfile": {
+        "imageReference": {
+          "publisher": "RedHat",
+          "exactVersion": "9.4.2025040316",
+          "sku": "94_gen2",
+          "version": "latest",
+          "offer": "RHEL"
+        },
+        "dataDisks": [],
+        "osDisk": {
+          "name": "Work02-ApVM01_OsDisk_1_c3f9e41c1c34442bb2ed95fbeb1a1cb3",
+          "createOption": "FromImage",
+          "diskSizeGB": 64,
+          "deleteOption": "Delete",
+          "managedDisk": {
+            "id": "/subscriptions/656fc812-2dc4-4124-978c-6c3d70c63ca4/resourceGroups/WORK02-SOUTHEAST-WORK-RG/providers/Microsoft.Compute/disks/Work02-ApVM01_OsDisk_1_c3f9e41c1c34442bb2ed95fbeb1a1cb3",
+            "storageAccountType": "StandardSSD_LRS"
+          },
+          "osType": "Linux",
+          "caching": "ReadWrite"
+        },
+        "diskControllerType": "NVMe"
+      },
+      "networkProfile": {
+        "networkInterfaces": [
+          {
+            "properties": {
+              "deleteOption": "Delete"
+            },
+            "id": "/subscriptions/656fc812-2dc4-4124-978c-6c3d70c63ca4/resourceGroups/Work02-Southeast-Work-RG/providers/Microsoft.Network/networkInterfaces/work02-apvm01973"
+          }
+        ]
+      },
+      "hardwareProfile": {
+        "vmSize": "Standard_D2s_v6"
+      },
+      "securityProfile": {
+        "securityType": "TrustedLaunch",
+        "uefiSettings": {
+          "secureBootEnabled": true,
+          "vTpmEnabled": true
+        }
+      },
+      "extended": {
+        "instanceView": {
+          "hyperVGeneration": "V2",
+          "computerName": "Work02-ApVM01",
+          "powerState": {
+            "displayStatus": "VM running",
+            "level": "Info",
+            "code": "PowerState/running"
+          },
+          "osVersion": "9.4",
+          "osName": "rhel"
+        }
+      },
+      "osProfile": {
+        "requireGuestProvisionSignal": true,
+        "allowExtensionOperations": true,
+        "computerName": "Work02-ApVM01",
+        "linuxConfiguration": {
+          "disablePasswordAuthentication": false,
+          "provisionVMAgent": true,
+          "patchSettings": {
+            "assessmentMode": "ImageDefault",
+            "patchMode": "ImageDefault"
+          }
+        },
+        "adminUsername": "ssano",
+        "secrets": []
+      },
+      "vmId": "f0d2d933-e235-4215-8dc1-fae95d70e70b",
+      "diagnosticsProfile": {
+        "bootDiagnostics": {
+          "enabled": true
+        }
+      },
+      "additionalCapabilities": {
+        "hibernationEnabled": false
+      },
+      "billingProfile": {
+        "maxPrice": -1.0
+      },
+      "evictionPolicy": "Deallocate"
+    },
+    "tags": null,
+    "identity": null,
+    "zones": null,
+    "extendedLocation": null
+  },
+  {
+    "id": "/subscriptions/656fc812-2dc4-4124-978c-6c3d70c63ca4/resourceGroups/Work02-Southeast-Work-RG/providers/Microsoft.Compute/virtualMachines/Work02-ApVM02",
+    "name": "Work02-ApVM02",
+    "type": "microsoft.compute/virtualmachines",
+    "tenantId": "b21220c9-8507-4fc3-b7f4-8d4c63265d26",
+    "kind": "",
+    "location": "southeastasia",
+    "resourceGroup": "work02-southeast-work-rg",
+    "subscriptionId": "656fc812-2dc4-4124-978c-6c3d70c63ca4",
+    "managedBy": "",
+    "sku": null,
+    "plan": null,
+    "properties": {
+      "provisioningState": "Succeeded",
+      "priority": "Spot",
+      "timeCreated": "2025-08-08T04:45:26.754Z",
+      "storageProfile": {
+        "imageReference": {
+          "publisher": "RedHat",
+          "exactVersion": "9.4.2025040316",
+          "version": "latest",
+          "sku": "94_gen2",
+          "offer": "RHEL"
+        },
+        "dataDisks": [],
+        "osDisk": {
+          "name": "Work02-ApVM02_OsDisk_1_19aeae1d57ec41be849e1d8aa89e3d4c",
+          "createOption": "FromImage",
+          "diskSizeGB": 64,
+          "deleteOption": "Delete",
+          "managedDisk": {
+            "id": "/subscriptions/656fc812-2dc4-4124-978c-6c3d70c63ca4/resourceGroups/WORK02-SOUTHEAST-WORK-RG/providers/Microsoft.Compute/disks/Work02-ApVM02_OsDisk_1_19aeae1d57ec41be849e1d8aa89e3d4c",
+            "storageAccountType": "StandardSSD_LRS"
+          },
+          "caching": "ReadWrite",
+          "osType": "Linux"
+        },
+        "diskControllerType": "NVMe"
+      },
+      "networkProfile": {
+        "networkInterfaces": [
+          {
+            "properties": {
+              "deleteOption": "Delete"
+            },
+            "id": "/subscriptions/656fc812-2dc4-4124-978c-6c3d70c63ca4/resourceGroups/Work02-Southeast-Work-RG/providers/Microsoft.Network/networkInterfaces/work02-apvm02414"
+          }
+        ]
+      },
+      "hardwareProfile": {
+        "vmSize": "Standard_D2s_v6"
+      },
+      "extended": {
+        "instanceView": {
+          "hyperVGeneration": "V2",
+          "computerName": "Work02-ApVM02",
+          "powerState": {
+            "displayStatus": "VM running",
+            "level": "Info",
+            "code": "PowerState/running"
+          },
+          "osVersion": "9.4",
+          "osName": "rhel"
+        }
+      },
+      "securityProfile": {
+        "securityType": "TrustedLaunch",
+        "uefiSettings": {
+          "secureBootEnabled": true,
+          "vTpmEnabled": true
+        }
+      },
+      "osProfile": {
+        "requireGuestProvisionSignal": true,
+        "allowExtensionOperations": true,
+        "computerName": "Work02-ApVM02",
+        "linuxConfiguration": {
+          "disablePasswordAuthentication": false,
+          "provisionVMAgent": true,
+          "patchSettings": {
+            "assessmentMode": "ImageDefault",
+            "patchMode": "ImageDefault"
+          }
+        },
+        "adminUsername": "ssano",
+        "secrets": []
+      },
+      "vmId": "36c48bfc-e359-4836-b408-360ddad040b9",
+      "diagnosticsProfile": {
+        "bootDiagnostics": {
+          "enabled": true
+        }
+      },
+      "billingProfile": {
+        "maxPrice": -1.0
+      },
+      "evictionPolicy": "Deallocate",
+      "additionalCapabilities": {
+        "hibernationEnabled": false
+      }
+    },
+    "tags": null,
+    "identity": null,
+    "zones": null,
+    "extendedLocation": null
+  },
+  {
+    "id": "/subscriptions/656fc812-2dc4-4124-978c-6c3d70c63ca4/resourceGroups/Work02-Southeast-Work-RG/providers/Microsoft.Compute/virtualMachines/Work02-DbVM01",
+    "name": "Work02-DbVM01",
+    "type": "microsoft.compute/virtualmachines",
+    "tenantId": "b21220c9-8507-4fc3-b7f4-8d4c63265d26",
+    "kind": "",
+    "location": "southeastasia",
+    "resourceGroup": "work02-southeast-work-rg",
+    "subscriptionId": "656fc812-2dc4-4124-978c-6c3d70c63ca4",
+    "managedBy": "",
+    "sku": null,
+    "plan": null,
+    "properties": {
+      "provisioningState": "Succeeded",
+      "priority": "Spot",
+      "timeCreated": "2025-08-08T05:41:12.263Z",
+      "storageProfile": {
+        "imageReference": {
+          "publisher": "MicrosoftWindowsServer",
+          "exactVersion": "26100.4652.250713",
+          "sku": "2025-datacenter-azure-edition",
+          "version": "latest",
+          "offer": "WindowsServer"
+        },
+        "dataDisks": [
+          {
+            "name": "Work02-DbVM01-DataDisk01",
+            "createOption": "Attach",
+            "deleteOption": "Detach",
+            "diskSizeGB": 16,
+            "managedDisk": {
+              "id": "/subscriptions/656fc812-2dc4-4124-978c-6c3d70c63ca4/resourceGroups/Work02-Southeast-Work-RG/providers/Microsoft.Compute/disks/work02-dbvm01-datadisk01",
+              "storageAccountType": "StandardSSD_LRS"
+            },
+            "caching": "ReadOnly",
+            "toBeDetached": false,
+            "lun": 0,
+            "writeAcceleratorEnabled": false
+          }
+        ],
+        "osDisk": {
+          "name": "Work02-DbVM01_OsDisk_1_a2a6abe2d145467185a4c7a27a924d9f",
+          "createOption": "FromImage",
+          "deleteOption": "Delete",
+          "diskSizeGB": 127,
+          "managedDisk": {
+            "id": "/subscriptions/656fc812-2dc4-4124-978c-6c3d70c63ca4/resourceGroups/WORK02-SOUTHEAST-WORK-RG/providers/Microsoft.Compute/disks/Work02-DbVM01_OsDisk_1_a2a6abe2d145467185a4c7a27a924d9f",
+            "storageAccountType": "StandardSSD_LRS"
+          },
+          "osType": "Windows",
+          "caching": "ReadWrite"
+        },
+        "diskControllerType": "NVMe"
+      },
+      "networkProfile": {
+        "networkInterfaces": [
+          {
+            "properties": {
+              "deleteOption": "Delete"
+            },
+            "id": "/subscriptions/656fc812-2dc4-4124-978c-6c3d70c63ca4/resourceGroups/Work02-Southeast-Work-RG/providers/Microsoft.Network/networkInterfaces/work02-dbvm01623"
+          }
+        ]
+      },
+      "hardwareProfile": {
+        "vmSize": "Standard_D2s_v6"
+      },
+      "extended": {
+        "instanceView": {
+          "hyperVGeneration": "V2",
+          "computerName": "Work02-DbVM01",
+          "powerState": {
+            "displayStatus": "VM running",
+            "level": "Info",
+            "code": "PowerState/running"
+          },
+          "osVersion": "10.0.26100.4662",
+          "osName": "Windows Server 2025 Datacenter Azure Edition"
+        }
+      },
+      "securityProfile": {
+        "securityType": "TrustedLaunch",
+        "uefiSettings": {
+          "secureBootEnabled": true,
+          "vTpmEnabled": true
+        }
+      },
+      "osProfile": {
+        "requireGuestProvisionSignal": true,
+        "allowExtensionOperations": true,
+        "computerName": "Work02-DbVM01",
+        "adminUsername": "ssano",
+        "secrets": [],
+        "windowsConfiguration": {
+          "provisionVMAgent": true,
+          "patchSettings": {
+            "assessmentMode": "ImageDefault",
+            "patchMode": "AutomaticByPlatform",
+            "automaticByPlatformSettings": {
+              "rebootSetting": "IfRequired"
+            },
+            "enableHotpatching": true
+          },
+          "enableAutomaticUpdates": true,
+          "enableVMAgentPlatformUpdates": true
+        }
+      },
+      "vmId": "e2395d80-7462-4cce-9c50-e93fd43cac2b",
+      "billingProfile": {
+        "maxPrice": -1.0
+      },
+      "evictionPolicy": "Deallocate",
+      "diagnosticsProfile": {
+        "bootDiagnostics": {
+          "enabled": true
+        }
+      },
+      "additionalCapabilities": {
+        "hibernationEnabled": false
+      }
+    },
+    "tags": null,
+    "identity": null,
+    "zones": null,
+    "extendedLocation": null
+  },
+  {
+    "id": "/subscriptions/6e054861-6086-4cb9-9ebb-3ee2ad50a04f/resourceGroups/hub-southeast-work-rg/providers/Microsoft.Compute/virtualMachines/Hub-AddcVM01",
+    "name": "Hub-AddcVM01",
+    "type": "microsoft.compute/virtualmachines",
+    "tenantId": "b21220c9-8507-4fc3-b7f4-8d4c63265d26",
+    "kind": "",
+    "location": "southeastasia",
+    "resourceGroup": "hub-southeast-work-rg",
+    "subscriptionId": "6e054861-6086-4cb9-9ebb-3ee2ad50a04f",
+    "managedBy": "",
+    "sku": null,
+    "plan": null,
+    "properties": {
+      "provisioningState": "Succeeded",
+      "priority": "Spot",
+      "timeCreated": "2024-07-19T07:58:34.9522766Z",
+      "securityProfile": {
+        "securityType": "TrustedLaunch",
+        "uefiSettings": {
+          "secureBootEnabled": true,
+          "vTpmEnabled": true
+        }
+      },
+      "storageProfile": {
+        "imageReference": {
+          "publisher": "MicrosoftWindowsServer",
+          "exactVersion": "20348.2582.240703",
+          "version": "latest",
+          "sku": "2022-datacenter-azure-edition-hotpatch",
+          "offer": "WindowsServer"
+        },
+        "diskControllerType": "SCSI",
+        "dataDisks": [],
+        "osDisk": {
+          "name": "Hub-AddcVM01_OsDisk_1_b5ddb16ed9df4e3f8d2546a3d906ff6b",
+          "createOption": "FromImage",
+          "diskSizeGB": 127,
+          "osType": "Windows",
+          "deleteOption": "Delete",
+          "managedDisk": {
+            "id": "/subscriptions/6e054861-6086-4cb9-9ebb-3ee2ad50a04f/resourceGroups/HUB-SOUTHEAST-WORK-RG/providers/Microsoft.Compute/disks/Hub-AddcVM01_OsDisk_1_b5ddb16ed9df4e3f8d2546a3d906ff6b",
+            "storageAccountType": "StandardSSD_LRS"
+          },
+          "caching": "ReadWrite"
+        }
+      },
+      "networkProfile": {
+        "networkInterfaces": [
+          {
+            "properties": {
+              "deleteOption": "Delete"
+            },
+            "id": "/subscriptions/6e054861-6086-4cb9-9ebb-3ee2ad50a04f/resourceGroups/Hub-Southeast-Work-RG/providers/Microsoft.Network/networkInterfaces/hub-addcvm0170"
+          }
+        ]
+      },
+      "hardwareProfile": {
+        "vmSize": "Standard_E2ds_v5"
+      },
+      "osProfile": {
+        "requireGuestProvisionSignal": true,
+        "allowExtensionOperations": true,
+        "computerName": "Hub-AddcVM01",
+        "secrets": [],
+        "adminUsername": "ssano",
+        "windowsConfiguration": {
+          "provisionVMAgent": true,
+          "patchSettings": {
+            "assessmentMode": "AutomaticByPlatform",
+            "patchMode": "AutomaticByPlatform",
+            "automaticByPlatformSettings": {
+              "bypassPlatformSafetyChecksOnUserSchedule": false,
+              "rebootSetting": "IfRequired"
+            },
+            "enableHotpatching": true
+          },
+          "enableAutomaticUpdates": true
+        }
+      },
+      "diagnosticsProfile": {
+        "bootDiagnostics": {
+          "enabled": true
+        }
+      },
+      "extended": {
+        "instanceView": {
+          "hyperVGeneration": "V2",
+          "computerName": "Hub-AddcVM01",
+          "powerState": {
+            "displayStatus": "VM running",
+            "level": "Info",
+            "code": "PowerState/running"
+          },
+          "osVersion": "10.0.20348.3932",
+          "osName": "Windows Server 2022 Datacenter Azure Edition"
+        }
+      },
+      "additionalCapabilities": {
+        "hibernationEnabled": false
+      },
+      "vmId": "736da850-5a3e-4402-bf13-1b5911cd0d7e",
+      "billingProfile": {
+        "maxPrice": -1.0
+      },
+      "evictionPolicy": "Deallocate"
+    },
+    "tags": {
+      "ServerType": "\u30c9\u30e1\u30a4\u30f3\u30b3\u30f3\u30c8\u30ed\u30fc\u30e9"
+    },
+    "identity": {
+      "principalId": "76b45d27-f7eb-41e1-8c73-6b5f2c8d0a03",
+      "tenantId": "b21220c9-8507-4fc3-b7f4-8d4c63265d26",
+      "type": "SystemAssigned"
+    },
+    "zones": null,
+    "extendedLocation": null
+  },
+  {
+    "id": "/subscriptions/6e054861-6086-4cb9-9ebb-3ee2ad50a04f/resourceGroups/hub-southeast-work-rg/providers/Microsoft.Compute/virtualMachines/Hub-WorkVM01",
+    "name": "Hub-WorkVM01",
+    "type": "microsoft.compute/virtualmachines",
+    "tenantId": "b21220c9-8507-4fc3-b7f4-8d4c63265d26",
+    "kind": "",
+    "location": "southeastasia",
+    "resourceGroup": "hub-southeast-work-rg",
+    "subscriptionId": "6e054861-6086-4cb9-9ebb-3ee2ad50a04f",
+    "managedBy": "",
+    "sku": null,
+    "plan": null,
+    "properties": {
+      "provisioningState": "Succeeded",
+      "priority": "Spot",
+      "timeCreated": "2025-03-25T08:05:36.396Z",
+      "networkProfile": {
+        "networkInterfaces": [
+          {
+            "properties": {
+              "deleteOption": "Delete"
+            },
+            "id": "/subscriptions/6e054861-6086-4cb9-9ebb-3ee2ad50a04f/resourceGroups/Hub-Southeast-Work-RG/providers/Microsoft.Network/networkInterfaces/hub-workvm01121"
+          }
+        ]
+      },
+      "storageProfile": {
+        "dataDisks": [],
+        "osDisk": {
+          "name": "Hub-WorkVM01_OsDisk_1_ef2aefba208d485a82dc7644333bd896",
+          "createOption": "Attach",
+          "diskSizeGB": 127,
+          "deleteOption": "Detach",
+          "managedDisk": {
+            "id": "/subscriptions/6e054861-6086-4cb9-9ebb-3ee2ad50a04f/resourceGroups/HUB-SOUTHEAST-WORK-RG/providers/Microsoft.Compute/disks/Hub-WorkVM01_OsDisk_1_ef2aefba208d485a82dc7644333bd896",
+            "storageAccountType": "StandardSSD_LRS"
+          },
+          "caching": "ReadWrite",
+          "osType": "Windows"
+        },
+        "diskControllerType": "NVMe"
+      },
+      "hardwareProfile": {
+        "vmSize": "Standard_E2ds_v6"
+      },
+      "securityProfile": {
+        "securityType": "TrustedLaunch",
+        "uefiSettings": {
+          "secureBootEnabled": true,
+          "vTpmEnabled": true
+        }
+      },
+      "extended": {
+        "instanceView": {
+          "hyperVGeneration": "V2",
+          "computerName": "Hub-WorkVM01",
+          "powerState": {
+            "displayStatus": "VM running",
+            "level": "Info",
+            "code": "PowerState/running"
+          },
+          "osVersion": "10.0.20348.3453",
+          "osName": "Windows Server 2022 Datacenter Azure Edition"
+        }
+      },
+      "osProfile": {
+        "windowsConfiguration": {
+          "patchSettings": {
+            "assessmentMode": "AutomaticByPlatform",
+            "patchMode": "Manual"
+          }
+        }
+      },
+      "diagnosticsProfile": {
+        "bootDiagnostics": {
+          "enabled": true
+        }
+      },
+      "vmId": "abd8be79-1ed3-4d9f-9544-29d065233050",
+      "additionalCapabilities": {
+        "hibernationEnabled": false
+      },
+      "licenseType": "None",
+      "billingProfile": {
+        "maxPrice": -1.0
+      },
+      "evictionPolicy": "Deallocate"
+    },
+    "tags": {},
+    "identity": {
+      "principalId": "ee9eb355-96af-4adb-9889-9a5e16d7f31f",
+      "type": "SystemAssigned",
+      "tenantId": "b21220c9-8507-4fc3-b7f4-8d4c63265d26"
+    },
+    "zones": null,
+    "extendedLocation": null
+  },
+  {
+    "id": "/subscriptions/6e054861-6086-4cb9-9ebb-3ee2ad50a04f/resourceGroups/Hub-Southeast-Work-RG/providers/Microsoft.Compute/virtualMachines/Hub-WorkVM02",
+    "name": "Hub-WorkVM02",
+    "type": "microsoft.compute/virtualmachines",
+    "tenantId": "b21220c9-8507-4fc3-b7f4-8d4c63265d26",
+    "kind": "",
+    "location": "southeastasia",
+    "resourceGroup": "hub-southeast-work-rg",
+    "subscriptionId": "6e054861-6086-4cb9-9ebb-3ee2ad50a04f",
+    "managedBy": "",
+    "sku": null,
+    "plan": null,
+    "properties": {
+      "provisioningState": "Succeeded",
+      "priority": "Spot",
+      "timeCreated": "2025-04-21T10:55:48.5978044Z",
+      "securityProfile": {
+        "securityType": "TrustedLaunch",
+        "uefiSettings": {
+          "secureBootEnabled": true,
+          "vTpmEnabled": true
+        }
+      },
+      "storageProfile": {
+        "imageReference": {
+          "publisher": "MicrosoftWindowsServer",
+          "exactVersion": "26100.3775.250406",
+          "version": "latest",
+          "sku": "2025-datacenter-azure-edition",
+          "offer": "WindowsServer"
+        },
+        "diskControllerType": "NVMe",
+        "dataDisks": [],
+        "osDisk": {
+          "name": "Hub-WorkVM02_OsDisk_1_d82397b38808489e8a2cc1f91fc704d4",
+          "createOption": "FromImage",
+          "diskSizeGB": 127,
+          "osType": "Windows",
+          "deleteOption": "Delete",
+          "managedDisk": {
+            "id": "/subscriptions/6e054861-6086-4cb9-9ebb-3ee2ad50a04f/resourceGroups/HUB-SOUTHEAST-WORK-RG/providers/Microsoft.Compute/disks/Hub-WorkVM02_OsDisk_1_d82397b38808489e8a2cc1f91fc704d4",
+            "storageAccountType": "StandardSSD_LRS"
+          },
+          "caching": "ReadWrite"
+        }
+      },
+      "networkProfile": {
+        "networkInterfaces": [
+          {
+            "properties": {
+              "deleteOption": "Delete"
+            },
+            "id": "/subscriptions/6e054861-6086-4cb9-9ebb-3ee2ad50a04f/resourceGroups/Hub-Southeast-Work-RG/providers/Microsoft.Network/networkInterfaces/hub-workvm0292"
+          }
+        ]
+      },
+      "hardwareProfile": {
+        "vmSize": "Standard_E2s_v6"
+      },
+      "osProfile": {
+        "requireGuestProvisionSignal": true,
+        "allowExtensionOperations": true,
+        "computerName": "Hub-WorkVM02",
+        "secrets": [],
+        "adminUsername": "ssano",
+        "windowsConfiguration": {
+          "provisionVMAgent": true,
+          "patchSettings": {
+            "assessmentMode": "AutomaticByPlatform",
+            "patchMode": "AutomaticByPlatform",
+            "automaticByPlatformSettings": {
+              "rebootSetting": "IfRequired"
+            },
+            "enableHotpatching": true
+          },
+          "enableAutomaticUpdates": true,
+          "enableVMAgentPlatformUpdates": false
+        }
+      },
+      "diagnosticsProfile": {
+        "bootDiagnostics": {
+          "enabled": true
+        }
+      },
+      "extended": {
+        "instanceView": {
+          "hyperVGeneration": "V2",
+          "computerName": "Hub-WorkVM02",
+          "powerState": {
+            "displayStatus": "VM running",
+            "level": "Info",
+            "code": "PowerState/running"
+          },
+          "osVersion": "10.0.26100.4270",
+          "osName": "Windows Server 2025 Datacenter Azure Edition"
+        }
+      },
+      "additionalCapabilities": {
+        "hibernationEnabled": false
+      },
+      "vmId": "436de972-e165-481d-b913-ccdef13ab3ce",
+      "billingProfile": {
+        "maxPrice": -1.0
+      },
+      "evictionPolicy": "Deallocate"
+    },
+    "tags": {
+      "ServerType": "\u30aa\u30da\u30ec\u30fc\u30b7\u30e7\u30f3\u7528"
+    },
+    "identity": {
+      "principalId": "73da40df-222e-48f0-83d9-7eff082e574e",
+      "tenantId": "b21220c9-8507-4fc3-b7f4-8d4c63265d26",
+      "type": "SystemAssigned"
+    },
+    "zones": null,
+    "extendedLocation": null
+  },
+  {
+    "id": "/subscriptions/6e054861-6086-4cb9-9ebb-3ee2ad50a04f/resourceGroups/mgmt-southeast-mgmt-rg/providers/Microsoft.Compute/virtualMachines/Hub-SlogVM01",
+    "name": "Hub-SlogVM01",
+    "type": "microsoft.compute/virtualmachines",
+    "tenantId": "b21220c9-8507-4fc3-b7f4-8d4c63265d26",
+    "kind": "",
+    "location": "southeastasia",
+    "resourceGroup": "mgmt-southeast-mgmt-rg",
+    "subscriptionId": "6e054861-6086-4cb9-9ebb-3ee2ad50a04f",
+    "managedBy": "",
+    "sku": null,
+    "plan": null,
+    "properties": {
+      "provisioningState": "Succeeded",
+      "priority": "Spot",
+      "timeCreated": "2024-11-21T04:03:54.213Z",
+      "hardwareProfile": {
+        "vmSize": "Standard_D2as_v5"
+      },
+      "storageProfile": {
+        "imageReference": {
+          "exactVersion": "9.4.2024081415",
+          "publisher": "RedHat",
+          "version": "latest",
+          "sku": "94_gen2",
+          "offer": "RHEL"
+        },
+        "dataDisks": [
+          {
+            "name": "Hub-SlogVM01_DataDisk_0",
+            "createOption": "Attach",
+            "deleteOption": "Detach",
+            "diskSizeGB": 32,
+            "managedDisk": {
+              "id": "/subscriptions/6e054861-6086-4cb9-9ebb-3ee2ad50a04f/resourceGroups/Mgmt-Southeast-Mgmt-RG/providers/Microsoft.Compute/disks/Hub-SlogVM01_DataDisk_0",
+              "storageAccountType": "StandardSSD_LRS"
+            },
+            "caching": "ReadOnly",
+            "toBeDetached": false,
+            "lun": 0,
+            "writeAcceleratorEnabled": false
+          }
+        ],
+        "osDisk": {
+          "name": "Hub-SlogVM01_OsDisk_1_34609d2f6e92435290e1ad26790f566e",
+          "createOption": "FromImage",
+          "deleteOption": "Delete",
+          "diskSizeGB": 64,
+          "managedDisk": {
+            "id": "/subscriptions/6e054861-6086-4cb9-9ebb-3ee2ad50a04f/resourceGroups/MGMT-SOUTHEAST-MGMT-RG/providers/Microsoft.Compute/disks/Hub-SlogVM01_OsDisk_1_34609d2f6e92435290e1ad26790f566e",
+            "storageAccountType": "StandardSSD_LRS"
+          },
+          "caching": "ReadWrite",
+          "osType": "Linux"
+        },
+        "diskControllerType": "SCSI"
+      },
+      "networkProfile": {
+        "networkInterfaces": [
+          {
+            "properties": {
+              "deleteOption": "Delete"
+            },
+            "id": "/subscriptions/6e054861-6086-4cb9-9ebb-3ee2ad50a04f/resourceGroups/Mgmt-Southeast-Mgmt-RG/providers/Microsoft.Network/networkInterfaces/hub-slogvm01619"
+          }
+        ]
+      },
+      "securityProfile": {
+        "securityType": "TrustedLaunch",
+        "uefiSettings": {
+          "secureBootEnabled": true,
+          "vTpmEnabled": true
+        }
+      },
+      "extended": {
+        "instanceView": {
+          "hyperVGeneration": "V2",
+          "computerName": "Hub-SlogVM01",
+          "powerState": {
+            "displayStatus": "VM running",
+            "level": "Info",
+            "code": "PowerState/running"
+          },
+          "osVersion": "9.5",
+          "osName": "rhel"
+        }
+      },
+      "osProfile": {
+        "requireGuestProvisionSignal": true,
+        "allowExtensionOperations": true,
+        "computerName": "Hub-SlogVM01",
+        "linuxConfiguration": {
+          "disablePasswordAuthentication": false,
+          "provisionVMAgent": true,
+          "patchSettings": {
+            "assessmentMode": "AutomaticByPlatform",
+            "patchMode": "AutomaticByPlatform",
+            "automaticByPlatformSettings": {
+              "bypassPlatformSafetyChecksOnUserSchedule": true
+            }
+          }
+        },
+        "adminUsername": "ssano",
+        "secrets": []
+      },
+      "vmId": "f98ae853-6747-4f1b-ba8d-ce4ce5684172",
+      "diagnosticsProfile": {
+        "bootDiagnostics": {
+          "enabled": true
+        }
+      },
+      "billingProfile": {
+        "maxPrice": -1.0
+      },
+      "evictionPolicy": "Deallocate",
+      "additionalCapabilities": {
+        "hibernationEnabled": false
+      }
+    },
+    "tags": {
+      "ServerType": "Syslog\u30b5\u30fc\u30d0\u30fc"
+    },
+    "identity": {
+      "principalId": "24f95d2e-b8af-462f-8826-84754e55810a",
+      "type": "SystemAssigned",
+      "tenantId": "b21220c9-8507-4fc3-b7f4-8d4c63265d26"
+    },
+    "zones": null,
+    "extendedLocation": null
+  }
+]
