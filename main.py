@@ -10,6 +10,7 @@ from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 
 from app.models.chat_models import ChatRequest
+from app.services.decide_tool import decide_tool
 
 # Configure logging
 logging.basicConfig(
@@ -17,9 +18,6 @@ logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
 )
 logger = logging.getLogger(__name__)
-
-# Import the RAG chat service after logging to capture any initialization logs
-from app.services.decide_tool import decide_tool
 
 # Create FastAPI app
 app = FastAPI(

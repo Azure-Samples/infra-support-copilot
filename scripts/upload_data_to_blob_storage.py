@@ -1,16 +1,16 @@
 import os
+import hashlib
 from dotenv import load_dotenv
 from azure.storage.blob import BlobServiceClient
 from azure.identity import DefaultAzureCredential
 
 load_dotenv()
 
-STORAGE_ACCOUNT_URL = "https://" + os.getenv("AZURE_STORAGE_ACCOUNT_NAME") + ".blob.core.windows.net"
+storage_account_name = os.getenv("AZURE_STORAGE_ACCOUNT_NAME", "")
+STORAGE_ACCOUNT_URL = f"https://{storage_account_name}.blob.core.windows.net" if storage_account_name else ""
 CREDENTIAL = DefaultAzureCredential()
 
 blob_service_client = BlobServiceClient(account_url=STORAGE_ACCOUNT_URL, credential=CREDENTIAL)
-
-import hashlib
 
 container = "inventories"
 doc = "Sample_Server_Inventories.json"

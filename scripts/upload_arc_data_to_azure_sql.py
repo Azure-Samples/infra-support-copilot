@@ -297,11 +297,11 @@ def main() -> None:
 		sw_rows = load_json_array(SW_FILE)
 
 		total_vm = upsert_virtual_machines(cursor, vm_rows)
-		print(f"Virtual Machine Data Uploaded.")
+		print("Virtual Machine Data Uploaded.")
 		total_nic = upsert_network_interfaces(cursor, nic_rows)
-		print(f"Network Interface Data Uploaded.")
+		print("Network Interface Data Uploaded.")
 		total_sw = insert_installed_software(cursor, sw_rows)
-		print(f"Installed Software Data Uploaded.")
+		print("Installed Software Data Uploaded.")
 		conn.commit()
 
 	print("Import complete:")

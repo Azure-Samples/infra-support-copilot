@@ -1,7 +1,6 @@
 """SQL Query Service
 """
 import logging
-import os
 import asyncio
 import struct
 from typing import List, Any, Dict
@@ -191,7 +190,7 @@ class SQLQueryService:
         lines = [" | ".join(cols)]
         for r in rows:
             lines.append(" | ".join(str(r.get(c, "")) for c in cols))
-            if sum(len(l) for l in lines) > max_chars:
+            if sum(len(line) for line in lines) > max_chars:
                 lines.append("... (truncated) ...")
                 break
         return "\n".join(lines)
@@ -207,7 +206,7 @@ class SQLQueryService:
             rows = await self._execute_sql(sql)
             sources = self._rows_to_sources(rows)
 
-            return [{"title": f"SQL Query", "content": f"SQL Query:\n{sql}\n\nResults:\n{sources}"}]
+            return [{"title": "SQL Query", "content": f"SQL Query:\n{sql}\n\nResults:\n{sources}"}]
         except Exception as e:
             logger.error(f"Error in get_chat_completion: {e}")
             raise

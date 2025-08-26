@@ -1,14 +1,15 @@
 import os
 from dotenv import load_dotenv
-import requests
+import requests  # type: ignore[import-untyped]
 from azure.search.documents.indexes import SearchIndexClient, SearchIndexerClient
-from azure.search.documents.indexes.models import SearchIndexer
+from azure.search.documents.indexes.models import SearchIndexer, FieldMapping
 from azure.core.exceptions import ResourceExistsError
 from azure.identity import DefaultAzureCredential
 
 load_dotenv()
 
-search_service_endpoint = "https://" + os.getenv("AZURE_SEARCH_SERVICE_NAME") + ".search.windows.net"
+search_service_name = os.getenv("AZURE_SEARCH_SERVICE_NAME", "")
+search_service_endpoint = f"https://{search_service_name}.search.windows.net" if search_service_name else ""
 
 storage_account_name = os.getenv("AZURE_STORAGE_ACCOUNT_NAME")
 storage_account_resource_id = os.getenv("AZURE_STORAGE_ACCOUNT_RESOURCE_ID") 
@@ -190,10 +191,10 @@ for container in containers:
             data_source_name=data_source_name,
             target_index_name=index_name,
             field_mappings=[
-                {"sourceFieldName": "metadata_storage_name", "targetFieldName": "metadata_storage_name"},
-                {"sourceFieldName": "metadata_storage_path", "targetFieldName": "metadata_storage_path"},
-                {"sourceFieldName": "docid", "targetFieldName": "docid"},
-                {"sourceFieldName": "content", "targetFieldName": "content"},
+                FieldMapping(source_field_name="metadata_storage_name", target_field_name="metadata_storage_name"),
+                FieldMapping(source_field_name="metadata_storage_path", target_field_name="metadata_storage_path"),
+                FieldMapping(source_field_name="docid", target_field_name="docid"),
+                FieldMapping(source_field_name="content", target_field_name="content"),
             ]
         )
         indexer_client.create_indexer(indexer)
