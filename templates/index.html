@@ -77,11 +77,126 @@
             max-height: 400px;
             overflow-y: auto;
         }
+
+        /* Prompt suggestion layout */
+        :root {
+            --prompt-width: 360px;
+            --prompt-height: 56px;
+        }
+        /* Center prompt block on screen (both axes) */
+        #prompt-suggestion {
+            min-height: 90vh; 
+            display: flex;
+            flex-direction: column; /* stack title over grid */
+            align-items: center;
+            justify-content: center;
+        }
+        #prompt-suggestion .prompt-grid {
+            display: grid;
+            grid-template-columns: 1fr; /* mobile: single column */
+            gap: 0.5rem;
+            justify-content: center; /* center grid within container */
+            justify-items: stretch;   /* buttons stretch in column */
+        }
+        #prompt-suggestion .prompt-btn {
+            height: var(--prompt-height);
+            width: 100%;
+            max-width: var(--prompt-width); /* fixed width cap */
+            border-radius: 12px;
+            white-space: normal; /* allow wrapping text */
+            display: inline-flex;
+            align-items: center;
+        }
+        /* Desktop (lg and up): 2x2 centered grid with fixed button width */
+        @media (min-width: 992px) {
+            #prompt-suggestion .prompt-grid {
+                grid-template-columns: repeat(2, var(--prompt-width));
+                gap: 0.75rem 1rem;
+                justify-items: center; /* center each cell */
+            }
+            #prompt-suggestion .prompt-btn {
+                width: var(--prompt-width);
+            }
+        }
+
+        /* Prompt button theming: border and hover background */
+        #prompt-suggestion .prompt-btn {
+            border-color: #b783fa !important;
+            color: var(--bs-secondary) !important; /* keep same text color as outline-secondary */
+            background-color: #fff; /* default white background */
+            transition: background-color 0.15s ease, border-color 0.15s ease;
+        }
+        #prompt-suggestion .prompt-btn:hover,
+        #prompt-suggestion .prompt-btn:focus,
+        #prompt-suggestion .prompt-btn:active,
+        #prompt-suggestion .prompt-btn.active {
+            background-color: #b783fa !important;
+            border-color: #b783fa !important;
+            color: #000 !important; /* do not change text color on hover */
+        }
+
+        /* Prompt title responsive alignment */
+        #prompt-suggestion .prompt-title {
+            color: #6c757d;
+            text-align: center; /* mobile center */
+            margin: 0 0 0.75rem 0;
+            width: 100%;
+            max-width: var(--prompt-width);
+        }
+        @media (min-width: 992px) {
+            #prompt-suggestion .prompt-title {
+                /* match grid width: two columns + 1rem column gap */
+                width: calc(var(--prompt-width) * 2 + 1rem);
+                max-width: none;
+                margin: 0 0 0.75rem 0;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="d-flex flex-column vh-100 w-100">        
         <div class="flex-grow-1 overflow-auto bg-light w-100 px-3" id="chat-container" style="scroll-behavior: smooth;">
+            <div id="prompt-suggestion" class="d-flex justify-content-center">
+                <h3 class="prompt-title">Hello! How can I help you?</h3>
+                <div class="prompt-grid">
+                    <button
+                        type="button"
+                        id="btn-srv001-inquiry"
+                        class="btn btn-outline-secondary text-start prompt-btn"
+                        data-text="Where should I direct inquiries regarding SRV001?"
+                        aria-label="Where should I direct inquiries regarding SRV001?"
+                    >
+                        Where should I direct inquiries regarding SRV001?
+                    </button>
+                    <button
+                        type="button"
+                        id="btn-srv003-incidents"
+                        class="btn btn-outline-secondary text-start prompt-btn"
+                        data-text="Could you provide information about past incidents related to SRV003?"
+                        aria-label="Could you provide information about past incidents related to SRV003?"
+                    >
+                        Could you provide information about past incidents related to SRV003?
+                    </button>
+                    <button
+                        type="button"
+                        id="btn-list-resources"
+                        class="btn btn-outline-secondary text-start prompt-btn"
+                        data-text="Please enumerate all resources grouped by resource group."
+                        aria-label="Please enumerate all resources grouped by resource group."
+                    >
+                        Please enumerate all resources grouped by resource group.
+                    </button>
+                    <button
+                        type="button"
+                        id="btn-count-vms"
+                        class="btn btn-outline-secondary text-start prompt-btn"
+                        data-text="How many virtual machines are there in total?"
+                        aria-label="How many virtual machines are there in total?"
+                    >
+                        How many virtual machines are there in total?
+                    </button>
+                </div>
+            </div>
             <div id="chat-history" class="mt-4"></div>
             <div id="loading-indicator" class="d-none">
                 <div class="d-flex mb-4">
@@ -111,11 +226,11 @@
             
             <form id="chat-form">
                 <div class="input-group rounded-pill overflow-hidden py-2">
-                    <div style="border: 2px solid #000; border-radius: 2rem; width: calc(100% - 60px); display: flex; align-items: center; background: #fff;">
+                    <div style="border: 1px solid #6c757d; border-radius: 2rem; width: calc(100% - 60px); display: flex; align-items: center; background: #fff;">
                         <input type="text" class="form-control border-0 py-2" 
                             id="chat-input" 
                             placeholder="Type your message..." 
-                            style="border-top-left-radius: 50rem; border-bottom-left-radius: 50rem; box-shadow: none; outline: none; background: transparent;" />
+                            style="color: var(--bs-secondary); border-top-left-radius: 50rem; border-bottom-left-radius: 50rem; box-shadow: none; outline: none; background: transparent;" />
                     </div>
                     <button class="btn btn-link p-0" type="submit" id="send-button" style="border: none; background: none; margin-left: 10px;">
                         <span style="display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: #b783fa; border-radius: 50%;">

@@ -204,14 +204,10 @@ class SQLQueryService:
                 logger.warning(f"Unsafe SQL blocked: {sql}")
                 sql = f"SELECT TOP {self._default_row_limit} name, location, vm_size, power_state FROM dbo.virtual_machines ORDER BY name;"  # safe fallback
 
-            logger.info(f"Executing SQL: {sql}")
             rows = await self._execute_sql(sql)
             sources = self._rows_to_sources(rows)
 
-            logger.info(f"SQL query executed successfully: {sql}")
-            logger.info(f"SQL query results: {sources}")
-
-            return sources
+            return [{"title": f"SQL Query", "content": f"SQL Query:\n{sql}\n\nResults:\n{sources}"}]
         except Exception as e:
             logger.error(f"Error in get_chat_completion: {e}")
             raise

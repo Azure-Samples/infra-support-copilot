@@ -89,7 +89,7 @@ class DecideTool:
             condensed = last_user_query
         return condensed, last_user_query
 
-    async def _select_tools(self, condensed_query: str) -> Tuple[bool, bool, bool]:
+    async def _select_tools(self, condensed_query: str) -> Tuple[bool, bool]:
         """Use LLM to decide which tools should be used based on the condensed query."""
         import json
         index_selection_prompt = (
@@ -124,17 +124,17 @@ class DecideTool:
 
             search_rag, search_sql = await self._select_tools(effective_query)
 
-            sources_parts: List[str] = []
+            sources_parts: List[dict] = []
 
-            def _accumulate(name: str, source: str):
-                sources_parts.append(f"--- {name} ---\n" + source)
+            def _accumulate(source: List[dict]):
+                sources_parts.extend(source)
 
             # Query RAG
             if search_rag:
                 try:
                     logger.debug("RAG")
                     response_rag = await rag_chat_service.get_chat_completion(effective_query)
-                    _accumulate("RAG", response_rag.choices[0].message.content)
+                    _accumulate(response_rag)
                 except Exception as se:
                     logger.error(f"Search query failed for RAG: {se}")
             # Query SQL database
@@ -142,13 +142,12 @@ class DecideTool:
                 try:
                     logger.debug("Querying SQL database")
                     sql_results = await sql_query_service.get_chat_completion(effective_query)
-                    _accumulate("SQL", sql_results)
+                    _accumulate(sql_results)
                 except Exception as se:
                     logger.error(f"Search query failed for SQL database: {se}")
 
-            sources = "\n\n".join(sources_parts)
-
-            logger.info(f"Combined sources for final query:\n{sources}")
+            # Combine sources into a single string for the system prompt
+            sources = "\n\n".join(f"{src['title']}:\n{src['content']}" for src in sources_parts)
 
             # Final answer request
             final_content = self.system_prompt.format(
@@ -156,12 +155,35 @@ class DecideTool:
                 sources=sources
             )
 
-            response = await self.openai_client.chat.completions.create(
+            chat_resp = await self.openai_client.chat.completions.create(
                 messages=[{"role": "user", "content": final_content}],
                 model=self.gpt_deployment
             )
 
-            return response
+            # Extract assistant content from SDK object
+            base_content = chat_resp.choices[0].message.content if chat_resp.choices and chat_resp.choices[0].message else ""
+
+            # Build references section (1-based indexing for [docN])
+            references_suffix = ""
+            if sources_parts:
+                refs = "".join(f"[doc{idx+1}]" for idx in range(len(sources_parts)))
+                references_suffix = f"\n\nReferences: {refs}"
+
+            # Build citations array expected by the frontend (title/filePath/url optional)
+            citations = [{"title": s['title'], "content": s['content']} for s in sources_parts]
+
+            # Return a plain JSON-serializable structure used by the UI
+            return {
+                "choices": [
+                    {
+                        "message": {
+                            "role": "assistant",
+                            "content": f"{base_content}{references_suffix}",
+                            "context": {"citations": citations}
+                        }
+                    }
+                ]
+            }
         except Exception as e:
             if hasattr(e, 'status_code'):
                 logger.error(f"Error in get_chat_completion (status {getattr(e, 'status_code', 'n/a')}): {e}")

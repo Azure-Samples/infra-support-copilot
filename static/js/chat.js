@@ -23,22 +23,44 @@ document.addEventListener('DOMContentLoaded', function() {
     const loadingIndicator = document.getElementById('loading-indicator');
     const errorContainer = document.getElementById('error-container');
     const errorMessage = document.getElementById('error-message');
-    
+    const promptSuggestionContainer = document.getElementById('prompt-suggestion');
 
-    
     // Quick response buttons
     const btnPersonalInfo = document.getElementById('btn-personal-info');
     const btnWarranty = document.getElementById('btn-warranty');
     const btnCompany = document.getElementById('btn-company');
-    
+    const promptButtons = document.querySelectorAll('#prompt-suggestion .prompt-btn');
+
     // Chat history array
     let messages = [];
-    
-
     
     // Event listeners
     chatForm.addEventListener('submit', handleChatSubmit);
     chatInput.addEventListener('keydown', handleKeyDown);
+
+    // Attach handlers for prompt buttons (fills input with fixed sentence)
+    if (promptButtons && promptButtons.length > 0) {
+        promptButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const text = btn.getAttribute('data-text') || btn.textContent.trim();
+                chatInput.value = text;
+                chatInput.focus();
+            });
+        });
+    }
+
+    // Hide prompt suggestions if history already has items (e.g., persisted state)
+    updatePromptSuggestionVisibility();
+
+    function updatePromptSuggestionVisibility() {
+        if (!promptSuggestionContainer) return;
+        const hasAnyMessage = chatHistory && chatHistory.children && chatHistory.children.length > 0;
+        if (hasAnyMessage) {
+            promptSuggestionContainer.classList.add('d-none');
+        } else {
+            promptSuggestionContainer.classList.remove('d-none');
+        }
+    }
 
     /**
      * Handles form submission when the user sends a message
@@ -119,6 +141,8 @@ document.addEventListener('DOMContentLoaded', function() {
         avatar.textContent = 'You';
         wrapper.appendChild(avatar);
         chatHistory.appendChild(wrapper);
+    // Update prompt suggestions visibility after first message
+    updatePromptSuggestionVisibility();
         scrollToBottom();
     }
     
@@ -206,6 +230,8 @@ document.addEventListener('DOMContentLoaded', function() {
         wrapper.appendChild(avatar);
         wrapper.appendChild(card);
         chatHistory.appendChild(wrapper);
+    // Ensure suggestions remain hidden once messages exist
+    updatePromptSuggestionVisibility();
         // Add click listeners for citation badges
         setTimeout(() => {
             const badges = messageContent.querySelectorAll('.badge[data-index]');
@@ -331,9 +357,8 @@ document.addEventListener('DOMContentLoaded', function() {
     function showLoading() {
         loadingIndicator.classList.remove('d-none');
         sendButton.disabled = true;
-        if (typeof btnPersonalInfo !== 'undefined' && btnPersonalInfo) btnPersonalInfo.disabled = true;
-        if (typeof btnWarranty !== 'undefined' && btnWarranty) btnWarranty.disabled = true;
-        if (typeof btnCompany !== 'undefined' && btnCompany) btnCompany.disabled = true;
+        // Disable all prompt buttons while loading
+        document.querySelectorAll('#prompt-suggestion .prompt-btn').forEach(btn => btn.disabled = true);
     }
     
     /**
@@ -342,9 +367,8 @@ document.addEventListener('DOMContentLoaded', function() {
     function hideLoading() {
         loadingIndicator.classList.add('d-none');
         sendButton.disabled = false;
-        if (typeof btnPersonalInfo !== 'undefined' && btnPersonalInfo) btnPersonalInfo.disabled = false;
-        if (typeof btnWarranty !== 'undefined' && btnWarranty) btnWarranty.disabled = false;
-        if (typeof btnCompany !== 'undefined' && btnCompany) btnCompany.disabled = false;
+        // Enable all prompt buttons after loading
+        document.querySelectorAll('#prompt-suggestion .prompt-btn').forEach(btn => btn.disabled = false);
     }
     
     /**

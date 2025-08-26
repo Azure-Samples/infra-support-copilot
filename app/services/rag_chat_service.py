@@ -60,7 +60,7 @@ class RagChatService:
 
         logger.info("RagChatService initialized with environment variables")
 
-    async def _select_indexes(self, condensed_query: str) -> Tuple[bool, bool, bool]:
+    async def _select_indexes(self, condensed_query: str) -> Tuple[bool, bool]:
         """Use LLM to decide which indexes to search based on the condensed query."""
         import json
         index_selection_prompt = (
@@ -92,13 +92,17 @@ class RagChatService:
         try:
             search_inventories, search_incidents = await self._select_indexes(effective_query)
 
-            sources_parts: List[str] = []
+            sources_parts: List[dict] = []
 
             def _accumulate(name: str, results):
-                docs = [doc.get("content", "") for doc in results]
-                trimmed = [d for d in docs if d]
-                if trimmed:
-                    sources_parts.append(f"--- {name} ---\n" + "\n".join(trimmed))
+                # Append each result as a separate citation element
+                for doc in results:
+                    content = doc.get("content", "")
+                    if content:
+                        sources_parts.append({
+                            "title": name,
+                            "content": content
+                        })
 
             # Query inventories
             if search_inventories:
@@ -109,7 +113,7 @@ class RagChatService:
                         top=1,
                         select="content"
                     )
-                    _accumulate("inventories", inv_results)
+                    _accumulate('Inventories', inv_results)
                 except Exception as se:
                     logger.error(f"Search query failed for inventories index: {se}")
             # Query incidents
@@ -121,35 +125,11 @@ class RagChatService:
                         top=top_k,
                         select="content"
                     )
-                    _accumulate("incidents", inc_results)
+                    _accumulate('Incident', inc_results)
                 except Exception as se:
                     logger.error(f"Search query failed for incidents index: {se}")
 
-            sources = "\n\n".join(sources_parts)
-
-            # Final answer request
-            final_content = self.system_prompt.format(
-                query=effective_query,
-                sources=sources
-            )
-
-            response = await self.openai_client.chat.completions.create(
-                messages=[{"role": "user", "content": final_content}],
-                model=self.gpt_deployment
-            )
-
-            # Optionally attach metadata for client (not modifying OpenAI response object structure deeply)
-            try:
-                response.metadata = {
-                    "condensed_query": effective_query,
-                    "indexes": {
-                        "inventories": search_inventories,
-                        "incidents": search_incidents
-                    }
-                }
-            except Exception:
-                pass
-            return response
+            return sources_parts
         except Exception as e:
             if hasattr(e, 'status_code'):
                 logger.error(f"Error in get_chat_completion (status {getattr(e, 'status_code', 'n/a')}): {e}")
