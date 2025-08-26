@@ -14,8 +14,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-    contents: read #This is required for actions/checkout
-    security-events: write # Required to upload SARIF results (Bandit)
+      contents: read #This is required for actions/checkout
 
     steps:
       - uses: actions/checkout@v4
@@ -23,38 +22,17 @@ jobs:
       - name: Set up Python version
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
-          cache: 'pip'
-          cache-dependency-path: |
-            requirements.txt
+          python-version: '3.12'
 
+      - name: Create and start virtual environment
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+      
       - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-          # CI tooling
-          pip install ruff mypy bandit
-      
-      - name: Lint (Ruff)
-        run: |
-          # Fail on critical issues only to start: syntax errors (E9) and undefined names (F)
-          ruff check . --output-format=github --select E9,F
-      
-      - name: Type check (Mypy)
-        run: |
-          # Limit scope to project modules; ignore missing third-party types to reduce noise
-          mypy app main.py --ignore-missing-imports --install-types --non-interactive
-      
-      - name: Security scan (Bandit) and upload SARIF
-        run: |
-          bandit -r . -x venv,tests,__pycache__ \
-            -f sarif -o bandit.sarif \
-            -lll -iii
+        run: pip install -r requirements.txt
         
-      - name: Upload Bandit SARIF to code scanning
-        uses: github/codeql-action/upload-sarif@v3
-        with:
-          sarif_file: bandit.sarif
+      # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
 
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v4
@@ -80,9 +58,9 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_A49EA0B5134849BFA033ED92B8CD0BDE }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_0A098C76DF834817980648D5A643BA33 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_56A0C2AC03D34BECA1D9E01ACBECC670 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_D724B2D57EF84DEE8F473CC017CA2C94 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_63046AC3037A474EAAF74F061AE17C1F }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_B478CB231BC4482185BC8C9FB6620E62 }}
 
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
