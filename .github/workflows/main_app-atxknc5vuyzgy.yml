@@ -32,7 +32,20 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
         
-      # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
+      - name: Install linters and type checkers
+        run: |
+          python -m pip install --upgrade pip
+          pip install ruff mypy
+
+      - name: Lint with Ruff
+        run: |
+          ruff version
+          ruff check . --exclude "venv,__pycache__,.git,.github,infra,docs,static,templates"
+
+      - name: Type check with mypy
+        run: |
+          mypy --version
+          mypy . --ignore-missing-imports --exclude "venv|__pycache__|.git|.github|infra|docs|static|templates"
 
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v4
