@@ -1,9 +1,9 @@
 import os
-import dotenv
+from dotenv import load_dotenv
 from azure.storage.blob import BlobServiceClient
 from azure.identity import DefaultAzureCredential
 
-dotenv.load_dotenv()
+load_dotenv()
 
 STORAGE_ACCOUNT_URL = "https://" + os.getenv("AZURE_STORAGE_ACCOUNT_NAME") + ".blob.core.windows.net"
 CREDENTIAL = DefaultAzureCredential()

@@ -1,12 +1,12 @@
 import os
-import dotenv
+from dotenv import load_dotenv
 import requests
 from azure.search.documents.indexes import SearchIndexClient, SearchIndexerClient
 from azure.search.documents.indexes.models import SearchIndexer
 from azure.core.exceptions import ResourceExistsError
 from azure.identity import DefaultAzureCredential
 
-dotenv.load_dotenv()
+load_dotenv()
 
 search_service_endpoint = "https://" + os.getenv("AZURE_SEARCH_SERVICE_NAME") + ".search.windows.net"
 

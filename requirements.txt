@@ -10,7 +10,6 @@ pydantic==2.11.4
 pydantic-settings==2.2.1
 rich==14.0.0
 azure-storage-blob==12.26.0
-dotenv==0.9.9
 azure-search-documents==11.5.3
 sqlalchemy==2.0.36
 pyodbc==5.2.0

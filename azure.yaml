@@ -1,6 +1,6 @@
-name: rag-multi-index
+name: infra-support-copilot
 metadata:
-  template: rag-multi-index@0.0.1
+  template: infra-support-copilot@0.0.1
 infra:
   path: ./infra
 services:
@@ -31,12 +31,12 @@ hooks:
   preprovision:
     windows:
       shell: pwsh
-      run: -NoProfile -ExecutionPolicy Bypass -File .\scripts\set_up_environment.ps1 -ForceSqlcmd
+      run: .\scripts\get_ip_address.ps1
       interactive: true
       continueOnError: false
   postprovision:
     windows:
       shell: pwsh
-      run: ./scripts/set_up_environment.ps1
+      run: pwsh -NoProfile -ExecutionPolicy Bypass -File .\scripts\set_up_environment.ps1 -ForceSqlcmd
       interactive: true
       continueOnError: false

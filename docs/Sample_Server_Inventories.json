@@ -44,4 +44,50 @@
     "owner_team": "Support",
     "description": "Legacy server for deprecated Customer Support Chatbot"
   }
+  ,
+  {
+    "server_id": "SRV006",
+    "server_name": "cache-redis-prod",
+    "environment": "Production",
+    "os_type": "Linux",
+    "status": "Active",
+    "owner_team": "Platform",
+    "description": "Production Redis cache cluster"
+  },
+  {
+    "server_id": "SRV007",
+    "server_name": "web-frontend-uat",
+    "environment": "UAT",
+    "os_type": "Linux",
+    "status": "Active",
+    "owner_team": "Web",
+    "description": "UAT server for Web Frontend"
+  },
+  {
+    "server_id": "SRV008",
+    "server_name": "reporting-svc-staging",
+    "environment": "Staging",
+    "os_type": "Linux",
+    "status": "In Maintenance",
+    "owner_team": "BI",
+    "description": "Staging server for Reporting Service"
+  },
+  {
+    "server_id": "SRV009",
+    "server_name": "ml-worker-dev",
+    "environment": "Development",
+    "os_type": "Linux",
+    "status": "Active",
+    "owner_team": "DataScience",
+    "description": "Development node for ML batch workers"
+  },
+  {
+    "server_id": "SRV010",
+    "server_name": "vpn-gateway-dr",
+    "environment": "Production",
+    "os_type": "Linux",
+    "status": "Active",
+    "owner_team": "Security",
+    "description": "Production VPN gateway for disaster recovery site"
+  }
 ]

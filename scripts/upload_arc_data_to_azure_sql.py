@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import json
 import os
-import dotenv
+from dotenv import load_dotenv
 import sys
 import datetime as dt
 import struct
@@ -21,7 +21,7 @@ SW_FILE = ARC_DIR / "logana_get_install_software.json"
 
 SCOPE = "https://database.windows.net/.default"
 
-dotenv.load_dotenv()
+load_dotenv()
 
 def env(name: str, default: str | None = None) -> str:
 	v = os.getenv(name, default)
@@ -259,7 +259,6 @@ ELSE
 
 
 def insert_installed_software(cursor: pyodbc.Cursor, rows: Iterable[dict[str, Any]]) -> int:
-	# 重複排除 (computer_name + software_name + current_version)
 	count = 0
 	for row in rows:
 		cursor.execute(

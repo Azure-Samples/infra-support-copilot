@@ -1,14 +1,15 @@
+param(
+    [switch]$ForceSqlcmd,
+    [string]$SqlcmdPath
+)
+
+# Prepare environment and run data ingestion steps
 azd env get-values > .env
 Write-Output "Generate .env file"
 python ./scripts/upload_data_to_blob_storage.py
 python ./scripts/create_index.py
 Write-Output "Uploading to SQL Database..."
 python ./scripts/upload_arc_data_to_azure_sql.py
-
-param(
-    [switch]$ForceSqlcmd,
-    [string]$SqlcmdPath
-)
 
 $AZURE_APP_SERVICE_NAME = (Get-Content .env | Where-Object { $_ -match "^AZURE_APP_SERVICE_NAME=" } | ForEach-Object { $_ -replace "^AZURE_APP_SERVICE_NAME=", "" } | Select-Object -First 1)
 $AZURE_APP_SERVICE_NAME = $AZURE_APP_SERVICE_NAME.Trim().Trim('"').Trim("'")
