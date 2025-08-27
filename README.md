@@ -1,8 +1,8 @@
 ## Infra Support Copilot
 
-This project is an Azure-based Retrieval Augmented Generation (RAG) web application that answers infrastructure questions about servers, incidents, and ownership data. It combines Azure OpenAI (GPT + Embeddings), Azure AI Search (multiple indexes), Azure Blob Storage, and Azure SQL (ARC inventory). The app is deployed to Azure App Service using the Azure Developer CLI (`azd`) and Bicep IaC.
+This project is an Azure-based Retrieval Augmented Generation (RAG) web application that answers infrastructure questions about servers, incidents, and ownership data. It combines Azure OpenAI (GPT + Embeddings), Azure AI Search (multiple indexes), Azure Blob Storage, Azure SQL (ARC inventory), and Log Analytics API. The app is deployed to Azure App Service using the Azure Developer CLI (`azd`) and Bicep IaC.
 
-![structure](structure.png)
+<!-- ![structure](structure.png) -->
 
 ### Key Features
 * Multiple Azure AI Search indexes (inventories, incidents) unified at query time
@@ -30,7 +30,7 @@ Relevant files:
 * azd project: [azure.yaml](azure.yaml)
 * app entry: [main.py](main.py)
 * app config: [`app.config.AppSettings`](app/config/__init__.py)
-* services: [`app.services.sql_query_service.SQLQueryService`](app/services/sql_query_service.py)
+* services: [`app.services.sql_query_service.SQLQueryService`](app/services/sql_query_service.py), [`app.services.decideTools`](app/services/decide_tool.py), [`app.services.ragChatService`](app/services/rag_chat_service.py), [`app.services.logAnalyticsService`](app/services/log_analytics_service.py)
 * data ingest: [scripts/upload_data_to_blob_storage.py](scripts/upload_data_to_blob_storage.py), [scripts/create_index.py](scripts/create_index.py), [scripts/upload_arc_data_to_azure_sql.py](scripts/upload_arc_data_to_azure_sql.py)
 * sample data: [docs/Sample_Server_Inventories.json](docs/Sample_Server_Inventories.json), docs/incidents/*.md, docs/arc/*.json
 
@@ -97,6 +97,9 @@ USE_AAD | Use AAD for SQL auth (true/false) | .env
 CLIENT_PUBLIC_IP | Your client IP for firewall allowance | preprovision hook
 AZURE_APP_SERVICE_NAME | App Service name | Bicep output
 SYSTEM_PROMPT | System behavior prompt | Bicep param (can override in App Settings)
+LOG_ANALYTICS_CUSTOMER_ID | Log Analytics costumer id | Bicep output
+LOG_ANALYTICS_WORKSPACE_NAME | Log Analytics workspace name | Bicep output
+LOG_ANALYTICS_WORKSPACE_RESOURCE_ID | Log Analytics workspace resource id | Bicep output
 
 `SYSTEM_PROMPT` is parameterized in [infra/main.bicep](infra/main.bicep) (`systemPrompt`). You can override it in App Service Configuration post-deploy.
 
