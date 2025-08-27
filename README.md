@@ -64,6 +64,7 @@ python -m venv .venv
 pip install -r requirements.txt
 
 # 4. (First time) Provision Azure infra (creates OpenAI/Search/Storage/SQL/App Service)
+az login
 azd auth login
 azd up   # or: azd provision (infra) + azd deploy (code)
 
