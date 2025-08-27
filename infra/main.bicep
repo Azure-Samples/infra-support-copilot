@@ -166,6 +166,10 @@ resource appService 'Microsoft.Web/sites@2022-03-01' = {
           value: openAiAccount.properties.endpoint
         }
         {
+          name: 'AZURE_OPENAI_API_VERSION'
+          value: '2024-05-01-preview'
+        }
+        {
           name: 'AZURE_OPENAI_GPT_DEPLOYMENT'
           value: openAiGptDeploymentName
         }
@@ -461,6 +465,17 @@ resource openAISearchContributorRoleAssignment 'Microsoft.Authorization/roleAssi
     principalId: openAiAccount.identity.principalId
     principalType: 'ServicePrincipal'
     roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '7ca78c08-252a-4471-8644-bb5ff32d4ba0') // Search Service Contributor
+  }
+}
+
+// Assign 'Search Index Data Reader' role to App Service so it can query search indexes using AAD (managed identity)
+resource appServiceSearchDataReaderRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: guid(appService.id, searchService.id, 'Search Index Data Reader')
+  scope: searchService
+  properties: {
+    principalId: appService.identity.principalId
+    principalType: 'ServicePrincipal'
+    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '1407120a-92aa-4202-b7e9-c0e197c71c8f') // Search Index Data Reader
   }
 }
 

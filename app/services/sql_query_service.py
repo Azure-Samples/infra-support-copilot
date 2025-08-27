@@ -206,7 +206,7 @@ class SQLQueryService:
             rows = await self._execute_sql(sql)
             sources = self._rows_to_sources(rows)
 
-            return [{"title": "SQL Query", "content": f"SQL Query:\n{sql}\n\nResults:\n{sources}"}]
+            return [{"title": "SQL Query", "content": f"## SQL Query:\n{sql}\n\n## Results:\n{sources}"}]
         except Exception as e:
             logger.error(f"Error in get_chat_completion: {e}")
             raise
