@@ -33,6 +33,17 @@ jobs:
           azd auth login --client-id ${{ secrets.AZURE_CLIENT_ID }} --tenant-id ${{ secrets.AZURE_TENANT_ID }} --federated-credential-provider github
         shell: pwsh
 
+      - name: Configure azd environment for CI
+        run: |
+          azd env set AZURE_PRINCIPAL_TYPE ServicePrincipal
+          azd env unset AZURE_PRINCIPAL_ID
+        shell: pwsh
+        env:
+          AZURE_ENV_NAME: ${{ secrets.AZURE_ENV_NAME }}
+          AZURE_LOCATION: ${{ secrets.AZURE_LOCATION }}
+          AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          AZURE_RESOURCE_GROUP: ${{ secrets.AZURE_RESOURCE_GROUP }}
+
       - name: Provision Infrastructure
         run: |
           azd provision --no-prompt

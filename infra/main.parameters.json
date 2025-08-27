@@ -41,6 +41,9 @@
     "userPrincipalId": {
       "value": "${AZURE_PRINCIPAL_ID}"
     },
+    "userPrincipalType": {
+      "value": "${AZURE_PRINCIPAL_TYPE}"
+    },
     "clientPublicIp": {
       "value": "${CLIENT_PUBLIC_IP}"
     }

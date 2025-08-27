@@ -15,6 +15,18 @@ param tags object = {
 @description('Principal ID of the user running the deployment (for role assignments)')
 param userPrincipalId string = ''
 
+@description('Type of the principal identified by userPrincipalId. Use "User" for human accounts; "ServicePrincipal" for CI/CD service principals.')
+@allowed([
+  'User'
+  'ServicePrincipal'
+  'Group'
+  'ForeignGroup'
+  'Device'
+])
+param userPrincipalType string = 'User'
+
+var isUserPrincipal = toLower(userPrincipalType) == 'user'
+
 // ----------------------------------------------------
 // App Service and configuration
 // ----------------------------------------------------
@@ -66,7 +78,7 @@ var sqlServerBaseProps = {
   minimalTlsVersion: '1.2'
   publicNetworkAccess: 'Enabled'
 }
-var sqlServerAdminProps = empty(userPrincipalId) ? {} : {
+var sqlServerAdminProps = (!empty(userPrincipalId) && isUserPrincipal) ? {
   administrators: {
     administratorType: 'ActiveDirectory'
     login: 'aad-admin'
@@ -75,7 +87,7 @@ var sqlServerAdminProps = empty(userPrincipalId) ? {} : {
     principalType: 'User'
     azureADOnlyAuthentication: true
   }
-}
+} : {}
 
 // SQL Server
 resource sqlServer 'Microsoft.Sql/servers@2024-11-01-preview' = {
@@ -486,7 +498,7 @@ resource searchStorageBlobDataReaderRoleAssignment 'Microsoft.Authorization/role
 }
 
 // Assign 'Storage Blob Data Contributor' role to the user running the deployment
-resource userStorageBlobDataContributorRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = if (!empty(userPrincipalId)) {
+resource userStorageBlobDataContributorRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = if (!empty(userPrincipalId) && isUserPrincipal) {
   name: guid(storageAccount.id, userPrincipalId, 'Storage Blob Data Contributor')
   scope: storageAccount
   properties: {
@@ -497,7 +509,7 @@ resource userStorageBlobDataContributorRoleAssignment 'Microsoft.Authorization/r
 }
 
 // Assign 'Search Service Contributor' role to the user running the deployment
-resource userSearchServiceContributorRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = if (!empty(userPrincipalId)) {
+resource userSearchServiceContributorRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = if (!empty(userPrincipalId) && isUserPrincipal) {
   name: guid(searchService.id, userPrincipalId, 'Search Service Contributor')
   scope: searchService
   properties: {
@@ -508,7 +520,7 @@ resource userSearchServiceContributorRoleAssignment 'Microsoft.Authorization/rol
 }
 
 // Assign 'Search Index Data Reader' role to the user running the deployment so local CLI-based execution can query index documents
-resource userSearchIndexDataReaderRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = if (!empty(userPrincipalId)) {
+resource userSearchIndexDataReaderRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = if (!empty(userPrincipalId) && isUserPrincipal) {
   name: guid(searchService.id, userPrincipalId, 'Search Index Data Reader')
   scope: searchService
   properties: {
@@ -519,7 +531,7 @@ resource userSearchIndexDataReaderRoleAssignment 'Microsoft.Authorization/roleAs
 }
 
 // Assign 'Cognitive Services OpenAI Contributor' role to the user running the deployment
-resource userOpenAIContributorRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = if (!empty(userPrincipalId)) {
+resource userOpenAIContributorRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = if (!empty(userPrincipalId) && isUserPrincipal) {
   name: guid(openAiAccount.id, userPrincipalId, 'Cognitive Services OpenAI Contributor')
   scope: openAiAccount
   properties: {
