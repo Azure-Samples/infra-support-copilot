@@ -27,6 +27,9 @@ pipeline:
     - USE_AAD
     - SYSTEM_PROMPT
     - AZURE_APP_SERVICE_NAME
+    - LOG_ANALYTICS_WORKSPACE_RESOURCE_ID
+    - LOG_ANALYTICS_WORKSPACE_NAME
+    - LOG_ANALYTICS_CUSTOMER_ID
 hooks:
   preprovision:
     windows:

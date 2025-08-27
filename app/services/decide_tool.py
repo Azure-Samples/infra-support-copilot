@@ -9,6 +9,7 @@ from app.models.chat_models import ChatMessage
 from app.config import settings
 from app.services.rag_chat_service import rag_chat_service
 from app.services.sql_query_service import sql_query_service
+from app.services.log_analytics_service import log_analytics_service
 
 logger = logging.getLogger(__name__)
 
@@ -22,10 +23,6 @@ class DecideTool:
         # Store settings
         self.openai_endpoint = settings.azure_openai_endpoint
         self.gpt_deployment = settings.azure_openai_gpt_deployment
-        self.embedding_deployment = settings.azure_openai_embedding_deployment
-        self.search_url = settings.azure_search_service_url
-        self.search_index_name_inventories = settings.azure_search_index_name_inventories
-        self.search_index_name_incidents = settings.azure_search_index_name_incidents
         self.system_prompt = settings.system_prompt
         self.azure_openai_api_version = settings.azure_openai_api_version
 
@@ -94,8 +91,8 @@ class DecideTool:
         import json
         index_selection_prompt = (
             "Decide which tool should be searched to answer the user's request.\n"
-            "Tools: 'RAG' (documents of ownership/contact/server metadata and incidents), 'SQL Query' (refer to the Azure Arc data to overview the whole service or numbers).\n"
-            "Return ONLY JSON like {\"rag\": true, \"sql_query\": false}. If unsure, set a field to true.\n"
+            "Tools: 'RAG' (documents of ownership/contact/server metadata and incidents), 'SQL Query' (refer to the Azure Arc data to overview the whole service or numbers), 'Log Analytics' (query Azure Monitor logs).\n"
+            "Return ONLY JSON like {\"rag\": true, \"sql_query\": false, \"log_analytics\": false}. If unsure, set a field to true.\n"
             f"Query: {condensed_query}"
         )
         try:
@@ -105,10 +102,10 @@ class DecideTool:
             )
             selection_text = selection_response.choices[0].message.content.strip()
             selection = json.loads(selection_text)
-            return bool(selection.get("rag", False)), bool(selection.get("sql_query", False))
+            return bool(selection.get("rag", False)), bool(selection.get("sql_query", False)), bool(selection.get("log_analytics", False))
         except Exception as e:
             logger.warning(f"Index selection failed ({e}); defaulting to all indexes")
-            return True, True
+            return True, True, True
 
     async def get_chat_completion(self, history: List[ChatMessage]):
         """Multi-turn RAG flow considering recent chat history.
@@ -122,7 +119,7 @@ class DecideTool:
             condensed_query, last_user_query = await self._condense_query(history)
             effective_query = condensed_query or last_user_query
 
-            search_rag, search_sql = await self._select_tools(effective_query)
+            search_rag, search_sql, search_log_analytics = await self._select_tools(effective_query)
 
             sources_parts: List[dict] = []
 
@@ -145,6 +142,14 @@ class DecideTool:
                     _accumulate(sql_results)
                 except Exception as se:
                     logger.error(f"Search query failed for SQL database: {se}")
+            # Query Log Analytics
+            if search_log_analytics:
+                try:
+                    logger.debug("Querying Log Analytics")
+                    log_analytics_results = await log_analytics_service.get_chat_completion(effective_query)
+                    _accumulate(log_analytics_results)
+                except Exception as se:
+                    logger.error(f"Search query failed for Log Analytics: {se}")
 
             # Combine sources into a single string for the system prompt
             sources = "\n\n".join(f"{src['title']}:\n{src['content']}" for src in sources_parts)

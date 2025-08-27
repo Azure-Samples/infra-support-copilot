@@ -431,6 +431,113 @@ resource incidentsContainer 'Microsoft.Storage/storageAccounts/blobServices/cont
   }
 }
 
+// Diagnostic settings for Azure SQL Server -> Log Analytics
+resource sqlServerDiagnostics 'Microsoft.Insights/diagnosticSettings@2021-05-01-preview' = {
+  scope: sqlServer
+  name: 'sqlServerDiagnostics'
+  properties: {
+    workspaceId: logAnalyticsWorkspace.id
+    metrics: [
+      {
+        category: 'AllMetrics'
+        enabled: true
+      }
+    ]
+  }
+}
+
+// Enable SQL Auditing to Azure Monitor (Log Analytics) at the server level
+resource sqlServerAuditing 'Microsoft.Sql/servers/auditingSettings@2024-11-01-preview' = {
+  name: 'default'
+  parent: sqlServer
+  properties: {
+    state: 'Enabled'
+    isAzureMonitorTargetEnabled: true
+    retentionDays: 0
+    auditActionsAndGroups: [
+      'SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP'
+      'FAILED_DATABASE_AUTHENTICATION_GROUP'
+      'BATCH_COMPLETED_GROUP'
+    ]
+  }
+}
+
+// Diagnostic settings for Azure SQL Database -> Log Analytics
+resource sqlDatabaseDiagnostics 'Microsoft.Insights/diagnosticSettings@2021-05-01-preview' = {
+  scope: sqlDatabase
+  name: 'sqlDatabaseDiagnostics'
+  properties: {
+    workspaceId: logAnalyticsWorkspace.id
+    metrics: [
+      {
+        category: 'AllMetrics'
+        enabled: true
+      }
+    ]
+  }
+}
+
+// Enable SQL Auditing to Azure Monitor (Log Analytics) at the database level
+resource sqlDatabaseAuditing 'Microsoft.Sql/servers/databases/auditingSettings@2024-11-01-preview' = {
+  name: 'default'
+  parent: sqlDatabase
+  properties: {
+    state: 'Enabled'
+    isAzureMonitorTargetEnabled: true
+    retentionDays: 0
+    auditActionsAndGroups: [
+      'SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP'
+      'FAILED_DATABASE_AUTHENTICATION_GROUP'
+      'BATCH_COMPLETED_GROUP'
+    ]
+  }
+}
+
+// Diagnostic settings for Storage Account -> Log Analytics
+resource storageDiagnostics 'Microsoft.Insights/diagnosticSettings@2021-05-01-preview' = {
+  scope: storageAccount
+  name: 'storageDiagnostics'
+  properties: {
+    workspaceId: logAnalyticsWorkspace.id
+    metrics: [
+      {
+        category: 'AllMetrics'
+        enabled: true
+      }
+    ]
+  }
+}
+
+// Diagnostic settings for Azure AI Search -> Log Analytics
+resource searchDiagnostics 'Microsoft.Insights/diagnosticSettings@2021-05-01-preview' = {
+  scope: searchService
+  name: 'searchDiagnostics'
+  properties: {
+    workspaceId: logAnalyticsWorkspace.id
+    metrics: [
+      {
+        category: 'AllMetrics'
+        enabled: true
+      }
+    ]
+  }
+}
+
+// Diagnostic settings for Azure OpenAI -> Log Analytics
+resource openAiDiagnostics 'Microsoft.Insights/diagnosticSettings@2021-05-01-preview' = {
+  scope: openAiAccount
+  name: 'openAiDiagnostics'
+  properties: {
+    workspaceId: logAnalyticsWorkspace.id
+    metrics: [
+      {
+        category: 'AllMetrics'
+        enabled: true
+      }
+    ]
+  }
+}
+
 // ----------------------------------------------------
 // Role assignments
 // ----------------------------------------------------
@@ -556,6 +663,28 @@ resource userOpenAIContributorRoleAssignment 'Microsoft.Authorization/roleAssign
   }
 }
 
+// Grant App Service managed identity read access to the Log Analytics workspace
+resource appServiceLogAnalyticsReaderRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: guid(appService.id, logAnalyticsWorkspace.id, 'Log Analytics Reader')
+  scope: logAnalyticsWorkspace
+  properties: {
+    principalId: appService.identity.principalId
+    principalType: 'ServicePrincipal'
+    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '73c42c96-874c-492b-b04d-ab87d138a893') // Log Analytics Reader
+  }
+}
+
+// Optionally grant the deploying user read access to the Log Analytics workspace
+resource userLogAnalyticsReaderRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = if (!empty(userPrincipalId) && isUserPrincipal) {
+  name: guid(logAnalyticsWorkspace.id, userPrincipalId, 'Log Analytics Reader')
+  scope: logAnalyticsWorkspace
+  properties: {
+    principalId: userPrincipalId
+    principalType: 'User'
+    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '73c42c96-874c-492b-b04d-ab87d138a893') // Log Analytics Reader
+  }
+}
+
 // ----------------------------------------------------
 // Output values
 // ----------------------------------------------------
@@ -574,6 +703,9 @@ output AZURE_OPENAI_API_VERSION string = '2024-05-01-preview'
 output USE_AAD int = 1
 output SYSTEM_PROMPT string = 'You are an infrastructure knowledge assistant answering about servers, incidents and ownership.\nUse ONLY the information contained in the Sources section. If information is missing, state you don\'t know. Never invent data.\n\nTOLERATE TYPOS & NORMALIZE:\n- Accept minor typos / case differences / missing leading zeros in server IDs (e.g. srv1, SRV1, SRV01 => SRV001 if that exists; payment-gw-stagin => payment-gw-staging).\n- Normalize server_id pattern: PREFIX + digits. If digits length < canonical (3), zero‑pad (SRV1 => SRV001). Remove extra zeros when comparing.\n- Ignore hyphens/underscores/case when matching IDs or team names (auth_api_prod ~ auth-api-prod).\n- For team / owner names allow edit distance 1 (Platfrom => Platform).\n- If multiple candidates remain, list the possible matches and ask the user to clarify; do not guess.\n\nANSWER FORMAT:\n- Provide concise bullet points (<=5) unless user requests another format.\n- For each factual bullet cite the server_id or incident identifier in parentheses.\n- If summarizing multiple rows, group by environment or status.\n\nRULES:\n1. Use only facts from Sources.\n2. Do not output internal reasoning.\n3. Clearly say \'insufficient information\' in the user\'s language when data not found.\n4. Do not include unrelated marketing or speculative content.\n\nNow answer the user Query in the language of the user Query using only Sources.\nQuery: {query}\nSources:\n{sources}'
 output AZURE_APP_SERVICE_NAME string = appService.name
+output LOG_ANALYTICS_WORKSPACE_RESOURCE_ID string = logAnalyticsWorkspace.id
+output LOG_ANALYTICS_WORKSPACE_ID string = logAnalyticsWorkspace.name
+output LOG_ANALYTICS_CUSTOMER_ID string = logAnalyticsWorkspace.properties.customerId
 
 // ----------------------------------------------------
 // App Service diagnostics settings

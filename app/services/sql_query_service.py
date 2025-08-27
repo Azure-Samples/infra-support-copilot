@@ -21,11 +21,6 @@ class SQLQueryService:
         # Store settings
         self.openai_endpoint = settings.azure_openai_endpoint
         self.gpt_deployment = settings.azure_openai_gpt_deployment
-        self.embedding_deployment = settings.azure_openai_embedding_deployment
-        self.search_url = settings.azure_search_service_url
-        self.search_index_name_inventories = settings.azure_search_index_name_inventories
-        self.search_index_name_incidents = settings.azure_search_index_name_incidents
-        self.system_prompt = settings.system_prompt
         self.azure_openai_api_version = settings.azure_openai_api_version
 
         # Create Azure credentials for managed identity

@@ -76,20 +76,6 @@ Local URL: http://127.0.0.1:8000
 
 ---
 
-## Sample Input
-* There are 5 services (SRV001-SRV005).
-* For Azure Arc data, we provide the data of virtual machines, servers and installed softwares.
-* Please ask the statistical information related to Azure Arc data, previous incidents of one of the 5 services or inventories of the 5 servers.
-
-For example,
-```
-- How many VMs in our service?
-- Where can we contact about SRV001?
-- Please tell me the latest incidents of SRV003.
-```
-
----
-
 ## Environment Variables
 
 The application reads settings (Pydantic) from env or `.env`. `azd env get-values` can export values.

@@ -13,3 +13,4 @@ azure-storage-blob==12.26.0
 azure-search-documents==11.5.3
 sqlalchemy==2.0.36
 pyodbc==5.2.0
+azure-monitor-query==1.5.2
