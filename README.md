@@ -53,7 +53,7 @@ Dev Container (optional):
 ## Quick Start (Local)
 ```pwsh
 # 1. Clone
-git clone https://github.com/Azure-Samples/infra-support-copilot && cd sre-sample
+git clone https://github.com/Azure-Samples/infra-support-copilot && cd infra-support-copilot
 
 # 2. Python venv
 python -m venv .venv
