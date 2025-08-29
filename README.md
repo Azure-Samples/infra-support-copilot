@@ -2,7 +2,7 @@
 
 This project is an Azure-based Retrieval Augmented Generation (RAG) web application that answers infrastructure questions about servers, incidents, and ownership data. It combines Azure OpenAI (GPT + Embeddings), Azure AI Search (multiple indexes), Azure Blob Storage, Azure SQL (ARC inventory), and Log Analytics API. The app is deployed to Azure App Service using the Azure Developer CLI (`azd`) and Bicep IaC.
 
-<!-- ![structure](structure.png) -->
+![structure](structure.png)
 
 ### Key Features
 * Multiple Azure AI Search indexes (inventories, incidents) unified at query time
