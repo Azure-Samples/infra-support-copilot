@@ -67,13 +67,13 @@ class LogAnalyticsService:
         for r in table.rows:
             rows.append({col: val for col, val in zip(columns, r)})
         return rows
-    
-    async def _select_service(self, condensed_query: str) -> Tuple[bool, bool, bool, bool]:
+
+    async def _select_service(self, condensed_query: str) -> Tuple[bool, bool, bool, bool, bool, bool, bool]:
         import json
         index_selection_prompt = (
             "Decide which log data should be searched to answer the user's request.\n"
-            "Services: 'AppServiceAuditLogs', 'AppServiceConsoleLogs', 'AppServiceHTTPLogs', 'AppServicePlatformLogs'.\n"
-            "Return ONLY JSON like {\"AppServiceAuditLogs\": true, \"AppServiceConsoleLogs\": false, \"AppServiceHTTPLogs\": false, \"AppServicePlatformLogs\": false}. If unsure, set a field to true.\n"
+            "Services: 'AppServiceAuditLogs', 'AppServiceConsoleLogs', 'AppServiceHTTPLogs', 'AppServicePlatformLogs', 'AzureDiagnostics', 'AzureMetrics', 'Usage'.\n"
+            "Return ONLY JSON like {\"AppServiceAuditLogs\": true, \"AppServiceConsoleLogs\": false, \"AppServiceHTTPLogs\": false, \"AppServicePlatformLogs\": false, \"AzureDiagnostics\": false, \"AzureMetrics\": false, \"Usage\": false}. If unsure, set a field to true.\n"
             f"Query: {condensed_query}"
         )
         try:
@@ -83,15 +83,15 @@ class LogAnalyticsService:
             )
             selection_text = selection_response.choices[0].message.content.strip()
             selection = json.loads(selection_text)
-            return bool(selection.get("AppServiceAuditLogs", False)), bool(selection.get("AppServiceConsoleLogs", False)), bool(selection.get("AppServiceHTTPLogs", False)), bool(selection.get("AppServicePlatformLogs", False))
+            return bool(selection.get("AppServiceAuditLogs", False)), bool(selection.get("AppServiceConsoleLogs", False)), bool(selection.get("AppServiceHTTPLogs", False)), bool(selection.get("AppServicePlatformLogs", False)), bool(selection.get("AzureDiagnostics", False)), bool(selection.get("AzureMetrics", False)), bool(selection.get("Usage", False))
         except Exception as e:
             logger.warning(f"Index selection failed ({e}); defaulting to all indexes")
-            return True, True, True, True
+            return True, True, True, True, True, True, True
 
     
     async def get_chat_completion(self, effective_query: str):
         try:
-            app_service_audit_logs, app_service_console_logs, app_service_http_logs, app_service_platform_logs = await self._select_service(effective_query)
+            app_service_audit_logs, app_service_console_logs, app_service_http_logs, app_service_platform_logs, azure_diagnostics_logs, azure_metrics_logs, usage_logs = await self._select_service(effective_query)
 
             sources = []
             
@@ -106,6 +106,15 @@ class LogAnalyticsService:
 
             if app_service_platform_logs:
                 sources.append({"title": "Log Analytics (App Service Platform Logs)", "content": f"## Errors:\n{self.query_appservice_platform_logs_errors()}\n"})
+
+            if azure_diagnostics_logs:
+                sources.append({"title": "Log Analytics (Azure Diagnostics)", "content": f"## Errors:\n{self.query_azure_diagnostics_errors()}\n"})
+
+            if azure_metrics_logs:
+                sources.append({"title": "Log Analytics (Azure Metrics)", "content": f"## Errors:\n{self.query_azure_metrics_errors()}\n"})
+
+            if usage_logs:
+                sources.append({"title": "Log Analytics (Usage)", "content": f"## Errors:\n{self.query_usage_errors()}\n"})
 
             return sources
         except Exception as e:
@@ -149,6 +158,36 @@ class LogAnalyticsService:
             "| extend Level = tostring(column_ifexists('Level','')), Status = toint(column_ifexists('StatusCode','')), ResultDescription = tostring(column_ifexists('ResultDescription',''))\n"
             "| where Level in ('Error','Critical','Fatal') or (isnotnull(Status) and Status >= 500) or ResultDescription has_any ('fail','error','exception','critical')\n"
             "| summarize count() by bin(TimeGenerated, 5m), Level\n"
+            "| sort by TimeGenerated desc"
+        )
+        return self.query(kusto)
+
+    def query_azure_diagnostics_errors(self) -> List[Dict[str, Any]]:
+        kusto = (
+            "AzureDiagnostics\n"
+            "| where TimeGenerated >= ago(24h)\n"
+            "| extend Level = tostring(column_ifexists('Level','')), Status = toint(column_ifexists('StatusCode','')), ResultDescription = tostring(column_ifexists('ResultDescription',''))\n"
+            "| summarize count() by bin(TimeGenerated, 5m), Level, Status, ResultDescription\n"
+            "| sort by TimeGenerated desc"
+        )
+        return self.query(kusto)
+    
+    def query_azure_metrics_errors(self) -> List[Dict[str, Any]]:
+        kusto = (
+            "AzureMetrics\n"
+            "| where TimeGenerated >= ago(24h)\n"
+            "| extend Level = tostring(column_ifexists('Level','')), Status = toint(column_ifexists('StatusCode','')), ResultDescription = tostring(column_ifexists('ResultDescription',''))\n"
+            "| summarize count() by bin(TimeGenerated, 5m), Level, Status, ResultDescription\n"
+            "| sort by TimeGenerated desc"
+        )
+        return self.query(kusto)
+
+    def query_usage_errors(self) -> List[Dict[str, Any]]:
+        kusto = (
+            "Usage\n"
+            "| where TimeGenerated >= ago(24h)\n"
+            "| extend Level = tostring(column_ifexists('Level','')), Status = toint(column_ifexists('StatusCode','')), ResultDescription = tostring(column_ifexists('ResultDescription',''))\n"
+            "| summarize count() by bin(TimeGenerated, 5m), Level, Status, ResultDescription\n"
             "| sort by TimeGenerated desc"
         )
         return self.query(kusto)

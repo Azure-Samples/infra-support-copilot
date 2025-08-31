@@ -110,6 +110,30 @@ class SQLQueryService:
             "9. Do not reference tables not listed.\n"
             f"Table definitions:\n{self.table_info}\n"
             f"User question: {condensed_query}\n"
+            "## Example1:\n"
+            """
+            WITH AllResources AS (
+            SELECT resource_group, name AS resource_name, 'Virtual Machine' AS resource_type
+            FROM dbo.virtual_machines
+            UNION ALL
+            SELECT resource_group, name AS resource_name, 'Network Interface' AS resource_type
+            FROM dbo.network_interfaces
+            )
+            SELECT resource_group, resource_name, resource_type
+            FROM AllResources
+            ORDER BY resource_group, resource_type;\n\n
+            """
+            "## Example2:\n"
+            """
+            WITH VM_Applications AS (
+            SELECT vm.resource_group, vm.name AS vm_name, software.software_name
+            FROM dbo.virtual_machines AS vm
+            JOIN dbo.installed_software AS software ON vm.name = software.computer_name
+            )
+            SELECT resource_group, vm_name, software_name
+            FROM VM_Applications
+            ORDER BY resource_group, vm_name;\n\n
+            """
             "Return ONLY the SQL." 
         )
         try:
