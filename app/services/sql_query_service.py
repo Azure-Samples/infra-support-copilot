@@ -108,8 +108,25 @@ class SQLQueryService:
         )
         return [{'title': 'SELECTABLE', 'content': f';;SELECTABLE;;{resp_tables.choices[0].message.content}'}]
 
+    async def _get_relevant_tables(self, condensed_query: str) -> List[str]:
+        """Retrieve relevant tables for a specific query."""
+        prompt = (
+            "You are a system that retrieves the relevant tables for a specific query in Azure SQL Database.\n"
+            f"User question: {condensed_query}\n"
+            "Output the relevant table names as a comma-separated list."
+            f"Table definitions:\n{self.table_info}\n"
+            "Return ONLY the table names."
+        )
+        resp_tables = await self.openai_client.chat.completions.create(
+            model=self.gpt_deployment,
+            messages=[{"role": "user", "content": prompt}],
+            temperature=0.1,
+        )
+        return [{'title': 'SELECTABLE', 'content': f';;SELECTABLE;;{resp_tables.choices[0].message.content}'}]
+
     async def _generate_sql(self, wanted_columns: List[str], user_query: str) -> str:
         """Generate a read-only SQL query."""
+        logger.info(f"Generating SQL for columns: {wanted_columns} and user query: {user_query}")
         prompt = (
             "You are an expert SQL query generator for Azure infrastructure data. Generate a read-only SQL query based on the user's requirements.\n\n"
             f"User Query: {user_query}\n"

@@ -162,7 +162,7 @@ class DecideTool:
                         }
                     ]
                 }
-            
+              
             conversation_id = str(uuid.uuid4())
         
             self.emit("chat_prompt", {
