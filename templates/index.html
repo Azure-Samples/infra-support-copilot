@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Support Chat</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for custom checkbox icons in selectable lists -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="/static/css/app.css">
     <style>
         /* Markdown styling for chat messages */
@@ -157,43 +159,43 @@
     <div class="d-flex flex-column vh-100 w-100">        
         <div class="flex-grow-1 overflow-auto bg-light w-100 px-3" id="chat-container" style="scroll-behavior: smooth;">
             <div id="prompt-suggestion" class="d-flex justify-content-center">
-                <h3 class="prompt-title">Hello! How can I help you?</h3>
+                <h3 class="prompt-title">サンプルプロンプト</h3>
                 <div class="prompt-grid">
                     <button
                         type="button"
                         id="btn-srv001-inquiry"
                         class="btn btn-outline-secondary text-start prompt-btn"
-                        data-text="Where should I direct inquiries regarding SRV001?"
-                        aria-label="Where should I direct inquiries regarding SRV001?"
+                        data-text="SRV001に関する問い合わせはどこに行えばよいでしょうか？"
+                        aria-label="SRV001に関する問い合わせはどこに行えばよいでしょうか？"
                     >
-                        Where should I direct inquiries regarding SRV001?
+                        SRV001に関する問い合わせはどこに行えばよいでしょうか？
                     </button>
                     <button
                         type="button"
                         id="btn-srv003-incidents"
                         class="btn btn-outline-secondary text-start prompt-btn"
-                        data-text="Could you provide information about past incidents related to SRV003?"
-                        aria-label="Could you provide information about past incidents related to SRV003?"
+                        data-text="SRV003に関する過去のインシデントについての情報を提供してください"
+                        aria-label="SRV003に関する過去のインシデントについての情報を提供してください"
                     >
-                        Could you provide information about past incidents related to SRV003?
+                        SRV003に関する過去のインシデントについての情報を提供してください
                     </button>
                     <button
                         type="button"
                         id="btn-list-resources"
                         class="btn btn-outline-secondary text-start prompt-btn"
-                        data-text="Please enumerate all resources grouped by resource group."
-                        aria-label="Please enumerate all resources grouped by resource group."
+                        data-text="リソースグループごとにリソースを列挙してください。"
+                        aria-label="リソースグループごとにリソースを列挙してください。"
                     >
-                        Please enumerate all resources grouped by resource group.
+                        リソースグループごとにリソースを列挙してください。
                     </button>
                     <button
                         type="button"
                         id="btn-count-vms"
                         class="btn btn-outline-secondary text-start prompt-btn"
-                        data-text="How many virtual machines are there in total?"
-                        aria-label="How many virtual machines are there in total?"
+                        data-text="仮想マシンは合計でいくつありますか？"
+                        aria-label="仮想マシンは合計でいくつありますか？"
                     >
-                        How many virtual machines are there in total?
+                        仮想マシンは合計でいくつありますか？
                     </button>
                 </div>
             </div>
@@ -229,7 +231,7 @@
                     <div style="border: 1px solid #6c757d; border-radius: 2rem; width: calc(100% - 60px); display: flex; align-items: center; background: #fff;">
                         <input type="text" class="form-control border-0 py-2" 
                             id="chat-input" 
-                            placeholder="Type your message..." 
+                            placeholder="入力してください..." 
                             style="color: var(--bs-secondary); border-top-left-radius: 50rem; border-bottom-left-radius: 50rem; box-shadow: none; outline: none; background: transparent;" />
                     </div>
                     <button class="btn btn-link p-0" type="submit" id="send-button" style="border: none; background: none; margin-left: 10px;">

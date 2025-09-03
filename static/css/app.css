@@ -157,3 +157,26 @@ html, body {
         width: 95%;
     }
 }
+
+/* FontAwesome-based custom checkbox styling for selectable list */
+.selectable-options .form-check .form-check-input { 
+    display: none; /* hide native checkbox */
+}
+
+.selectable-options .form-check .form-check-input + .form-check-label::before {
+    font-family: "Font Awesome 6 Free", "Font Awesome 5 Free", "FontAwesome"; /* support common FA versions */
+    font-weight: 900; /* required for solid in FA5/6 */
+    content: "\f096"; /* unchecked square (FA4 code). Adjust if using FA5/6 Regular */
+    display: inline-block;
+    margin-right: .5rem; /* space between icon and text */
+    vertical-align: middle;
+    line-height: 1;
+}
+
+.selectable-options .form-check .form-check-input:checked + .form-check-label::before {
+    content: "\f046"; /* checked square (FA4 code). For FA5/6 you may want \f14a */
+}
+
+.selectable-options .form-check .form-check-label { 
+    cursor: pointer; 
+}

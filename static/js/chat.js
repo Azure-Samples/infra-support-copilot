@@ -26,9 +26,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const promptSuggestionContainer = document.getElementById('prompt-suggestion');
 
     // Quick response buttons
-    const btnPersonalInfo = document.getElementById('btn-personal-info');
-    const btnWarranty = document.getElementById('btn-warranty');
-    const btnCompany = document.getElementById('btn-company');
     const promptButtons = document.querySelectorAll('#prompt-suggestion .prompt-btn');
 
     // Chat history array
@@ -101,49 +98,50 @@ document.addEventListener('DOMContentLoaded', function() {
         if (chatHistory.querySelector('.text-center')) {
             chatHistory.innerHTML = '';
         }
-        // Create user message DOM directly
-        const wrapper = document.createElement('div');
-        wrapper.className = 'd-flex mb-4 justify-content-end align-items-end';
-        const card = document.createElement('div');
-        card.className = 'card user-card';
-        card.style.maxWidth = '80%';
-        const cardBody = document.createElement('div');
-        cardBody.className = 'card-body';
-        const messageContent = document.createElement('div');
-        messageContent.className = 'message-content';
-        messageContent.style.lineHeight = '1.5';
-        
-        // Convert markdown to HTML for user messages too
-        let htmlContent;
-        try {
-            // Configure marked options
-            marked.setOptions({
-                breaks: true,
-                gfm: true,
-                headerIds: false,
-                mangle: false
-            });
+        if (!((text.startsWith(";;SQL;;") || text.startsWith(";;EXECUTE;;")))) {
+            // Create user message DOM directly
+            const wrapper = document.createElement('div');
+            wrapper.className = 'd-flex mb-4 justify-content-end align-items-end';
+            const card = document.createElement('div');
+            card.className = 'card user-card';
+            card.style.maxWidth = '80%';
+            const cardBody = document.createElement('div');
+            cardBody.className = 'card-body';
+            const messageContent = document.createElement('div');
+            messageContent.className = 'message-content';
+            messageContent.style.lineHeight = '1.5';
             
-            htmlContent = marked.parse(text);
-        } catch (error) {
-            console.warn('Markdown parsing failed for user message, falling back to plain text:', error);
-            htmlContent = text.replace(/\n/g, '<br>');
+            // Convert markdown to HTML for user messages too
+            let htmlContent;
+            try {
+                // Configure marked options
+                marked.setOptions({
+                    breaks: true,
+                    gfm: true,
+                    headerIds: false,
+                    mangle: false
+                });
+                
+                htmlContent = marked.parse(text);
+            } catch (error) {
+                console.warn('Markdown parsing failed for user message, falling back to plain text:', error);
+                htmlContent = text.replace(/\n/g, '<br>');
+            }
+            
+            messageContent.innerHTML = htmlContent;
+            cardBody.appendChild(messageContent);
+            card.appendChild(cardBody);
+            wrapper.appendChild(card);
+            
+            // Add avatar next to the message card
+            const avatar = document.createElement('div');
+            avatar.className = 'avatar-badge user-avatar-badge ms-2';
+            avatar.textContent = 'You';
+            wrapper.appendChild(avatar);
+            chatHistory.appendChild(wrapper);
+            scrollToBottom();
+            updatePromptSuggestionVisibility();
         }
-        
-        messageContent.innerHTML = htmlContent;
-        cardBody.appendChild(messageContent);
-        card.appendChild(cardBody);
-        wrapper.appendChild(card);
-        
-        // Add avatar next to the message card
-        const avatar = document.createElement('div');
-        avatar.className = 'avatar-badge user-avatar-badge ms-2';
-        avatar.textContent = 'You';
-        wrapper.appendChild(avatar);
-        chatHistory.appendChild(wrapper);
-    // Update prompt suggestions visibility after first message
-    updatePromptSuggestionVisibility();
-        scrollToBottom();
     }
     
     /**
@@ -176,9 +174,200 @@ document.addEventListener('DOMContentLoaded', function() {
         // Prevent long words/URLs from forcing the bubble wider than available space
         messageContent.style.wordBreak = 'break-word';
         messageContent.style.overflowWrap = 'anywhere';
-        // Handle citations
-        let formattedContent = content || '';
+
+        // Detect special selectable list format: ";;SELECTABLE;;item1,item2,..."
+        const selectablePrefix = ';;SELECTABLE;;';
+        const isSelectable = typeof content === 'string' && content.trim().startsWith(selectablePrefix);
         const messageId = 'msg-' + Date.now();
+
+        if (isSelectable) {
+            const itemsRaw = content.trim().slice(selectablePrefix.length).trim();
+            const items = itemsRaw.split(',').map(s => s.trim()).filter(Boolean);
+
+            if (items.length > 0) {
+                // Build checkbox list UI
+                const container = document.createElement('div');
+                container.className = 'selectable-options';
+
+                const title = document.createElement('div');
+                title.className = 'mb-2 fw-semibold';
+                title.textContent = 'どのテーブルを検索しますか？';
+                container.appendChild(title);
+
+                const list = document.createElement('div');
+                list.className = 'd-flex flex-column gap-2';
+
+                items.forEach((label, idx) => {
+                    const id = `${messageId}-opt-${idx + 1}`;
+                    const row = document.createElement('div');
+                    row.className = 'form-check';
+
+                    const input = document.createElement('input');
+                    input.type = 'checkbox';
+                    input.className = 'form-check-input';
+                    input.id = id;
+                    input.value = label;
+
+                    const lbl = document.createElement('label');
+                    lbl.className = 'form-check-label';
+                    lbl.setAttribute('for', id);
+                    lbl.textContent = label;
+
+                    row.appendChild(input);
+                    row.appendChild(lbl);
+                    list.appendChild(row);
+                });
+
+                container.appendChild(list);
+
+                // Action buttons (apply selection to input, clear selection)
+                const actions = document.createElement('div');
+                actions.className = 'd-flex gap-2 mt-3 justify-content-end';
+
+                let selectTableInput = '';
+
+                const applyBtn = document.createElement('button');
+                applyBtn.type = 'button';
+                applyBtn.className = 'btn btn-dark btn-sm';
+                // Ensure pure black styling regardless of theme
+                applyBtn.style.backgroundColor = '#000';
+                applyBtn.style.borderColor = '#000';
+                applyBtn.style.color = '#fff';
+                applyBtn.textContent = '決定';
+                applyBtn.addEventListener('click', () => {
+                    const selected = Array.from(list.querySelectorAll('input[type="checkbox"]:checked'))
+                        .map(el => el.value)
+                        .filter(Boolean);
+                    selectTableInput = ';;SQL;;' +selected.join(',');
+                    sendMessage(selectTableInput);
+                });
+
+                actions.appendChild(applyBtn);
+                container.appendChild(actions);
+
+                messageContent.appendChild(container);
+                cardBody.appendChild(messageContent);
+                card.appendChild(cardBody);
+                card.setAttribute('id', messageId);
+                // No citations processing for selectable lists
+
+                // Add avatar next to the message card (assistant on the left)
+                const avatar = document.createElement('div');
+                avatar.className = 'avatar-badge assistant-avatar-badge me-2';
+                avatar.textContent = 'AI';
+                wrapper.appendChild(avatar);
+                wrapper.appendChild(card);
+                chatHistory.appendChild(wrapper);
+
+                updatePromptSuggestionVisibility();
+                scrollToBottom();
+                return; // Done for selectable content
+            }
+            // If no items parsed, fall through to default rendering
+        }
+
+        // Detect special selectable list format: ";;SELECTABLE;;item1,item2,..."
+        const columnsPrefix = ';;COLUMNS;;';
+        const isColumns = typeof content === 'string' && content.trim().startsWith(columnsPrefix);
+
+        if (isColumns) {
+            const itemsRaw = content.trim().slice(columnsPrefix.length).trim();
+            // Expect multi-line payload; ignore first line, parse the rest as 'a|b' -> 'a.b'
+            const lines = itemsRaw.split(/\r?\n/).map(s => s.trim());
+            const dataLines = lines.filter(Boolean).slice(2); // ignore first non-empty line
+            const items = [];
+            for (const line of dataLines) {
+                const parts = line.split('|').map(s => s.trim());
+                if (parts.length >= 2 && parts[0] && parts[1]) {
+                    items.push(`${parts[0]}.${parts[1]}`);
+                }
+            }
+
+            if (items.length > 0) {
+                // Build checkbox list UI
+                const container = document.createElement('div');
+                container.className = 'selectable-options';
+
+                const title = document.createElement('div');
+                title.className = 'mb-2 fw-semibold';
+                title.textContent = 'どのカラムを検索しますか？';
+                container.appendChild(title);
+
+                const list = document.createElement('div');
+                list.className = 'd-flex flex-column gap-2';
+
+                items.forEach((label, idx) => {
+                    const id = `${messageId}-opt-${idx + 1}`;
+                    const row = document.createElement('div');
+                    row.className = 'form-check';
+
+                    const input = document.createElement('input');
+                    input.type = 'checkbox';
+                    input.className = 'form-check-input';
+                    input.id = id;
+                    input.value = label;
+
+                    const lbl = document.createElement('label');
+                    lbl.className = 'form-check-label';
+                    lbl.setAttribute('for', id);
+                    lbl.textContent = label;
+
+                    row.appendChild(input);
+                    row.appendChild(lbl);
+                    list.appendChild(row);
+                });
+
+                container.appendChild(list);
+
+                // Action buttons (apply selection to input, clear selection)
+                const actions = document.createElement('div');
+                actions.className = 'd-flex gap-2 mt-3 justify-content-end';
+
+                let selectColumnInput = '';
+
+                const applyBtn = document.createElement('button');
+                applyBtn.type = 'button';
+                applyBtn.className = 'btn btn-dark btn-sm';
+                // Ensure pure black styling regardless of theme
+                applyBtn.style.backgroundColor = '#000';
+                applyBtn.style.borderColor = '#000';
+                applyBtn.style.color = '#fff';
+                applyBtn.textContent = '決定';
+                applyBtn.addEventListener('click', () => {
+                    const selected = Array.from(list.querySelectorAll('input[type="checkbox"]:checked'))
+                        .map(el => el.value)
+                        .filter(Boolean);
+                    selectColumnInput = ';;EXECUTE;;' +selected.join(',');
+                    sendMessage(selectColumnInput);
+                    scrollToBottom();
+                });
+
+                actions.appendChild(applyBtn);
+                container.appendChild(actions);
+
+                messageContent.appendChild(container);
+                cardBody.appendChild(messageContent);
+                card.appendChild(cardBody);
+                card.setAttribute('id', messageId);
+                // No citations processing for selectable lists
+
+                // Add avatar next to the message card (assistant on the left)
+                const avatar = document.createElement('div');
+                avatar.className = 'avatar-badge assistant-avatar-badge me-2';
+                avatar.textContent = 'AI';
+                wrapper.appendChild(avatar);
+                wrapper.appendChild(card);
+                chatHistory.appendChild(wrapper);
+
+                updatePromptSuggestionVisibility();
+                scrollToBottom();
+                return; // Done for selectable content
+            }
+            // If no items parsed, fall through to default rendering
+        }
+
+    // Handle citations
+    let formattedContent = content || '';
         const messageCitations = {};
         if (citations && citations.length > 0) {
             const pattern = /\[doc(\d+)\]/g;

@@ -46,7 +46,7 @@ param appServiceName string = 'app-${resourceToken}'
   'P2v2'
   'P3v2'
 ])
-param appServicePlanSku string = 'S1'
+param appServicePlanSku string = 'P1v2'
 
 // Create App Service Plan
 resource appServicePlan 'Microsoft.Web/serverfarms@2022-03-01' = {
@@ -264,10 +264,10 @@ param openAiServiceName string = 'ai-${resourceToken}'
 param openAiSkuName string = 'S0'
 
 @description('GPT model deployment name')
-param openAiGptDeploymentName string = 'gpt-4o-mini'
+param openAiGptDeploymentName string = 'gpt-4.1'
 
 @description('GPT model name')
-param openAiGptModelName string = 'gpt-4o-mini'
+param openAiGptModelName string = 'gpt-4.1'
 
 @description('GPT model version')
 param openAiGptModelVersion string = '2025-04-14'
@@ -309,7 +309,7 @@ resource openAiGptDeployment 'Microsoft.CognitiveServices/accounts/deployments@2
   parent: openAiAccount
   name: openAiGptDeploymentName
   sku: {
-    name: 'Standard'
+    name: 'GlobalStandard'
     capacity: 20
   }
   properties: {
@@ -342,7 +342,7 @@ resource openAiEmbeddingDeployment 'Microsoft.CognitiveServices/accounts/deploym
 }
 
 // ----------------------------------------------------
-// Azure Cognitive Search service
+// Azure AI Search service
 // ----------------------------------------------------
 
 @description('Name of the Azure AI Search service')
