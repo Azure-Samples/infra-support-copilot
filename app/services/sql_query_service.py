@@ -126,7 +126,6 @@ class SQLQueryService:
 
     async def _generate_sql(self, wanted_columns: List[str], user_query: str) -> str:
         """Generate a read-only SQL query."""
-        logger.info(f"Generating SQL for columns: {wanted_columns} and user query: {user_query}")
         prompt = (
             "You are an expert SQL query generator for Azure infrastructure data. Generate a read-only SQL query based on the user's requirements.\n\n"
             f"User Query: {user_query}\n"
