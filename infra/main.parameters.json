@@ -9,7 +9,7 @@
       "value": "eastus2"
     },
     "appServicePlanSku": {
-      "value": "S1"
+      "value": "P2v2"
     },
     "openAiSkuName": {
       "value": "S0"

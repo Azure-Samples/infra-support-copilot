@@ -46,7 +46,7 @@ param appServiceName string = 'app-${resourceToken}'
   'P2v2'
   'P3v2'
 ])
-param appServicePlanSku string = 'P1v2'
+param appServicePlanSku string = 'P2v2'
 
 // Create App Service Plan
 resource appServicePlan 'Microsoft.Web/serverfarms@2022-03-01' = {
