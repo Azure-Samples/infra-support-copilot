@@ -103,7 +103,6 @@ class RagChatService:
             # Query inventories
             if search_inventories:
                 try:
-                    logger.debug("Querying inventories index")
                     inv_results = self.search_client_inventories.search(
                         search_text=effective_query,
                         top=1,
@@ -115,7 +114,6 @@ class RagChatService:
             # Query incidents
             if search_incidents:
                 try:
-                    logger.debug("Querying incidents index")
                     inc_results = self.search_client_incidents.search(
                         search_text=effective_query,
                         top=top_k,

@@ -62,6 +62,24 @@ resource appServicePlan 'Microsoft.Web/serverfarms@2022-03-01' = {
   }
 }
 
+  // ----------------------------------------------------
+  // Application Insights
+  // ----------------------------------------------------
+  @description('Name of the Application Insights resource')
+  param appInsightsName string = 'appi-${resourceToken}'
+
+  resource appInsights 'Microsoft.Insights/components@2020-02-02' = {
+    name: appInsightsName
+    location: location
+    tags: tags
+    kind: 'web'
+    properties: {
+      Application_Type: 'web'
+      Flow_Type: 'Bluefield'
+      WorkspaceResourceId: logAnalyticsWorkspace.id
+    }
+  }
+
 // ----------------------------------------------------
 // Azure SQL (AAD only authentication, no SQL login/password)
 // ----------------------------------------------------
@@ -217,6 +235,14 @@ resource appService 'Microsoft.Web/sites@2022-03-01' = {
           name: 'USE_AAD'
           value: '1'
         }
+          {
+            name: 'APPINSIGHTS_INSTRUMENTATIONKEY'
+            value: appInsights.properties.InstrumentationKey
+          }
+          {
+            name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
+            value: appInsights.properties.ConnectionString
+          }
       ]
     }
   }
