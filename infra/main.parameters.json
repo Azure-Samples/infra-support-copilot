@@ -15,13 +15,13 @@
       "value": "S0"
     },
     "openAiGptDeploymentName": {
-      "value": "gpt-4o-mini"
+      "value": "gpt-4.1"
     },
     "openAiGptModelName": {
-      "value": "gpt-4o-mini"
+      "value": "gpt-4.1"
     },
     "openAiGptModelVersion": {
-      "value": "2024-07-18"
+      "value": "2025-04-14"
     },
     "openAiEmbeddingDeploymentName": {
       "value": "text-embedding-ada-002"

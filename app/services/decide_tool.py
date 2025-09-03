@@ -116,6 +116,51 @@ class DecideTool:
           4. Inject sources + original last user query into system prompt for final answer.
         """
         try:
+            if history[-1].content.startswith(";;SQL;;"):
+                sql_results = await sql_query_service.get_chat_completion(history[-1].content)
+                return {
+                    "choices": [
+                        {
+                            "message": {
+                                "role": "assistant",
+                                "content": f"{sql_results[0]['content']}",
+                                "context": {"citations": []}
+                            }
+                        }
+                    ]
+                }
+            
+            if history[-1].content.startswith(";;EXECUTE;;"):
+                sql_results = await sql_query_service.get_chat_completion(f"{history[-1].content}|||{history[-5].content}")
+                citations = [{"title": sql_results[0]['title'], "content": sql_results[0]['content']}]
+                sources = "\n\n".join(f"{src['title']}:\n{src['content']}" for src in citations)
+
+                # Final answer request
+                final_content = self.system_prompt.format(
+                    query=history[-5].content,
+                    sources=sources
+                )
+
+                chat_resp = await self.openai_client.chat.completions.create(
+                    messages=[{"role": "user", "content": final_content}],
+                    model=self.gpt_deployment
+                )
+
+                # Extract assistant content from SDK object
+                base_content = chat_resp.choices[0].message.content if chat_resp.choices and chat_resp.choices[0].message else ""
+
+                return {
+                    "choices": [
+                        {
+                            "message": {
+                                "role": "assistant",
+                                "content": f"{base_content}:n\nReferences: [doc1]",
+                                "context": {"citations": citations}
+                            }
+                        }
+                    ]
+                }
+
             condensed_query, last_user_query = await self._condense_query(history)
             effective_query = condensed_query or last_user_query
 
@@ -126,6 +171,24 @@ class DecideTool:
             def _accumulate(source: List[dict]):
                 sources_parts.extend(source)
 
+            # Query SQL database
+            if search_sql:
+                try:
+                    logger.debug("Querying SQL database")
+                    sql_results = await sql_query_service.get_chat_completion(effective_query)
+                    return {
+                        "choices": [
+                            {
+                                "message": {
+                                    "role": "assistant",
+                                    "content": f"{sql_results[0]['content']}",
+                                    "context": {"citations": []}
+                                }
+                            }
+                        ]
+                    }
+                except Exception as se:
+                    logger.error(f"Search query failed for SQL database: {se}")
             # Query RAG
             if search_rag:
                 try:
@@ -134,14 +197,6 @@ class DecideTool:
                     _accumulate(response_rag)
                 except Exception as se:
                     logger.error(f"Search query failed for RAG: {se}")
-            # Query SQL database
-            if search_sql:
-                try:
-                    logger.debug("Querying SQL database")
-                    sql_results = await sql_query_service.get_chat_completion(effective_query)
-                    _accumulate(sql_results)
-                except Exception as se:
-                    logger.error(f"Search query failed for SQL database: {se}")
             # Query Log Analytics
             if search_log_analytics:
                 try:
