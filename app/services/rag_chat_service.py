@@ -56,8 +56,6 @@ class RagChatService:
             credential=self.credential
         )
 
-        logger.info("RagChatService initialized with environment variables")
-
     async def _select_indexes(self, condensed_query: str) -> Tuple[bool, bool]:
         """Use LLM to decide which indexes to search based on the condensed query."""
         import json

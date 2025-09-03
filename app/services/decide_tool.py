@@ -2,6 +2,8 @@
 RAG Chat Service using Azure OpenAI and AI Search
 """
 import logging
+import json
+import uuid
 from typing import List, Tuple
 from azure.identity import DefaultAzureCredential, get_bearer_token_provider
 from openai import AsyncAzureOpenAI
@@ -45,7 +47,8 @@ class DecideTool:
             api_version=self.azure_openai_api_version
         )
 
-        logger.info("DecideTool initialized with environment variables")
+    def emit(self, event: str, payload: dict):
+        logger.info(json.dumps({"event": event, **payload}, ensure_ascii=False))
 
     async def _condense_query(self, history: List[ChatMessage]) -> Tuple[str, str]:
         """Generate a standalone condensed query from recent multi-turn chat history.
@@ -77,7 +80,6 @@ class DecideTool:
                 messages=[{"role": "user", "content": rewrite_prompt}],
             )
             condensed = resp.choices[0].message.content.strip()
-            logger.debug(f"Condensed query: {condensed}")
             # Basic sanity: avoid model giving multi-line answer instead of a query
             if '\n' in condensed and len(condensed.split('\n')) > 3:
                 condensed = last_user_query  # fallback
@@ -160,6 +162,17 @@ class DecideTool:
                         }
                     ]
                 }
+            
+            conversation_id = str(uuid.uuid4())
+        
+            self.emit("chat_prompt", {
+                "conversation_id": conversation_id,
+                "turn_id": str(uuid.uuid4()),
+                "user_id": 'user',
+                "prompt": history[-1].content,
+                "prompt_chars": len(history[-1].content),
+                "metadata": {},
+            })
 
             condensed_query, last_user_query = await self._condense_query(history)
             effective_query = condensed_query or last_user_query
@@ -192,7 +205,6 @@ class DecideTool:
             # Query RAG
             if search_rag:
                 try:
-                    logger.debug("RAG")
                     response_rag = await rag_chat_service.get_chat_completion(effective_query)
                     _accumulate(response_rag)
                 except Exception as se:
@@ -200,7 +212,6 @@ class DecideTool:
             # Query Log Analytics
             if search_log_analytics:
                 try:
-                    logger.debug("Querying Log Analytics")
                     log_analytics_results = await log_analytics_service.get_chat_completion(effective_query)
                     _accumulate(log_analytics_results)
                 except Exception as se:
@@ -231,6 +242,15 @@ class DecideTool:
 
             # Build citations array expected by the frontend (title/filePath/url optional)
             citations = [{"title": s['title'], "content": s['content']} for s in sources_parts]
+
+            self.emit("chat_prompt", {
+                "conversation_id": conversation_id,
+                "turn_id": str(uuid.uuid4()),
+                "user_id": 'assistant',
+                "prompt": base_content,
+                "prompt_chars": len(base_content),
+                "metadata": {},
+            })
 
             # Return a plain JSON-serializable structure used by the UI
             return {
