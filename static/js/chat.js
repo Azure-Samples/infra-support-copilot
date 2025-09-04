@@ -154,7 +154,7 @@ document.addEventListener('DOMContentLoaded', function() {
      * 4. Sets up event handlers for citation badge clicks
      * 5. Adds the message to the chat history
      */
-    function addAssistantMessage(content, citations) {
+    function addAssistantMessage(content, citations, conversation_id) {
         // Create assistant message DOM directly
         const wrapper = document.createElement('div');
         // Keep items on one line and align at the top so the avatar stays left of the bubble
@@ -239,7 +239,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         .map(el => el.value)
                         .filter(Boolean);
                     selectTableInput = ';;SQL;;' +selected.join(',');
-                    sendMessage(selectTableInput);
+                    sendMessage(selectTableInput, conversation_id);
                 });
 
                 actions.appendChild(applyBtn);
@@ -338,7 +338,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         .map(el => el.value)
                         .filter(Boolean);
                     selectColumnInput = ';;EXECUTE;;' +selected.join(',');
-                    sendMessage(selectColumnInput);
+                    sendMessage(selectColumnInput, conversation_id);
                     scrollToBottom();
                 });
 
@@ -579,7 +579,7 @@ document.addEventListener('DOMContentLoaded', function() {
      * 4. Extracts any citations from the context
      * 5. Handles errors gracefully with user-friendly messages
      */
-    function sendMessage(text) {
+    function sendMessage(text, conversation_id="") {
         hideError();
         
         // Add user message to UI
@@ -606,6 +606,7 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             body: JSON.stringify({
                 messages: messages,
+                conversation_id: conversation_id
             })
         })
         .then(response => {
@@ -639,12 +640,14 @@ document.addEventListener('DOMContentLoaded', function() {
             // Get message data
             const message = choice.message;
             const content = message.content;
+            const metadata = message.metadata || {};
+            const conversation_id = metadata.conversation_id || null;
             
             // Extract citations from context
             const citations = message.context?.citations || [];
             
             // Add assistant message to UI
-            addAssistantMessage(content, citations);
+            addAssistantMessage(content, citations, conversation_id);
             
             // Add assistant message to chat history
             const assistantMessage = {

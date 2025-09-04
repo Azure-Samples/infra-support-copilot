@@ -109,7 +109,7 @@ class DecideTool:
             logger.warning(f"Index selection failed ({e}); defaulting to all indexes")
             return True, True, True
 
-    async def get_chat_completion(self, history: List[ChatMessage]):
+    async def get_chat_completion(self, history: List[ChatMessage], conversation_id: str = "") -> dict:
         """Multi-turn RAG flow considering recent chat history.
         Steps:
           1. Condense conversation into a standalone query.
@@ -118,6 +118,8 @@ class DecideTool:
           4. Inject sources + original last user query into system prompt for final answer.
         """
         try:
+            new_conversation_id = str(uuid.uuid4())
+
             if history[-1].content.startswith(";;SQL;;"):
                 sql_results = await sql_query_service.get_chat_completion(history[-1].content)
                 return {
@@ -126,7 +128,8 @@ class DecideTool:
                             "message": {
                                 "role": "assistant",
                                 "content": f"{sql_results[0]['content']}",
-                                "context": {"citations": []}
+                                "context": {"citations": []},
+                                "metadata": {"conversation_id": conversation_id}
                             }
                         }
                     ]
@@ -151,6 +154,16 @@ class DecideTool:
                 # Extract assistant content from SDK object
                 base_content = chat_resp.choices[0].message.content if chat_resp.choices and chat_resp.choices[0].message else ""
 
+                self.emit("chat_prompt", {
+                    "conversation_id": conversation_id,
+                    "turn_id": str(uuid.uuid4()),
+                    "user_id": 'assistant',
+                    "prompt": base_content,
+                    "prompt_chars": len(base_content),
+                    "metadata": {},
+                })
+
+
                 return {
                     "choices": [
                         {
@@ -162,11 +175,9 @@ class DecideTool:
                         }
                     ]
                 }
-              
-            conversation_id = str(uuid.uuid4())
         
             self.emit("chat_prompt", {
-                "conversation_id": conversation_id,
+                "conversation_id": new_conversation_id,
                 "turn_id": str(uuid.uuid4()),
                 "user_id": 'user',
                 "prompt": history[-1].content,
@@ -195,7 +206,8 @@ class DecideTool:
                                 "message": {
                                     "role": "assistant",
                                     "content": f"{sql_results[0]['content']}",
-                                    "context": {"citations": []}
+                                    "context": {"citations": []},
+                                    "metadata": {"conversation_id": new_conversation_id}
                                 }
                             }
                         ]
@@ -244,7 +256,7 @@ class DecideTool:
             citations = [{"title": s['title'], "content": s['content']} for s in sources_parts]
 
             self.emit("chat_prompt", {
-                "conversation_id": conversation_id,
+                "conversation_id": new_conversation_id,
                 "turn_id": str(uuid.uuid4()),
                 "user_id": 'assistant',
                 "prompt": base_content,

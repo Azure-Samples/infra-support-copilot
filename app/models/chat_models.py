@@ -20,3 +20,4 @@ class ChatMessage(BaseModel):
 class ChatRequest(BaseModel):
     """Chat completion request model for the API endpoint"""
     messages: List[ChatMessage] = Field(..., description="List of chat messages")
+    conversation_id: str = Field("", description="Optional conversation ID for tracking")

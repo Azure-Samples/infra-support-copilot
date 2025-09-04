@@ -82,7 +82,7 @@ async def chat_completion(chat_request: ChatRequest):
             raise HTTPException(status_code=400, detail="Messages cannot be empty")
         
         # Get chat completion from RAG service
-        response = await decide_tool.get_chat_completion(chat_request.messages)
+        response = await decide_tool.get_chat_completion(chat_request.messages, chat_request.conversation_id)
         
         return response
         
