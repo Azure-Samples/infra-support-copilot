@@ -235,14 +235,14 @@ resource appService 'Microsoft.Web/sites@2022-03-01' = {
           name: 'USE_AAD'
           value: '1'
         }
-          {
-            name: 'APPINSIGHTS_INSTRUMENTATIONKEY'
-            value: appInsights.properties.InstrumentationKey
-          }
-          {
-            name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
-            value: appInsights.properties.ConnectionString
-          }
+        {
+          name: 'APPINSIGHTS_INSTRUMENTATIONKEY'
+          value: appInsights.properties.InstrumentationKey
+        }
+        {
+          name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
+          value: appInsights.properties.ConnectionString
+        }
       ]
     }
   }
@@ -744,6 +744,8 @@ output AZURE_APP_SERVICE_NAME string = appService.name
 output LOG_ANALYTICS_WORKSPACE_RESOURCE_ID string = logAnalyticsWorkspace.id
 output LOG_ANALYTICS_WORKSPACE_NAME string = logAnalyticsWorkspace.name
 output LOG_ANALYTICS_CUSTOMER_ID string = logAnalyticsWorkspace.properties.customerId
+output APPINSIGHTS_INSTRUMENTATIONKEY string = appInsights.properties.InstrumentationKey
+output APPLICATIONINSIGHTS_CONNECTION_STRING string = appInsights.properties.ConnectionString
 
 // ----------------------------------------------------
 // App Service diagnostics settings

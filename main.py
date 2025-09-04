@@ -4,19 +4,45 @@ FastAPI RAG app using Azure OpenAI and Azure AI Search
 import os
 import logging
 import uvicorn
+from dotenv import load_dotenv
 from fastapi import FastAPI, Request, HTTPException
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 
+from opencensus.ext.azure.log_exporter import AzureLogHandler
+from opencensus.trace import config_integration
+
 from app.models.chat_models import ChatRequest
 from app.services.decide_tool import decide_tool
+
+load_dotenv()
+
+# Application Insightsの設定
+connection_string = os.getenv('APPLICATIONINSIGHTS_CONNECTION_STRING')
+if connection_string:
+    azure_log_handler = AzureLogHandler(connection_string=connection_string)
+    azure_log_handler.setLevel(logging.INFO)
+
+    root_logger = logging.getLogger()
+    root_logger.addHandler(azure_log_handler)
+    root_logger.setLevel(logging.INFO)
+
+    config_integration.trace_integrations(['requests', 'httplib'])
 
 # Configure logging
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    handlers=[
+        logging.StreamHandler(),
+    ]
 )
+
+if connection_string:
+    logging.getLogger().addHandler(azure_log_handler)
+
+
 logger = logging.getLogger(__name__)
 
 # Create FastAPI app

@@ -5,155 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Support Chat</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome for custom checkbox icons in selectable lists -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="/static/css/app.css">
-    <style>
-        /* Markdown styling for chat messages */
-        .message-content h1, .message-content h2, .message-content h3, 
-        .message-content h4, .message-content h5, .message-content h6,
-        .markdown-content h1, .markdown-content h2, .markdown-content h3, 
-        .markdown-content h4, .markdown-content h5, .markdown-content h6 {
-            margin-top: 1rem;
-            margin-bottom: 0.5rem;
-            font-weight: bold;
-        }
-        .message-content h1, .markdown-content h1 { font-size: 1.5rem; }
-        .message-content h2, .markdown-content h2 { font-size: 1.3rem; }
-        .message-content h3, .markdown-content h3 { font-size: 1.1rem; }
-        .message-content h4, .message-content h5, .message-content h6,
-        .markdown-content h4, .markdown-content h5, .markdown-content h6 { font-size: 1rem; }
-        
-        .message-content p, .markdown-content p { margin-bottom: 0.5rem; }
-        .message-content ul, .message-content ol,
-        .markdown-content ul, .markdown-content ol { 
-            margin-bottom: 0.5rem; 
-            padding-left: 1.5rem;
-        }
-        .message-content li, .markdown-content li { margin-bottom: 0.25rem; }
-        .message-content blockquote, .markdown-content blockquote {
-            border-left: 4px solid #dee2e6;
-            padding-left: 1rem;
-            margin: 0.5rem 0;
-            color: #6c757d;
-        }
-        .message-content code, .markdown-content code {
-            background-color: #f8f9fa;
-            padding: 0.2rem 0.4rem;
-            border-radius: 0.25rem;
-            font-family: 'Courier New', monospace;
-            font-size: 0.9em;
-        }
-        .message-content pre, .markdown-content pre {
-            background-color: #f8f9fa;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            overflow-x: auto;
-            margin: 0.5rem 0;
-        }
-        .message-content pre code, .markdown-content pre code {
-            background-color: transparent;
-            padding: 0;
-        }
-        .message-content table, .markdown-content table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 0.5rem 0;
-        }
-        .message-content th, .message-content td,
-        .markdown-content th, .markdown-content td {
-            border: 1px solid #dee2e6;
-            padding: 0.5rem;
-            text-align: left;
-        }
-        .message-content th, .markdown-content th {
-            background-color: #f8f9fa;
-            font-weight: bold;
-        }
-        
-        /* Additional styling for citation modal markdown content */
-        .citation-content.markdown-content {
-            white-space: normal;
-            font-family: inherit;
-            line-height: 1.6;
-            max-height: 400px;
-            overflow-y: auto;
-        }
-
-        /* Prompt suggestion layout */
-        :root {
-            --prompt-width: 360px;
-            --prompt-height: 56px;
-        }
-        /* Center prompt block on screen (both axes) */
-        #prompt-suggestion {
-            min-height: 90vh; 
-            display: flex;
-            flex-direction: column; /* stack title over grid */
-            align-items: center;
-            justify-content: center;
-        }
-        #prompt-suggestion .prompt-grid {
-            display: grid;
-            grid-template-columns: 1fr; /* mobile: single column */
-            gap: 0.5rem;
-            justify-content: center; /* center grid within container */
-            justify-items: stretch;   /* buttons stretch in column */
-        }
-        #prompt-suggestion .prompt-btn {
-            height: var(--prompt-height);
-            width: 100%;
-            max-width: var(--prompt-width); /* fixed width cap */
-            border-radius: 12px;
-            white-space: normal; /* allow wrapping text */
-            display: inline-flex;
-            align-items: center;
-        }
-        /* Desktop (lg and up): 2x2 centered grid with fixed button width */
-        @media (min-width: 992px) {
-            #prompt-suggestion .prompt-grid {
-                grid-template-columns: repeat(2, var(--prompt-width));
-                gap: 0.75rem 1rem;
-                justify-items: center; /* center each cell */
-            }
-            #prompt-suggestion .prompt-btn {
-                width: var(--prompt-width);
-            }
-        }
-
-        /* Prompt button theming: border and hover background */
-        #prompt-suggestion .prompt-btn {
-            border-color: #b783fa !important;
-            color: var(--bs-secondary) !important; /* keep same text color as outline-secondary */
-            background-color: #fff; /* default white background */
-            transition: background-color 0.15s ease, border-color 0.15s ease;
-        }
-        #prompt-suggestion .prompt-btn:hover,
-        #prompt-suggestion .prompt-btn:focus,
-        #prompt-suggestion .prompt-btn:active,
-        #prompt-suggestion .prompt-btn.active {
-            background-color: #b783fa !important;
-            border-color: #b783fa !important;
-            color: #000 !important; /* do not change text color on hover */
-        }
-
-        /* Prompt title responsive alignment */
-        #prompt-suggestion .prompt-title {
-            color: #6c757d;
-            text-align: center; /* mobile center */
-            margin: 0 0 0.75rem 0;
-            width: 100%;
-            max-width: var(--prompt-width);
-        }
-        @media (min-width: 992px) {
-            #prompt-suggestion .prompt-title {
-                /* match grid width: two columns + 1rem column gap */
-                width: calc(var(--prompt-width) * 2 + 1rem);
-                max-width: none;
-                margin: 0 0 0.75rem 0;
-            }
-        }
-    </style>
 </head>
 <body>
     <div class="d-flex flex-column vh-100 w-100">        
@@ -192,10 +45,10 @@
                         type="button"
                         id="btn-count-vms"
                         class="btn btn-outline-secondary text-start prompt-btn"
-                        data-text="仮想マシンは合計でいくつありますか？"
-                        aria-label="仮想マシンは合計でいくつありますか？"
+                        data-text="ネットワークインターフェースのプライベートIPが10.100.1.100、10.100.0.5の仮想マシンにインストールされているソフトウェア一覧をクエリしてください"
+                        aria-label="ネットワークインターフェースのプライベートIPが10.100.1.100、10.100.0.5の仮想マシンにインストールされているソフトウェア一覧をクエリしてください"
                     >
-                        仮想マシンは合計でいくつありますか？
+                        ネットワークインターフェースのプライベートIPが10.100.1.100、10.100.0.5の仮想マシンにインストールされているソフトウェア一覧をクエリしてください
                     </button>
                 </div>
             </div>
