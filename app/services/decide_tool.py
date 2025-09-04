@@ -156,7 +156,7 @@ class DecideTool:
                         {
                             "message": {
                                 "role": "assistant",
-                                "content": f"{base_content}:n\nReferences: [doc1]",
+                                "content": f"{base_content}\nReferences: [doc1]",
                                 "context": {"citations": citations}
                             }
                         }

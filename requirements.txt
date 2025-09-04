@@ -14,3 +14,5 @@ azure-search-documents==11.5.3
 sqlalchemy==2.0.36
 pyodbc==5.2.0
 azure-monitor-query==2.0.0
+opencensus-ext-azure==1.1.15
+opencensus-ext-logging==0.1.1

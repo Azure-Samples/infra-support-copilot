@@ -54,6 +54,8 @@ class AppSettings(BaseSettings):
 
     # Other
     client_public_ip: Optional[str] = Field(None, validation_alias="CLIENT_PUBLIC_IP")
+    appInsightsInstrumentationKey: str = Field(..., validation_alias="APPINSIGHTS_INSTRUMENTATIONKEY")
+    applicationInsightsConnectionString: str = Field(..., validation_alias="APPLICATIONINSIGHTS_CONNECTION_STRING")
 
     # Other settings
     system_prompt: str = Field(
