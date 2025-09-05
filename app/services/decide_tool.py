@@ -88,27 +88,6 @@ class DecideTool:
             condensed = last_user_query
         return condensed, last_user_query
 
-    async def _select_tools(self, condensed_query: str) -> Tuple[bool, bool]:
-        """Use LLM to decide which tools should be used based on the condensed query."""
-        import json
-        index_selection_prompt = (
-            "Decide which tool should be searched to answer the user's request.\n"
-            "Tools: 'RAG' (documents of ownership/contact/server metadata and incidents), 'SQL Query' (refer to the Azure Arc data to overview the whole service or numbers), 'Log Analytics' (query Azure Monitor logs).\n"
-            "Return ONLY JSON like {\"rag\": true, \"sql_query\": false, \"log_analytics\": false}. If unsure, set a field to true.\n"
-            f"Query: {condensed_query}"
-        )
-        try:
-            selection_response = await self.openai_client.chat.completions.create(
-                messages=[{"role": "user", "content": index_selection_prompt}],
-                model=self.gpt_deployment
-            )
-            selection_text = selection_response.choices[0].message.content.strip()
-            selection = json.loads(selection_text)
-            return bool(selection.get("rag", False)), bool(selection.get("sql_query", False)), bool(selection.get("log_analytics", False))
-        except Exception as e:
-            logger.warning(f"Index selection failed ({e}); defaulting to all indexes")
-            return True, True, True
-
     async def get_chat_completion(self, history: List[ChatMessage], conversation_id: str = "") -> dict:
         """Multi-turn RAG flow considering recent chat history.
         Steps:
@@ -188,63 +167,134 @@ class DecideTool:
             condensed_query, last_user_query = await self._condense_query(history)
             effective_query = condensed_query or last_user_query
 
-            search_rag, search_sql, search_log_analytics = await self._select_tools(effective_query)
+            tools = [
+                {
+                    "type": "function",
+                    "function": {
+                        "name": "rag_chat_service.get_chat_completion",
+                        "description": "Search RAG index for relevant documents (inventories, ownership, contacts, incidents).",
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "query": {
+                                    "type": "string",
+                                    "description": "The search query."
+                                }
+                            },
+                            "required": ["query"]
+                        }
+                    }
+                },
+                {
+                    "type": "function",
+                    "function": {
+                        "name": "sql_query_service.get_chat_completion",
+                        "description": "Query SQL database to get statistical information (servers, virtual machines, installed softwares).",
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "query": {
+                                    "type": "string",
+                                    "description": "The search query."
+                                }
+                            },
+                            "required": ["query"]
+                        }
+                    }
+                },
+                {
+                    "type": "function",
+                    "function": {
+                        "name": "log_analytics_service.get_chat_completion",
+                        "description": "Query Log Analytics to get log information (alerts, health, performance).",
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "query": {
+                                    "type": "string",
+                                    "description": "The search query."
+                                }
+                            },
+                            "required": ["query"]
+                        }
+                    }
+                }
+            ]
 
             sources_parts: List[dict] = []
+
+            chat_resp = await self.openai_client.chat.completions.create(
+                messages=[
+                    {"role": "system", "content": "Select the single best tool. If SQL stats, choose sql_query_service. If logs, choose log_analytics_service. If docs/inventories, choose rag_chat_service."},
+                    {"role": "user", "content": last_user_query or effective_query}
+                ],
+                model=self.gpt_deployment,
+                tools=tools,
+                tool_choice="auto"
+            )
+
+            logger.info(f"DecideTool tool selection response: {chat_resp}")
 
             def _accumulate(source: List[dict]):
                 sources_parts.extend(source)
 
-            # Query SQL database
-            if search_sql:
-                try:
-                    logger.debug("Querying SQL database")
-                    sql_results = await sql_query_service.get_chat_completion(effective_query)
-                    return {
-                        "choices": [
-                            {
-                                "message": {
-                                    "role": "assistant",
-                                    "content": f"{sql_results[0]['content']}",
-                                    "context": {"citations": []},
-                                    "metadata": {"conversation_id": new_conversation_id}
-                                }
-                            }
-                        ]
-                    }
-                except Exception as se:
-                    logger.error(f"Search query failed for SQL database: {se}")
-            # Query RAG
-            if search_rag:
-                try:
-                    response_rag = await rag_chat_service.get_chat_completion(effective_query)
-                    _accumulate(response_rag)
-                except Exception as se:
-                    logger.error(f"Search query failed for RAG: {se}")
-            # Query Log Analytics
-            if search_log_analytics:
-                try:
-                    log_analytics_results = await log_analytics_service.get_chat_completion(effective_query)
-                    _accumulate(log_analytics_results)
-                except Exception as se:
-                    logger.error(f"Search query failed for Log Analytics: {se}")
+            msg = chat_resp.choices[0].message
+            tool_calls = getattr(msg, "tool_calls", None)
 
-            # Combine sources into a single string for the system prompt
-            sources = "\n\n".join(f"{src['title']}:\n{src['content']}" for src in sources_parts)
+            if tool_calls:
+                for tc in tool_calls:
+                    fname = tc.function.name
+                    fargs = json.loads(tc.function.arguments or "{}")
+                    q = fargs.get("query", effective_query)
+
+                    if fname == "sql_query_service.get_chat_completion":
+                        try:
+                            sql_results = await sql_query_service.get_chat_completion(q)
+                            return {
+                                "choices": [
+                                    {
+                                        "message": {
+                                            "role": "assistant",
+                                            "content": f"{sql_results[0]['content']}",
+                                            "context": {"citations": []},
+                                            "metadata": {"conversation_id": new_conversation_id}
+                                        }
+                                    }
+                                ]
+                            }
+                        except Exception as se:
+                            logger.error(f"Search query failed for SQL database: {se}")
+
+                    elif fname == "rag_chat_service.get_chat_completion":
+                        try:
+                            response_rag = await rag_chat_service.get_chat_completion(q)
+                            _accumulate(response_rag)
+                        except Exception as se:
+                            logger.error(f"Search query failed for RAG: {se}")
+
+                    elif fname == "log_analytics_service.get_chat_completion":
+                        try:
+                            response_logs = await log_analytics_service.get_chat_completion(q)
+                            _accumulate(response_logs)
+                        except Exception as se:
+                            logger.error(f"Search query failed for Log Analytics: {se}")
 
             # Final answer request
+            # Combine sources into a single string for the system prompt (after tool execution)
+            sources = "\n\n".join(f"{src['title']}:\n{src['content']}" for src in sources_parts)
+
             final_content = self.system_prompt.format(
                 query=last_user_query or effective_query,
                 sources=sources
             )
 
-            chat_resp = await self.openai_client.chat.completions.create(
+            final_response = await self.openai_client.chat.completions.create(
                 messages=[{"role": "user", "content": final_content}],
-                model=self.gpt_deployment
+                model=self.gpt_deployment,
             )
 
             # Extract assistant content from SDK object
-            base_content = chat_resp.choices[0].message.content if chat_resp.choices and chat_resp.choices[0].message else ""
+            base_content = final_response.choices[0].message.content if final_response.choices and final_response.choices[0].message else ""
 
             # Build references section (1-based indexing for [docN])
             references_suffix = ""
