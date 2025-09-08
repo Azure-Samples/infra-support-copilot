@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import logging
 from typing import Any, Dict, List
-import json
 
 from azure.identity import DefaultAzureCredential, get_bearer_token_provider
 from azure.monitor.query import LogsQueryClient
