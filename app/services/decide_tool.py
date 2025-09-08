@@ -206,7 +206,7 @@ class DecideTool:
                     "type": "function",
                     "function": {
                         "name": "log_analytics_service.get_chat_completion",
-                        "description": "Query Log Analytics to get log information (alerts, health, performance).",
+                        "description": "Query Log Analytics to get log information (AppServiceAuditLogs, AppServiceConsoleLogs, AppServiceHttpLogs, AppServicePlatformLogs, AzureDiagnostics, AzureMetrics, Usage).",
                         "parameters": {
                             "type": "object",
                             "properties": {
@@ -232,9 +232,7 @@ class DecideTool:
                 tools=tools,
                 tool_choice="auto"
             )
-
-            logger.info(f"DecideTool tool selection response: {chat_resp}")
-
+        
             def _accumulate(source: List[dict]):
                 sources_parts.extend(source)
 

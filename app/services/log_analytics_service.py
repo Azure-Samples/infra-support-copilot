@@ -1,7 +1,8 @@
 from __future__ import annotations
 
 import logging
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List
+import json
 
 from azure.identity import DefaultAzureCredential, get_bearer_token_provider
 from azure.monitor.query import LogsQueryClient
@@ -67,55 +68,170 @@ class LogAnalyticsService:
         for r in table.rows:
             rows.append({col: val for col, val in zip(columns, r)})
         return rows
-
-    async def _select_service(self, condensed_query: str) -> Tuple[bool, bool, bool, bool, bool, bool, bool]:
-        import json
-        index_selection_prompt = (
-            "Decide which log data should be searched to answer the user's request.\n"
-            "Services: 'AppServiceAuditLogs', 'AppServiceConsoleLogs', 'AppServiceHTTPLogs', 'AppServicePlatformLogs', 'AzureDiagnostics', 'AzureMetrics', 'Usage'.\n"
-            "Return ONLY JSON like {\"AppServiceAuditLogs\": true, \"AppServiceConsoleLogs\": false, \"AppServiceHTTPLogs\": false, \"AppServicePlatformLogs\": false, \"AzureDiagnostics\": false, \"AzureMetrics\": false, \"Usage\": false}. If unsure, set a field to true.\n"
-            f"Query: {condensed_query}"
-        )
-        try:
-            selection_response = await self.openai_client.chat.completions.create(
-                messages=[{"role": "user", "content": index_selection_prompt}],
-                model=self.gpt_deployment
-            )
-            selection_text = selection_response.choices[0].message.content.strip()
-            selection = json.loads(selection_text)
-            return bool(selection.get("AppServiceAuditLogs", False)), bool(selection.get("AppServiceConsoleLogs", False)), bool(selection.get("AppServiceHTTPLogs", False)), bool(selection.get("AppServicePlatformLogs", False)), bool(selection.get("AzureDiagnostics", False)), bool(selection.get("AzureMetrics", False)), bool(selection.get("Usage", False))
-        except Exception as e:
-            logger.warning(f"Index selection failed ({e}); defaulting to all indexes")
-            return True, True, True, True, True, True, True
-
+    
+    def rows_to_markdown_table(self, rows: List[Dict[str, Any]]) -> str:
+        if not rows:
+            return "(no rows)"
+        cols = list(rows[0].keys())
+        header = " | ".join(cols)
+        separator = " | ".join(["---"] * len(cols))
+        lines = [header, separator]
+        for r in rows:
+            lines.append(" | ".join(str(r.get(c, "")) for c in cols))
+        return "\n".join(lines)
     
     async def get_chat_completion(self, effective_query: str):
         try:
-            app_service_audit_logs, app_service_console_logs, app_service_http_logs, app_service_platform_logs, azure_diagnostics_logs, azure_metrics_logs, usage_logs = await self._select_service(effective_query)
+            tools = [
+                {
+                    "type": "function",
+                    "function": {
+                        "name": "self.query_appservice_audit_logs_errors",
+                        "description": "Search Log Analytics (AppServiceAuditLogs: Logs generated when publishing users successfully log on via one of the App Service publishing protocols.).",
+                        "parameters": {
+                            "type": "object",
+                            "properties": {},
+                            "required": []
+                        }
+                    }
+                },
+                {
+                    "type": "function",
+                    "function": {
+                        "name": "self.query_appservice_console_logs_errors",
+                        "description": "Search Log Analytics (AppServiceConsoleLogs: Console logs generated from application or container.).",
+                        "parameters": {
+                            "type": "object",
+                            "properties": {},
+                            "required": []
+                        }
+                    }
+                },
+                {
+                    "type": "function",
+                    "function": {
+                        "name": "self.query_appservice_http_logs_errors",
+                        "description": "Search Log Analytics (AppServiceHttpLogs: Incoming HTTP requests on App Service. Use these logs to monitor application health, performance and usage patterns.).",
+                        "parameters": {
+                            "type": "object",
+                            "properties": {},
+                            "required": []
+                        }
+                    }
+                },
+                {
+                    "type": "function",
+                    "function": {
+                        "name": "self.query_appservice_platform_logs_errors",
+                        "description": "Search Log Analytics (AppServicePlatformLogs: Logs generated through AppService platform for your application.).",
+                        "parameters": {
+                            "type": "object",
+                            "properties": {},
+                            "required": []
+                        }
+                    }
+                },
+                {
+                    "type": "function",
+                    "function": {
+                        "name": "self.query_azure_diagnostics",
+                        "description": "Search Log Analytics (AzureDiagnostics: Diagnostic logs emitted by Azure services describe the operation of those services or resources. All diagnostic logs share a common top-level schema, which services extend to emit unique properties for their specifc events.).",
+                        "parameters": {
+                            "type": "object",
+                            "properties": {},
+                            "required": []
+                        }
+                    }
+                },
+                {
+                    "type": "function",
+                    "function": {
+                        "name": "self.query_azure_metrics",
+                        "description": "Search Log Analytics (AzureMetrics: Metric data emitted by Azure services that measure their health and performance.).",
+                        "parameters": {
+                            "type": "object",
+                            "properties": {},
+                            "required": []
+                        }
+                    }
+                },
+                {
+                    "type": "function",
+                    "function": {
+                        "name": "self.query_useage",
+                        "description": "Search Log Analytics (Usage: Hourly usage data for each table in the workspace.).",
+                        "parameters": {
+                            "type": "object",
+                            "properties": {},
+                            "required": []
+                        }
+                    }
+                },
+            ]
 
             sources = []
-            
-            if app_service_audit_logs:
-                sources.append({"title": "Log Analytics (App Service Audit Logs)", "content": f"## Errors:\n{self.query_appservice_audit_logs_errors()}\n"})
 
-            if app_service_console_logs:
-                sources.append({"title": "Log Analytics (App Service Console Logs)", "content": f"## Errors:\n{self.query_appservice_console_logs_errors()}\n"})
+            chat_resp = await self.openai_client.chat.completions.create(
+                messages=[
+                    {"role": "system", "content": "Select the single best tool."},
+                    {"role": "user", "content": effective_query}
+                ],
+                model=self.gpt_deployment,
+                tools=tools,
+                tool_choice="auto"
+            )
 
-            if app_service_http_logs:
-                sources.append({"title": "Log Analytics (App Service HTTP Logs)", "content": f"## Errors:\n{self.query_appservice_http_logs_errors()}\n"})
+            msg = chat_resp.choices[0].message
+            tool_calls = getattr(msg, "tool_calls", None)
 
-            if app_service_platform_logs:
-                sources.append({"title": "Log Analytics (App Service Platform Logs)", "content": f"## Errors:\n{self.query_appservice_platform_logs_errors()}\n"})
+            if tool_calls:
+                for tc in tool_calls:
+                    fname = tc.function.name
 
-            if azure_diagnostics_logs:
-                sources.append({"title": "Log Analytics (Azure Diagnostics)", "content": f"## Errors:\n{self.query_azure_diagnostics_errors()}\n"})
+                    if fname == "self.query_appservice_audit_logs_errors":
+                        try:
+                            sql_results = self.query_appservice_audit_logs_errors()
+                            sources.append({"title": "Log Analytics (AppServiceAuditLogs)", "content": f"## Errors:\n{sql_results}\n"})
+                        except Exception as se:
+                            logger.error(f"Search query failed for Log Analytics: {se}")
 
-            if azure_metrics_logs:
-                sources.append({"title": "Log Analytics (Azure Metrics)", "content": f"## Errors:\n{self.query_azure_metrics_errors()}\n"})
+                    elif fname == "self.query_appservice_console_logs_errors":
+                        try:
+                            sql_results = self.query_appservice_console_logs_errors()
+                            sources.append({"title": "Log Analytics (AppServiceConsoleLogs)", "content": f"## Errors:\n{sql_results}\n"})
+                        except Exception as se:
+                            logger.error(f"Search query failed for Log Analytics: {se}")
 
-            if usage_logs:
-                sources.append({"title": "Log Analytics (Usage)", "content": f"## Errors:\n{self.query_usage_errors()}\n"})
-
+                    elif fname == "self.query_appservice_http_logs_errors":
+                        try:
+                            sql_results = self.query_appservice_http_logs_errors()
+                            sources.append({"title": "Log Analytics (AppServiceHttpLogs)", "content": f"## Errors:\n{sql_results}\n"})
+                        except Exception as se:
+                            logger.error(f"Search query failed for Log Analytics: {se}")
+                    elif fname == "self.query_appservice_platform_logs_errors":
+                        try:
+                            sql_results = self.query_appservice_platform_logs_errors()
+                            sources.append({"title": "Log Analytics (AppServicePlatformLogs)", "content": f"## Errors:\n{sql_results}\n"})
+                        except Exception as se:
+                            logger.error(f"Search query failed for Log Analytics: {se}")
+                    elif fname == "self.query_azure_diagnostics":
+                        try:
+                            sql_results = self.query_azure_diagnostics()
+                            sources.append({"title": "Log Analytics (AzureDiagnostics)", "content": f"## Logs:\n{sql_results}\n"})
+                        except Exception as se:
+                            logger.error(f"Search query failed for Log Analytics: {se}")
+                    elif fname == "self.query_azure_metrics":
+                        try:
+                            sql_results = self.query_azure_metrics()
+                            sources.append({"title": "Log Analytics (AzureMetrics)", "content": f"## Logs:\n{sql_results}\n"})
+                        except Exception as se:
+                            logger.error(f"Search query failed for Log Analytics: {se}")
+                    elif fname == "self.query_usage":
+                        try:
+                            sql_results = self.query_usage()
+                            sources.append({"title": "Log Analytics (Usage)", "content": f"## Logs:\n{sql_results}\n"})
+                        except Exception as se:
+                            logger.error(f"Search query failed for Log Analytics: {se}")
             return sources
         except Exception as e:
             logger.error(f"Error in get_chat_completion: {e}")
@@ -127,69 +243,66 @@ class LogAnalyticsService:
             "| extend Status = coalesce(toint(column_ifexists('ResultType','')), toint(column_ifexists('StatusCode','')), toint(column_ifexists('scStatus','')))\n"
             "| extend ResultDescription = tostring(column_ifexists('ResultDescription',''))\n"
             "| where (isnotnull(Status) and Status >= 500) or ResultDescription has_any ('fail','error','exception','critical')\n"
-            "| summarize count() by bin(TimeGenerated, 5m), Status\n"
             "| sort by TimeGenerated desc"
         )
-        return self.query(kusto)
+        rows = self.query(kusto)
+        return self.rows_to_markdown_table(rows)
 
     def query_appservice_console_logs_errors(self) -> List[Dict[str, Any]]:
         kusto = (
             "AppServiceConsoleLogs\n"
             "| extend Level = tostring(column_ifexists('Level','')), Message = tostring(column_ifexists('Message',''))\n"
             "| where Level in ('Error','Critical','Fatal') or Message has_any ('ERROR','Error','Exception','Critical','Fail')\n"
-            "| summarize count() by bin(TimeGenerated, 5m), Level\n"
             "| sort by TimeGenerated desc"
         )
-        return self.query(kusto)
+        rows = self.query(kusto)
+        return self.rows_to_markdown_table(rows)
     
     def query_appservice_http_logs_errors(self) -> List[Dict[str, Any]]:
         kusto = (
             "union isfuzzy=true AppServiceHTTPLogs, AppServiceHttpLogs\n"
             "| extend Status = coalesce(toint(column_ifexists('scStatus','')), toint(column_ifexists('StatusCode','')), toint(column_ifexists('status','')), toint(column_ifexists('httpStatusCode','')))\n"
             "| where isnotnull(Status) and Status >= 500\n"
-            "| summarize count() by bin(TimeGenerated, 5m), Status\n"
             "| sort by TimeGenerated desc"
         )
-        return self.query(kusto)
+        rows = self.query(kusto)
+        return self.rows_to_markdown_table(rows)
     
     def query_appservice_platform_logs_errors(self) -> List[Dict[str, Any]]:
         kusto = (
             "AppServicePlatformLogs\n"
             "| extend Level = tostring(column_ifexists('Level','')), Status = toint(column_ifexists('StatusCode','')), ResultDescription = tostring(column_ifexists('ResultDescription',''))\n"
             "| where Level in ('Error','Critical','Fatal') or (isnotnull(Status) and Status >= 500) or ResultDescription has_any ('fail','error','exception','critical')\n"
-            "| summarize count() by bin(TimeGenerated, 5m), Level\n"
             "| sort by TimeGenerated desc"
         )
-        return self.query(kusto)
+        rows = self.query(kusto)
+        return self.rows_to_markdown_table(rows)
 
-    def query_azure_diagnostics_errors(self) -> List[Dict[str, Any]]:
+    def query_azure_diagnostics(self) -> List[Dict[str, Any]]:
         kusto = (
             "AzureDiagnostics\n"
             "| where TimeGenerated >= ago(24h)\n"
-            "| extend Level = tostring(column_ifexists('Level','')), Status = toint(column_ifexists('StatusCode','')), ResultDescription = tostring(column_ifexists('ResultDescription',''))\n"
-            "| summarize count() by bin(TimeGenerated, 5m), Level, Status, ResultDescription\n"
             "| sort by TimeGenerated desc"
         )
-        return self.query(kusto)
+        rows = self.query(kusto)
+        return self.rows_to_markdown_table(rows)
     
-    def query_azure_metrics_errors(self) -> List[Dict[str, Any]]:
+    def query_azure_metrics(self) -> List[Dict[str, Any]]:
         kusto = (
             "AzureMetrics\n"
             "| where TimeGenerated >= ago(24h)\n"
-            "| extend Level = tostring(column_ifexists('Level','')), Status = toint(column_ifexists('StatusCode','')), ResultDescription = tostring(column_ifexists('ResultDescription',''))\n"
-            "| summarize count() by bin(TimeGenerated, 5m), Level, Status, ResultDescription\n"
             "| sort by TimeGenerated desc"
         )
-        return self.query(kusto)
+        rows = self.query(kusto)
+        return self.rows_to_markdown_table(rows)
 
-    def query_usage_errors(self) -> List[Dict[str, Any]]:
+    def query_usage(self) -> List[Dict[str, Any]]:
         kusto = (
             "Usage\n"
             "| where TimeGenerated >= ago(24h)\n"
-            "| extend Level = tostring(column_ifexists('Level','')), Status = toint(column_ifexists('StatusCode','')), ResultDescription = tostring(column_ifexists('ResultDescription',''))\n"
-            "| summarize count() by bin(TimeGenerated, 5m), Level, Status, ResultDescription\n"
             "| sort by TimeGenerated desc"
         )
-        return self.query(kusto)
+        rows = self.query(kusto)
+        return self.rows_to_markdown_table(rows)
 
 log_analytics_service = LogAnalyticsService()
