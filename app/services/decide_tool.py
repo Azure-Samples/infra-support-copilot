@@ -232,7 +232,7 @@ class DecideTool:
                 tools=tools,
                 tool_choice="auto"
             )
-        
+            
             def _accumulate(source: List[dict]):
                 sources_parts.extend(source)
 
