@@ -168,7 +168,7 @@ resource appService 'Microsoft.Web/sites@2022-03-01' = {
       linuxFxVersion: 'PYTHON|3.12'
       alwaysOn: true
       // Required by FastAPI: start Gunicorn with Uvicorn workers
-      appCommandLine: 'gunicorn -w 2 -k uvicorn.workers.UvicornWorker -b 0.0.0.0:8000 main:app'
+      appCommandLine: 'gunicorn -w 2 -k uvicorn.workers.UvicornWorker -b 0.0.0.0:8000 app.main:app'
       // Enable application logging
       httpLoggingEnabled: true
       detailedErrorLoggingEnabled: true

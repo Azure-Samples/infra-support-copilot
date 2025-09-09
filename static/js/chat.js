@@ -234,6 +234,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 applyBtn.style.borderColor = '#000';
                 applyBtn.style.color = '#fff';
                 applyBtn.textContent = '決定';
+
+                applyBtn.disabled = true;
+                list.addEventListener('change', () => {
+                    const anyChecked = list.querySelectorAll('input[type="checkbox"]:checked').length > 0;
+                    applyBtn.disabled = !anyChecked;
+                });
                 applyBtn.addEventListener('click', () => {
                     const selected = Array.from(list.querySelectorAll('input[type="checkbox"]:checked'))
                         .map(el => el.value)
@@ -333,6 +339,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 applyBtn.style.borderColor = '#000';
                 applyBtn.style.color = '#fff';
                 applyBtn.textContent = '決定';
+
+                applyBtn.disabled = true;
+                list.addEventListener('change', () => {
+                    const anyChecked = list.querySelectorAll('input[type="checkbox"]:checked').length > 0;
+                    applyBtn.disabled = !anyChecked;
+                });
+
                 applyBtn.addEventListener('click', () => {
                     const selected = Array.from(list.querySelectorAll('input[type="checkbox"]:checked'))
                         .map(el => el.value)
