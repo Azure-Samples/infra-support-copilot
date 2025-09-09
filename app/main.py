@@ -19,16 +19,16 @@ from app.services.decide_tool import decide_tool
 load_dotenv()
 
 # Application Insightsの設定
-connection_string = os.getenv('APPLICATIONINSIGHTS_CONNECTION_STRING')
-if connection_string:
-    azure_log_handler = AzureLogHandler(connection_string=connection_string)
-    azure_log_handler.setLevel(logging.INFO)
+# connection_string = os.getenv('APPLICATIONINSIGHTS_CONNECTION_STRING')
+# if connection_string:
+#     azure_log_handler = AzureLogHandler(connection_string=connection_string)
+#     azure_log_handler.setLevel(logging.INFO)
 
-    root_logger = logging.getLogger()
-    root_logger.addHandler(azure_log_handler)
-    root_logger.setLevel(logging.INFO)
+#     root_logger = logging.getLogger()
+#     root_logger.addHandler(azure_log_handler)
+#     root_logger.setLevel(logging.INFO)
 
-    config_integration.trace_integrations(['requests', 'httplib'])
+#     config_integration.trace_integrations(['requests', 'httplib'])
 
 # Configure logging
 logging.basicConfig(
@@ -39,8 +39,8 @@ logging.basicConfig(
     ]
 )
 
-if connection_string:
-    logging.getLogger().addHandler(azure_log_handler)
+# if connection_string:
+#     logging.getLogger().addHandler(azure_log_handler)
 
 
 logger = logging.getLogger(__name__)
