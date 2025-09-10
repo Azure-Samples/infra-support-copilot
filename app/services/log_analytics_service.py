@@ -71,12 +71,38 @@ class LogAnalyticsService:
     def rows_to_markdown_table(self, rows: List[Dict[str, Any]]) -> str:
         if not rows:
             return "(no rows)"
-        cols = list(rows[0].keys())
+        # Limits to keep token usage under control
+        max_cols = 12
+        max_rows = 50
+        max_cell_chars = 200
+
+        cols_all = list(rows[0].keys())
+        cols = cols_all[:max_cols]
         header = " | ".join(cols)
         separator = " | ".join(["---"] * len(cols))
         lines = [header, separator]
+
+        row_count = 0
         for r in rows:
-            lines.append(" | ".join(str(r.get(c, "")) for c in cols))
+            if row_count >= max_rows:
+                break
+            trimmed = []
+            for c in cols:
+                val = str(r.get(c, ""))
+                if len(val) > max_cell_chars:
+                    val = val[:max_cell_chars] + "…"
+                trimmed.append(val)
+            lines.append(" | ".join(trimmed))
+            row_count += 1
+
+        truncated_notice_parts = []
+        if len(cols_all) > max_cols:
+            truncated_notice_parts.append(f"columns {len(cols_all) - max_cols} more hidden")
+        if len(rows) > max_rows:
+            truncated_notice_parts.append(f"rows {len(rows) - max_rows} more hidden")
+        if truncated_notice_parts:
+            lines.append("")
+            lines.append(f"(truncated: {'; '.join(truncated_notice_parts)})")
         return "\n".join(lines)
     
     async def get_chat_completion(self, effective_query: str):
@@ -133,8 +159,32 @@ class LogAnalyticsService:
                 {
                     "type": "function",
                     "function": {
-                        "name": "self.query_azure_diagnostics",
-                        "description": "Search Log Analytics (AzureDiagnostics: Diagnostic logs emitted by Azure services describe the operation of those services or resources. All diagnostic logs share a common top-level schema, which services extend to emit unique properties for their specifc events.).",
+                        "name": "self.query_azure_diagnostics_cognitive_services",
+                        "description": "Search Log Analytics for Azure OpenAI (AzureDiagnostics: Diagnostic logs emitted by Azure services describe the operation of those services or resources. All diagnostic logs share a common top-level schema, which services extend to emit unique properties for their specifc events.).",
+                        "parameters": {
+                            "type": "object",
+                            "properties": {},
+                            "required": []
+                        }
+                    }
+                },
+                {
+                    "type": "function",
+                    "function": {
+                        "name": "self.query_azure_diagnostics_ai_search",
+                        "description": "Search Log Analytics for Azure AI Search (AzureDiagnostics: Diagnostic logs emitted by Azure services describe the operation of those services or resources. All diagnostic logs share a common top-level schema, which services extend to emit unique properties for their specifc events.).",
+                        "parameters": {
+                            "type": "object",
+                            "properties": {},
+                            "required": []
+                        }
+                    }
+                },
+                {
+                    "type": "function",
+                    "function": {
+                        "name": "self.query_azure_diagnostics_sql",
+                        "description": "Search Log Analytics for SQL (AzureDiagnostics: Diagnostic logs emitted by Azure services describe the operation of those services or resources. All diagnostic logs share a common top-level schema, which services extend to emit unique properties for their specifc events.).",
                         "parameters": {
                             "type": "object",
                             "properties": {},
@@ -213,9 +263,21 @@ class LogAnalyticsService:
                             sources.append({"title": "Log Analytics (AppServicePlatformLogs)", "content": f"## Errors:\n{sql_results}\n"})
                         except Exception as se:
                             logger.error(f"Search query failed for Log Analytics: {se}")
-                    elif fname == "self.query_azure_diagnostics":
+                    elif fname == "self.query_azure_diagnostics_cognitive_services":
                         try:
-                            sql_results = self.query_azure_diagnostics()
+                            sql_results = self.query_azure_diagnostics_cognitive_services()
+                            sources.append({"title": "Log Analytics (AzureDiagnostics)", "content": f"## Logs:\n{sql_results}\n"})
+                        except Exception as se:
+                            logger.error(f"Search query failed for Log Analytics: {se}")
+                    elif fname == "self.query_azure_diagnostics_ai_search":
+                        try:
+                            sql_results = self.query_azure_diagnostics_ai_search()
+                            sources.append({"title": "Log Analytics (AzureDiagnostics)", "content": f"## Logs:\n{sql_results}\n"})
+                        except Exception as se:
+                            logger.error(f"Search query failed for Log Analytics: {se}")
+                    elif fname == "self.query_azure_diagnostics_sql":
+                        try:
+                            sql_results = self.query_azure_diagnostics_sql()
                             sources.append({"title": "Log Analytics (AzureDiagnostics)", "content": f"## Logs:\n{sql_results}\n"})
                         except Exception as se:
                             logger.error(f"Search query failed for Log Analytics: {se}")
@@ -277,9 +339,30 @@ class LogAnalyticsService:
         rows = self.query(kusto)
         return self.rows_to_markdown_table(rows)
 
-    def query_azure_diagnostics(self) -> List[Dict[str, Any]]:
+    def query_azure_diagnostics_cognitive_services(self) -> List[Dict[str, Any]]:
         kusto = (
             "AzureDiagnostics\n"
+            "| where ResourceProvider == 'MICROSOFT.COGNITIVESERVICES'\n"
+            "| where TimeGenerated >= ago(24h)\n"
+            "| sort by TimeGenerated desc"
+        )
+        rows = self.query(kusto)
+        return self.rows_to_markdown_table(rows)
+
+    def query_azure_diagnostics_ai_search(self) -> List[Dict[str, Any]]:
+        kusto = (
+            "AzureDiagnostics\n"
+            "| where ResourceProvider == 'MICROSOFT.SEARCH'\n"
+            "| where TimeGenerated >= ago(24h)\n"
+            "| sort by TimeGenerated desc"
+        )
+        rows = self.query(kusto)
+        return self.rows_to_markdown_table(rows)
+    
+    def query_azure_diagnostics_sql(self) -> List[Dict[str, Any]]:
+        kusto = (
+            "AzureDiagnostics\n"
+            "| where ResourceProvider == 'MICROSOFT.SQL'\n"
             "| where TimeGenerated >= ago(24h)\n"
             "| sort by TimeGenerated desc"
         )

@@ -69,7 +69,7 @@ azd auth login
 azd up   # or: azd provision (infra) + azd deploy (code)
 
 # 5. Run locally
-uvicorn main:app --reload
+uvicorn app.main:app --reload
 ```
 
 Local URL: http://127.0.0.1:8000
@@ -246,7 +246,7 @@ python scripts/create_index.py
 python scripts/upload_arc_data_to_azure_sql.py
 
 # Local run
-uvicorn main:app --reload
+uvicorn app.main:app --reload
 
 # Tear down
 azd down

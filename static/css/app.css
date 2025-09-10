@@ -4,7 +4,35 @@ html, body {
     height: 100%;
     margin: 0;
     padding: 0;
-    background-color: #f5f5f5;
+    background-color: #f8f9fa;
+}
+
+/* Main container - full width for scrollbar positioning */
+.main-container {
+    width: 100%;
+    background-color: #f8f9fa;
+    min-height: 100vh;
+}
+
+/* Content wrapper with max width and center alignment */
+.content-wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #f8f9fa;
+}
+
+/* Fixed bottom input form */
+.bottom-input-section {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+}
+
+/* Add padding to main container to account for fixed bottom section */
+.main-container {
+    padding-bottom: 120px; /* Adjust based on actual height of bottom section */
 }
 
 /* Card styles for chat messages */
@@ -206,7 +234,6 @@ html, body {
     border-left: 4px solid #dee2e6;
     padding-left: 1rem;
     margin: 0.5rem 0;
-    color: #6c757d;
 }
 .message-content code, .markdown-content code {
     background-color: #f8f9fa;
@@ -280,6 +307,19 @@ html, body {
     display: inline-flex;
     align-items: center;
 }
+
+/* Centered input form styling */
+#centered-input-form {
+    width: 100%;
+    max-width: var(--prompt-width);
+    margin-top: 1.5rem;
+}
+
+/* Hide bottom input form when centered form is visible */
+body.empty-chat .bottom-input-section {
+    display: none !important;
+}
+
 /* Desktop (lg and up): 2x2 centered grid with fixed button width */
 @media (min-width: 992px) {
     #prompt-suggestion .prompt-grid {
@@ -290,12 +330,18 @@ html, body {
     #prompt-suggestion .prompt-btn {
         width: var(--prompt-width);
     }
+    
+    /* Desktop: match grid width for centered input form */
+    #centered-input-form {
+        width: calc(var(--prompt-width) * 2 + 1rem);
+        max-width: none;
+    }
 }
 
 /* Prompt button theming: border and hover background */
 #prompt-suggestion .prompt-btn {
     border-color: #b783fa !important;
-    color: var(--bs-secondary) !important; /* keep same text color as outline-secondary */
+    color: #000 !important; /* black text color */
     background-color: #fff; /* default white background */
     transition: background-color 0.15s ease, border-color 0.15s ease;
 }
@@ -310,7 +356,7 @@ html, body {
 
 /* Prompt title responsive alignment */
 #prompt-suggestion .prompt-title {
-    color: #6c757d;
+    color: #000;
     text-align: center; /* mobile center */
     margin: 0 0 0.75rem 0;
     width: 100%;
