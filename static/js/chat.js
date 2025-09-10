@@ -24,6 +24,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const errorContainer = document.getElementById('error-container');
     const errorMessage = document.getElementById('error-message');
     const promptSuggestionContainer = document.getElementById('prompt-suggestion');
+    
+    // Centered form elements
+    const centeredInputForm = document.getElementById('centered-input-form');
+    const centeredChatForm = document.getElementById('centered-chat-form');
+    const centeredChatInput = document.getElementById('centered-chat-input');
+    const centeredSendButton = document.getElementById('centered-send-button');
+    const centeredErrorContainer = document.getElementById('centered-error-container');
+    const centeredErrorMessage = document.getElementById('centered-error-message');
 
     // Quick response buttons
     const promptButtons = document.querySelectorAll('#prompt-suggestion .prompt-btn');
@@ -34,33 +42,63 @@ document.addEventListener('DOMContentLoaded', function() {
     // Event listeners
     chatForm.addEventListener('submit', handleChatSubmit);
     chatInput.addEventListener('keydown', handleKeyDown);
+    
+    // Centered form event listeners
+    centeredChatForm.addEventListener('submit', handleCenteredChatSubmit);
+    centeredChatInput.addEventListener('keydown', handleCenteredKeyDown);
 
     // Attach handlers for prompt buttons (fills input with fixed sentence)
     if (promptButtons && promptButtons.length > 0) {
         promptButtons.forEach(btn => {
             btn.addEventListener('click', () => {
                 const text = btn.getAttribute('data-text') || btn.textContent.trim();
-                chatInput.value = text;
-                chatInput.focus();
+                const activeInput = getCurrentActiveInput();
+                activeInput.value = text;
+                activeInput.focus();
             });
         });
     }
 
     // Hide prompt suggestions if history already has items (e.g., persisted state)
     updatePromptSuggestionVisibility();
+    
+    /**
+     * Get the currently active input field based on visibility
+     */
+    function getCurrentActiveInput() {
+        return centeredInputForm.classList.contains('d-none') ? chatInput : centeredChatInput;
+    }
+    
+    /**
+     * Get the currently active error container based on visibility
+     */
+    function getCurrentErrorContainer() {
+        return centeredInputForm.classList.contains('d-none') ? errorContainer : centeredErrorContainer;
+    }
+    
+    /**
+     * Get the currently active error message element based on visibility
+     */
+    function getCurrentErrorMessage() {
+        return centeredInputForm.classList.contains('d-none') ? errorMessage : centeredErrorMessage;
+    }
 
     function updatePromptSuggestionVisibility() {
         if (!promptSuggestionContainer) return;
         const hasAnyMessage = chatHistory && chatHistory.children && chatHistory.children.length > 0;
         if (hasAnyMessage) {
             promptSuggestionContainer.classList.add('d-none');
+            centeredInputForm.classList.add('d-none');
+            document.body.classList.remove('empty-chat');
         } else {
             promptSuggestionContainer.classList.remove('d-none');
+            centeredInputForm.classList.remove('d-none');
+            document.body.classList.add('empty-chat');
         }
     }
 
     /**
-     * Handles form submission when the user sends a message
+     * Handles form submission when the user sends a message from main form
      */
     function handleChatSubmit(e) {
         e.preventDefault();
@@ -71,12 +109,36 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     /**
-     * Handles sending a message when Enter key is pressed
+     * Handles form submission when the user sends a message from centered form
+     */
+    function handleCenteredChatSubmit(e) {
+        e.preventDefault();
+        const query = centeredChatInput.value.trim();
+        if (query && !isLoading()) {
+            sendMessage(query);
+        }
+    }
+    
+    /**
+     * Handles sending a message when Enter key is pressed in main input
      */
     function handleKeyDown(e) {
         if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();
             const query = chatInput.value.trim();
+            if (query && !isLoading()) {
+                sendMessage(query);
+            }
+        }
+    }
+    
+    /**
+     * Handles sending a message when Enter key is pressed in centered input
+     */
+    function handleCenteredKeyDown(e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            const query = centeredChatInput.value.trim();
             if (query && !isLoading()) {
                 sendMessage(query);
             }
@@ -542,8 +604,10 @@ document.addEventListener('DOMContentLoaded', function() {
      * Displays an error message
      */
     function showError(text) {
-        errorMessage.textContent = text;
-        errorContainer.classList.remove('d-none');
+        const errorMsg = getCurrentErrorMessage();
+        const errorCont = getCurrentErrorContainer();
+        errorMsg.textContent = text;
+        errorCont.classList.remove('d-none');
     }
     
     /**
@@ -551,6 +615,7 @@ document.addEventListener('DOMContentLoaded', function() {
      */
     function hideError() {
         errorContainer.classList.add('d-none');
+        centeredErrorContainer.classList.add('d-none');
     }
     
     /**
@@ -559,6 +624,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function showLoading() {
         loadingIndicator.classList.remove('d-none');
         sendButton.disabled = true;
+        centeredSendButton.disabled = true;
         // Disable all prompt buttons while loading
         document.querySelectorAll('#prompt-suggestion .prompt-btn').forEach(btn => btn.disabled = true);
     }
@@ -569,6 +635,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function hideLoading() {
         loadingIndicator.classList.add('d-none');
         sendButton.disabled = false;
+        centeredSendButton.disabled = false;
         // Enable all prompt buttons after loading
         document.querySelectorAll('#prompt-suggestion .prompt-btn').forEach(btn => btn.disabled = false);
     }
@@ -598,8 +665,9 @@ document.addEventListener('DOMContentLoaded', function() {
         // Add user message to UI
         addUserMessage(text);
         
-        // Clear input field
+        // Clear input fields
         chatInput.value = '';
+        centeredChatInput.value = '';
         
         // Add user message to chat history
         const userMessage = {

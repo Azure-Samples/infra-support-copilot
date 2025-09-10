@@ -4,9 +4,10 @@ RAG Chat Service using Azure OpenAI and AI Search
 import logging
 import json
 import uuid
-from typing import List, Tuple
+import asyncio
+from typing import List
 from azure.identity import DefaultAzureCredential, get_bearer_token_provider
-from openai import AsyncAzureOpenAI
+from openai import AsyncAzureOpenAI, RateLimitError
 from app.models.chat_models import ChatMessage
 from app.config import settings
 from app.services.rag_chat_service import rag_chat_service
@@ -50,43 +51,39 @@ class DecideTool:
     def emit(self, event: str, payload: dict):
         logger.info(json.dumps({"event": event, **payload}, ensure_ascii=False))
 
-    async def _condense_query(self, history: List[ChatMessage]) -> Tuple[str, str]:
-        """Generate a standalone condensed query from recent multi-turn chat history.
-        Returns (condensed_query, last_user_query)."""
-        if not history:
-            return "", ""
+    def _truncate_text(self, text: str, max_chars: int = 20000) -> str:
+        """Trim text to a safe character budget to avoid excessive token usage.
+        Roughly ~4 chars per token ⇒ 20k chars ≈ 5k tokens.
+        """
+        if not text:
+            return text
+        if len(text) <= max_chars:
+            return text
+        return text[:max_chars] + "\n\n... (truncated)"
 
-        recent_history = history[-20:] if len(history) > 20 else history
-        # Extract last user query
-        last_user_query = next((m.content for m in reversed(recent_history) if m.role == 'user'), recent_history[-1].content)
-
-        # Build a lightweight transcript for rewriting (include roles)
-        transcript_lines = []
-        for m in recent_history:
-            # Keep only user + assistant to limit tokens
-            if m.role in ("user", "assistant"):
-                transcript_lines.append(f"{m.role.upper()}: {m.content}")
-        transcript = "\n".join(transcript_lines)[-5000:]  # crude length guard
-
-        rewrite_prompt = (
-            "You are a system that rewrites the latest user query into a standalone question. "
-            "Incorporate necessary context from earlier turns (entities, references like 'that server', 'the previous incident'). "
-            "Do NOT answer the question. Only output the rewritten query. If the last user query is already standalone, return it unchanged.\n\n"
-            f"Conversation (most recent last):\n{transcript}\n\nRewritten standalone query:"
-        )
+    def _trim_history_for_prompt(self, history: List[ChatMessage], keep_last: int = 6) -> List[ChatMessage]:
+        """Keep only the most recent messages to control prompt size."""
         try:
-            resp = await self.openai_client.chat.completions.create(
-                model=self.gpt_deployment,
-                messages=[{"role": "user", "content": rewrite_prompt}],
-            )
-            condensed = resp.choices[0].message.content.strip()
-            # Basic sanity: avoid model giving multi-line answer instead of a query
-            if '\n' in condensed and len(condensed.split('\n')) > 3:
-                condensed = last_user_query  # fallback
-        except Exception as e:
-            logger.warning(f"Query condensation failed, falling back to last user query: {e}")
-            condensed = last_user_query
-        return condensed, last_user_query
+            return history[-keep_last:]
+        except Exception:
+            return history
+
+    async def _retry_openai_call(self, func, max_retries=3, base_delay=1.5):
+        """Retry OpenAI API calls with exponential backoff for rate limits."""
+        for attempt in range(max_retries):
+            try:
+                return await func()
+            except RateLimitError as e:
+                if attempt == max_retries - 1:
+                    logger.error(f"Rate limit exceeded after {max_retries} attempts: {e}")
+                    raise
+                
+                delay = base_delay * (2 ** attempt)
+                logger.warning(f"Rate limit hit (attempt {attempt + 1}/{max_retries}), retrying in {delay}s: {e}")
+                await asyncio.sleep(delay)
+            except Exception as e:
+                logger.error(f"OpenAI API call failed: {e}")
+                raise
 
     async def get_chat_completion(self, history: List[ChatMessage], conversation_id: str = "") -> dict:
         """Multi-turn RAG flow considering recent chat history.
@@ -125,9 +122,11 @@ class DecideTool:
                     sources=sources
                 )
 
-                chat_resp = await self.openai_client.chat.completions.create(
-                    messages=[{"role": "user", "content": final_content}],
-                    model=self.gpt_deployment
+                chat_resp = await self._retry_openai_call(
+                    lambda: self.openai_client.chat.completions.create(
+                        messages=[{"role": "user", "content": final_content}],
+                        model=self.gpt_deployment
+                    )
                 )
 
                 # Extract assistant content from SDK object
@@ -163,9 +162,6 @@ class DecideTool:
                 "prompt_chars": len(history[-1].content),
                 "metadata": {},
             })
-
-            condensed_query, last_user_query = await self._condense_query(history)
-            effective_query = condensed_query or last_user_query
 
             tools = [
                 {
@@ -223,14 +219,17 @@ class DecideTool:
 
             sources_parts: List[dict] = []
 
-            chat_resp = await self.openai_client.chat.completions.create(
-                messages=[
-                    {"role": "system", "content": "Select the single best tool. If SQL stats, choose sql_query_service. If logs, choose log_analytics_service. If docs/inventories, choose rag_chat_service."},
-                    {"role": "user", "content": last_user_query or effective_query}
-                ],
-                model=self.gpt_deployment,
-                tools=tools,
-                tool_choice="auto"
+            trimmed_history = self._trim_history_for_prompt(history)
+            messages = trimmed_history[:-1] + [{"role": "system", "content": "Select the single best tool."}]
+            messages.append({"role": "user", "content": trimmed_history[-1].content})
+
+            chat_resp = await self._retry_openai_call(
+                lambda: self.openai_client.chat.completions.create(
+                    messages=messages,
+                    model=self.gpt_deployment,
+                    tools=tools,
+                    tool_choice="auto",
+                )
             )
             
             def _accumulate(source: List[dict]):
@@ -243,7 +242,7 @@ class DecideTool:
                 for tc in tool_calls:
                     fname = tc.function.name
                     fargs = json.loads(tc.function.arguments or "{}")
-                    q = fargs.get("query", effective_query)
+                    q = fargs.get("query", history[-1].content)
 
                     if fname == "sql_query_service.get_chat_completion":
                         try:
@@ -279,16 +278,22 @@ class DecideTool:
 
             # Final answer request
             # Combine sources into a single string for the system prompt (after tool execution)
-            sources = "\n\n".join(f"{src['title']}:\n{src['content']}" for src in sources_parts)
+            sources_joined = "\n\n".join(f"{src['title']}:\n{src['content']}" for src in sources_parts)
+            sources = self._truncate_text(sources_joined)
 
             final_content = self.system_prompt.format(
-                query=last_user_query or effective_query,
+                query=history[-1].content,
                 sources=sources
             )
 
-            final_response = await self.openai_client.chat.completions.create(
-                messages=[{"role": "user", "content": final_content}],
-                model=self.gpt_deployment,
+            trimmed_history = self._trim_history_for_prompt(history)
+            final_messages = trimmed_history[:-1] + [{"role": "user", "content": final_content}]
+
+            final_response = await self._retry_openai_call(
+                lambda: self.openai_client.chat.completions.create(
+                    messages=final_messages,
+                    model=self.gpt_deployment,
+                )
             )
 
             # Extract assistant content from SDK object
