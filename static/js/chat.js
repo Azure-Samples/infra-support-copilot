@@ -83,6 +83,24 @@ document.addEventListener('DOMContentLoaded', function() {
         return centeredInputForm.classList.contains('d-none') ? errorMessage : centeredErrorMessage;
     }
 
+    /**
+     * Creates the assistant avatar element with the provided SVG icon
+     */
+    function createAssistantAvatar() {
+        const avatar = document.createElement('div');
+        avatar.className = 'avatar-badge me-2';
+        avatar.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <g fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                    <rect width="20" height="14" x="2" y="9" rx="4"/>
+                    <circle cx="12" cy="3" r="2"/>
+                    <path d="M12 5v4m-3 8v-2m6 0v2"/>
+                </g>
+            </svg>
+        `;
+        return avatar;
+    }
+
     function updatePromptSuggestionVisibility() {
         if (!promptSuggestionContainer) return;
         const hasAnyMessage = chatHistory && chatHistory.children && chatHistory.children.length > 0;
@@ -195,11 +213,6 @@ document.addEventListener('DOMContentLoaded', function() {
             card.appendChild(cardBody);
             wrapper.appendChild(card);
             
-            // Add avatar next to the message card
-            const avatar = document.createElement('div');
-            avatar.className = 'avatar-badge user-avatar-badge ms-2';
-            avatar.textContent = 'You';
-            wrapper.appendChild(avatar);
             chatHistory.appendChild(wrapper);
             scrollToBottom();
             updatePromptSuggestionVisibility();
@@ -320,9 +333,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // No citations processing for selectable lists
 
                 // Add avatar next to the message card (assistant on the left)
-                const avatar = document.createElement('div');
-                avatar.className = 'avatar-badge assistant-avatar-badge me-2';
-                avatar.textContent = 'AI';
+                const avatar = createAssistantAvatar();
                 wrapper.appendChild(avatar);
                 wrapper.appendChild(card);
                 chatHistory.appendChild(wrapper);
@@ -427,9 +438,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // No citations processing for selectable lists
 
                 // Add avatar next to the message card (assistant on the left)
-                const avatar = document.createElement('div');
-                avatar.className = 'avatar-badge assistant-avatar-badge me-2';
-                avatar.textContent = 'AI';
+                const avatar = createAssistantAvatar();
                 wrapper.appendChild(avatar);
                 wrapper.appendChild(card);
                 chatHistory.appendChild(wrapper);
@@ -487,10 +496,8 @@ document.addEventListener('DOMContentLoaded', function() {
         card.setAttribute('id', messageId);
         card.setAttribute('data-citations', JSON.stringify(messageCitations));
         
-        // Add avatar next to the message card (assistant on the left)
-        const avatar = document.createElement('div');
-        avatar.className = 'avatar-badge assistant-avatar-badge me-2';
-        avatar.textContent = 'AI';
+    // Add avatar next to the message card (assistant on the left)
+    const avatar = createAssistantAvatar();
         wrapper.appendChild(avatar);
         wrapper.appendChild(card);
         chatHistory.appendChild(wrapper);

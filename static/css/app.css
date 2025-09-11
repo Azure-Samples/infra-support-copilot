@@ -66,10 +66,6 @@ html, body {
     background-color: #000000;
 }
 
-.assistant-avatar-badge {
-    background-color: #b783fa;
-}
-
 /* Loading indicator - simplified but keeping essential animation */
 .loading-indicator {
     display: flex;
