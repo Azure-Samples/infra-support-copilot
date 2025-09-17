@@ -26,6 +26,7 @@ param userPrincipalId string
 param userPrincipalType string = 'User'
 
 var isUserPrincipal = toLower(userPrincipalType) == 'user'
+var isServicePrincipal = toLower(userPrincipalType) == 'serviceprincipal'
 
 // ----------------------------------------------------
 // App Service and configuration
@@ -96,13 +97,23 @@ var sqlServerBaseProps = {
   minimalTlsVersion: '1.2'
   publicNetworkAccess: 'Enabled'
 }
+var sqlServerAdminProps = (!empty(userPrincipalId) && (isUserPrincipal || isServicePrincipal)) ? {
+  administrators: {
+    administratorType: 'ActiveDirectory'
+    login: isUserPrincipal ? 'aad-admin' : 'sp-admin'
+    sid: userPrincipalId
+    tenantId: tenant().tenantId
+    principalType: isUserPrincipal ? 'User' : 'Application'
+    azureADOnlyAuthentication: true
+  }
+} : {}
 
 // SQL Server
 resource sqlServer 'Microsoft.Sql/servers@2024-11-01-preview' = {
   name: sqlServerName
   location: location
   tags: tags
-  properties: sqlServerBaseProps
+  properties: union(sqlServerBaseProps, sqlServerAdminProps)
 }
 
 // Allow Azure services (0.0.0.0) firewall rule
