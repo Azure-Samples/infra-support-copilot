@@ -3,7 +3,7 @@ name: Build and deploy Python app to Azure Web App - app-m46eayfyi2pcc
 on:
   push:
     branches:
-      - main
+      - '**'
   workflow_dispatch:
 
 permissions:
