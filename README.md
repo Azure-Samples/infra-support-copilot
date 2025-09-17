@@ -176,6 +176,39 @@ Logs (App Service via Log Analytics): Use Portal or `az monitor log-analytics qu
 
 ---
 
+## GitHub Environments & Multi-subscription CI
+
+This repository includes a GitHub Actions workflow that can deploy the same `azd` project to multiple Azure subscriptions in parallel by using a matrix of GitHub Environments. To use it safely and predictably, create one GitHub Environment per target subscription and set subscription-scoped secrets/variables into those environments.
+
+Recommended setup:
+
+1. In the repo settings, go to Settings → Environments and create an environment for each target subscription (for example: `rukasakurai-env`, `<github-username>-env`).
+2. For each environment, add the following secrets/variables (Repository Settings → Environments → <env>):
+   - AZURE_CLIENT_ID (service principal client id)
+   - AZURE_TENANT_ID (tenant id)
+   - AZURE_SUBSCRIPTION_ID (target subscription id)
+   - AZURE_RESOURCE_GROUP (resource group name to deploy into)
+   - AZURE_ENV_NAME (azd environment name, e.g. `rukasakurai-env`)
+   - AZURE_LOCATION (region, e.g. `japaneast`)
+
+Notes:
+- Environment-scoped secrets are available only to workflow runs that specify `environment: <env>`; the CI workflow is configured to use `environment: ${{ matrix.env }}` so each matrix job automatically uses the matching environment's secrets.
+- To change which environments the workflow deploys to, edit `.github/workflows/cicd.yml` and update the `matrix.env` array.
+- The workflow runs with `strategy.fail-fast: false` so deployments to different subscriptions run independently; failures in one environment don't cancel others.
+
+Example: the workflow currently contains a simple matrix:
+```yaml
+strategy:
+  fail-fast: false
+  matrix:
+    env: [rukasakurai-env, <github-username>-env]
+environment: ${{ matrix.env }}
+```
+
+This makes it easy to add more environments (rows) for handover, staging, or multi-tenant deployments. Ensure each GitHub Environment has the correct secrets for its target subscription before running the workflow.
+
+---
+
 ## Customizing the System Prompt
 
 Edit `systemPrompt` in [infra/main.bicep](infra/main.bicep) then:
@@ -250,3 +283,4 @@ uvicorn app.main:app --reload
 
 # Tear down
 azd down
+```
