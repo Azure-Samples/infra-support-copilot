@@ -92,38 +92,6 @@ class SQLQueryService:
             ");"
         )
 
-    async def _get_relevant_tables(self, condensed_query: str) -> List[str]:
-        """Retrieve relevant tables for a specific query."""
-        prompt = (
-            "You are a system that retrieves the relevant tables for a specific query in Azure SQL Database.\n"
-            f"User question: {condensed_query}\n"
-            "Output the relevant table names as a comma-separated list."
-            f"Table definitions:\n{self.table_info}\n"
-            "Return ONLY the table names."
-        )
-        resp_tables = await self.openai_client.chat.completions.create(
-            model=self.gpt_deployment,
-            messages=[{"role": "user", "content": prompt}],
-            temperature=0.1,
-        )
-        return [{'title': 'SELECTABLE', 'content': f';;SELECTABLE;;{resp_tables.choices[0].message.content}'}]
-
-    async def _get_relevant_tables(self, condensed_query: str) -> List[str]:
-        """Retrieve relevant tables for a specific query."""
-        prompt = (
-            "You are a system that retrieves the relevant tables for a specific query in Azure SQL Database.\n"
-            f"User question: {condensed_query}\n"
-            "Output the relevant table names as a comma-separated list."
-            f"Table definitions:\n{self.table_info}\n"
-            "Return ONLY the table names."
-        )
-        resp_tables = await self.openai_client.chat.completions.create(
-            model=self.gpt_deployment,
-            messages=[{"role": "user", "content": prompt}],
-            temperature=0.1,
-        )
-        return [{'title': 'SELECTABLE', 'content': f';;SELECTABLE;;{resp_tables.choices[0].message.content}'}]
-
     async def _generate_sql(self, wanted_columns: List[str], user_query: str) -> str:
         """Generate a read-only SQL query."""
         prompt = (
@@ -227,6 +195,7 @@ class SQLQueryService:
                     WHERE TABLE_NAME IN ({','.join(quoted_items)})
                     ORDER BY TABLE_NAME, ORDINAL_POSITION;
                 """
+                logger.info(f"Executing SQL for columns: {sql}")
                 rows = await self._execute_sql(sql)
                 columns = self._rows_to_sources(rows)
                 return [{"title": "COLUMNS", "content": f";;COLUMNS;;{columns}"}]
@@ -243,7 +212,7 @@ class SQLQueryService:
 
                 return [{"title": "SQL Query", "content": f"## SQL Query:\n{sql}\n\n## Results:\n{sources}"}]
             else:
-                return await self._get_relevant_tables(effective_query)
+                return [{'title': 'SELECTABLE', 'content': f';;SELECTABLE;;{",".join("dbo." + table for table in self._allowed_tables)}'}]
         except Exception as e:
             logger.error(f"Error in get_chat_completion: {e}")
             raise
