@@ -47,6 +47,7 @@ jobs:
       - name: Configure azd environment for CI
         run: |
           azd env set AZURE_PRINCIPAL_TYPE ServicePrincipal
+          azd env unset AZURE_PRINCIPAL_ID
         shell: pwsh
         env:
           AZURE_ENV_NAME: ${{ secrets.AZURE_ENV_NAME }}
