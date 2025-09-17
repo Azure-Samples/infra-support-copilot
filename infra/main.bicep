@@ -13,7 +13,7 @@ param tags object = {
 }
 
 @description('Principal ID of the user running the deployment (for role assignments)')
-param userPrincipalId string = ''
+param userPrincipalId string
 
 @description('Type of the principal identified by userPrincipalId. Use "User" for human accounts; "ServicePrincipal" for CI/CD service principals.')
 @allowed([
