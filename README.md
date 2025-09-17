@@ -145,6 +145,14 @@ pwsh -NoProfile -ExecutionPolicy Bypass -File .\scripts\set_up_environment.ps1 -
 
 ## Deployment (Azure)
 
+Important: Ensure the target Azure resource group exists before running `azd up` or `azd provision`. `azd` validates the deployment against the configured resource group and will fail if it doesn't exist (see error in the issue report). Create the resource group with the Azure CLI before provisioning:
+
+```pwsh
+az group create -n <resource-group-name> -l <location>
+```
+
+Alternatively set `AZURE_RESOURCE_GROUP` (for local env or CI environment secrets) to the name of an existing resource group. If you prefer `azd` to create resources automatically, ensure your `azure.yaml`/environment configuration does not point to a pre-existing group.
+
 Initial full provision + deploy:
 ```pwsh
 azd auth login
