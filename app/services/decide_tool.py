@@ -275,6 +275,34 @@ class DecideTool:
                             _accumulate(response_logs)
                         except Exception as se:
                             logger.error(f"Search query failed for Log Analytics: {se}")
+            else:
+                final_response = await self._retry_openai_call(
+                    lambda: self.openai_client.chat.completions.create(
+                        messages=history,
+                        model=self.gpt_deployment,
+                    )
+                )
+
+                self.emit("chat_prompt", {
+                    "conversation_id": new_conversation_id,
+                    "turn_id": str(uuid.uuid4()),
+                    "user_id": 'assistant',
+                    "prompt": final_response.choices[0].message.content,
+                    "prompt_chars": len(final_response.choices[0].message.content),
+                    "metadata": {},
+                })
+
+                return {
+                    "choices": [
+                        {
+                            "message": {
+                                "role": "assistant",
+                                "content": f"{final_response.choices[0].message.content}",
+                                "context": {"citations": []}
+                            }
+                        }
+                    ]
+                }
 
             # Final answer request
             # Combine sources into a single string for the system prompt (after tool execution)
