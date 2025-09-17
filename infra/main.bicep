@@ -96,23 +96,13 @@ var sqlServerBaseProps = {
   minimalTlsVersion: '1.2'
   publicNetworkAccess: 'Enabled'
 }
-var sqlServerAdminProps = (!empty(userPrincipalId) && isUserPrincipal) ? {
-  administrators: {
-    administratorType: 'ActiveDirectory'
-    login: 'aad-admin'
-    sid: userPrincipalId
-    tenantId: tenant().tenantId
-    principalType: 'User'
-    azureADOnlyAuthentication: true
-  }
-} : {}
 
 // SQL Server
 resource sqlServer 'Microsoft.Sql/servers@2024-11-01-preview' = {
   name: sqlServerName
   location: location
   tags: tags
-  properties: union(sqlServerBaseProps, sqlServerAdminProps)
+  properties: sqlServerBaseProps
 }
 
 // Allow Azure services (0.0.0.0) firewall rule
