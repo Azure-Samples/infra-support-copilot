@@ -1,9 +1,8 @@
-name: Build and deploy Python app to Azure Web App - app-m46eayfyi2pcc
-
+name: Build and deploy Python app to Azure Web App
 on:
   push:
     branches:
-      - ykitamura/pr-9
+      - '**'
   workflow_dispatch:
 
 permissions:
