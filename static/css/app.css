@@ -205,6 +205,28 @@ html, body {
     cursor: pointer; 
 }
 
+/* Collapsible header styles for selectable options */
+.selectable-options .collapsible-header {
+    user-select: none;
+    transition: background-color 0.2s ease;
+}
+
+.selectable-options .collapsible-header:hover {
+    background-color: #e9ecef !important;
+}
+
+.selectable-options .toggle-icon {
+    font-size: 0.875rem;
+    font-weight: bold;
+    min-width: 16px;
+    text-align: center;
+}
+
+.selectable-options .collapsible-content {
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
 .message-content h1, .message-content h2, .message-content h3, 
 .message-content h4, .message-content h5, .message-content h6,
 .markdown-content h1, .markdown-content h2, .markdown-content h3, 

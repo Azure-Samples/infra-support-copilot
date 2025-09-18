@@ -264,10 +264,31 @@ document.addEventListener('DOMContentLoaded', function() {
                 const container = document.createElement('div');
                 container.className = 'selectable-options';
 
-                const title = document.createElement('div');
-                title.className = 'mb-2 fw-semibold';
+                // Create collapsible header
+                const header = document.createElement('div');
+                header.className = 'collapsible-header d-flex justify-content-between align-items-center mb-2 p-2';
+                header.style.cursor = 'pointer';
+                header.style.backgroundColor = '#f8f9fa';
+                header.style.borderRadius = '0.375rem';
+                header.style.border = '1px solid #dee2e6';
+
+                const title = document.createElement('span');
+                title.className = 'fw-semibold';
                 title.textContent = 'どのテーブルを検索しますか？';
-                container.appendChild(title);
+
+                const toggleIcon = document.createElement('span');
+                toggleIcon.className = 'toggle-icon';
+                toggleIcon.innerHTML = '▼';
+                toggleIcon.style.transition = 'transform 0.2s ease';
+
+                header.appendChild(title);
+                header.appendChild(toggleIcon);
+                container.appendChild(header);
+
+                // Create collapsible content
+                const content = document.createElement('div');
+                content.className = 'collapsible-content';
+                content.style.display = 'block'; // Start expanded
 
                 const list = document.createElement('div');
                 list.className = 'd-flex flex-column gap-2';
@@ -293,7 +314,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     list.appendChild(row);
                 });
 
-                container.appendChild(list);
+                content.appendChild(list);
 
                 // Action buttons (apply selection to input, clear selection)
                 const actions = document.createElement('div');
@@ -324,7 +345,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
 
                 actions.appendChild(applyBtn);
-                container.appendChild(actions);
+                content.appendChild(actions);
+                container.appendChild(content);
+
+                // Add toggle functionality
+                header.addEventListener('click', () => {
+                    const isCollapsed = content.style.display === 'none';
+                    content.style.display = isCollapsed ? 'block' : 'none';
+                    toggleIcon.style.transform = isCollapsed ? 'rotate(0deg)' : 'rotate(-90deg)';
+                    toggleIcon.innerHTML = isCollapsed ? '▼' : '▶';
+                });
 
                 messageContent.appendChild(container);
                 cardBody.appendChild(messageContent);
@@ -367,10 +397,31 @@ document.addEventListener('DOMContentLoaded', function() {
                 const container = document.createElement('div');
                 container.className = 'selectable-options';
 
-                const title = document.createElement('div');
-                title.className = 'mb-2 fw-semibold';
+                // Create collapsible header
+                const header = document.createElement('div');
+                header.className = 'collapsible-header d-flex justify-content-between align-items-center mb-2 p-2';
+                header.style.cursor = 'pointer';
+                header.style.backgroundColor = '#f8f9fa';
+                header.style.borderRadius = '0.375rem';
+                header.style.border = '1px solid #dee2e6';
+
+                const title = document.createElement('span');
+                title.className = 'fw-semibold';
                 title.textContent = 'どのカラムを検索しますか？';
-                container.appendChild(title);
+
+                const toggleIcon = document.createElement('span');
+                toggleIcon.className = 'toggle-icon';
+                toggleIcon.innerHTML = '▼';
+                toggleIcon.style.transition = 'transform 0.2s ease';
+
+                header.appendChild(title);
+                header.appendChild(toggleIcon);
+                container.appendChild(header);
+
+                // Create collapsible content
+                const content = document.createElement('div');
+                content.className = 'collapsible-content';
+                content.style.display = 'block'; // Start expanded
 
                 const list = document.createElement('div');
                 list.className = 'd-flex flex-column gap-2';
@@ -396,7 +447,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     list.appendChild(row);
                 });
 
-                container.appendChild(list);
+                content.appendChild(list);
 
                 // Action buttons (apply selection to input, clear selection)
                 const actions = document.createElement('div');
@@ -429,7 +480,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
 
                 actions.appendChild(applyBtn);
-                container.appendChild(actions);
+                content.appendChild(actions);
+                container.appendChild(content);
+
+                // Add toggle functionality
+                header.addEventListener('click', () => {
+                    const isCollapsed = content.style.display === 'none';
+                    content.style.display = isCollapsed ? 'block' : 'none';
+                    toggleIcon.style.transform = isCollapsed ? 'rotate(0deg)' : 'rotate(-90deg)';
+                    toggleIcon.innerHTML = isCollapsed ? '▼' : '▶';
+                });
 
                 messageContent.appendChild(container);
                 cardBody.appendChild(messageContent);
