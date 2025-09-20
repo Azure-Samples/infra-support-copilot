@@ -52,6 +52,13 @@ class AppSettings(BaseSettings):
     azure_log_analytics_workspace_name: str = Field(..., validation_alias="LOG_ANALYTICS_WORKSPACE_NAME")
     azure_log_analytics_customer_id: str = Field(..., validation_alias="LOG_ANALYTICS_CUSTOMER_ID")
 
+    # VM Settings
+    vm_admin_username: str = Field(..., validation_alias="VM_ADMIN_USERNAME")
+    vm_name: str = Field(..., validation_alias="VM_NAME")
+    vm_public_ip: str = Field(..., validation_alias="VM_PUBLIC_IP")
+    vm_fqdn: str = Field(..., validation_alias="VM_FQDN")
+    virtual_network_name: str = Field(..., validation_alias="VIRTUAL_NETWORK_NAME")
+
     # Other
     client_public_ip: Optional[str] = Field(None, validation_alias="CLIENT_PUBLIC_IP")
     appInsightsInstrumentationKey: str = Field(..., validation_alias="APPINSIGHTS_INSTRUMENTATIONKEY")

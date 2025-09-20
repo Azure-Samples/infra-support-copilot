@@ -16,3 +16,4 @@ pyodbc==5.2.0
 azure-monitor-query==2.0.0
 opencensus-ext-azure==1.1.15
 opencensus-ext-logging==0.1.1
+paramiko==4.0.0

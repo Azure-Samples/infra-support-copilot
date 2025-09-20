@@ -46,6 +46,18 @@
     },
     "clientPublicIp": {
       "value": "${CLIENT_PUBLIC_IP}"
+    },
+    "vmAdminUsername": {
+      "value": "azureuser"
+    },
+    "vmAdminPassword": {
+      "value": "${VM_ADMIN_PASSWORD}"
+    },
+    "vmSize": {
+      "value": "Standard_B2s"
+    },
+    "vmOSVersion": {
+      "value": "Ubuntu-2204"
     }
   }
 }

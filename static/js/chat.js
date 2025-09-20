@@ -178,7 +178,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (chatHistory.querySelector('.text-center')) {
             chatHistory.innerHTML = '';
         }
-        if (!((text.startsWith(";;SQL;;") || text.startsWith(";;EXECUTE;;")))) {
+        if (!((text.startsWith(";;SQL;;") || text.startsWith(";;EXECUTE;;") || text.startsWith(";;VM_PASSWORD;;") || text.startsWith(";;SQL_QUERY_OPTION;;")))) {
             // Create user message DOM directly
             const wrapper = document.createElement('div');
             wrapper.className = 'd-flex mb-4 justify-content-end align-items-end';
@@ -250,10 +250,136 @@ document.addEventListener('DOMContentLoaded', function() {
         messageContent.style.wordBreak = 'break-word';
         messageContent.style.overflowWrap = 'anywhere';
 
+        const messageId = 'msg-' + Date.now();
+
+        // Detect special selectable list format: ";;SELECTABLE;;item1,item2,..."
+        const sqlQueryOptionPrefix = ';;SQL_QUERY_OPTION;;';
+        const isSqlQueryOption = typeof content === 'string' && content.trim().startsWith(sqlQueryOptionPrefix);
+
+        if (isSqlQueryOption) {
+            const items = ["手動でテーブル・項目を選択する", "自動でテーブル・項目を選択する"];
+            // Build checkbox list UI
+            const container = document.createElement('div');
+            container.className = 'selectable-options';
+
+            // Create collapsible header
+            const header = document.createElement('div');
+            header.className = 'collapsible-header d-flex justify-content-between align-items-center mb-2 p-2';
+            header.style.cursor = 'pointer';
+            header.style.backgroundColor = '#f8f9fa';
+            header.style.borderRadius = '0.375rem';
+            header.style.border = '1px solid #dee2e6';
+
+            const title = document.createElement('span');
+            title.className = 'fw-semibold';
+            title.textContent = 'どのようにSQL Databaseを検索しますか？';
+
+            const toggleIcon = document.createElement('span');
+            toggleIcon.className = 'toggle-icon';
+            toggleIcon.innerHTML = '▼';
+            toggleIcon.style.transition = 'transform 0.2s ease';
+
+            header.appendChild(title);
+            header.appendChild(toggleIcon);
+            container.appendChild(header);
+
+            // Create collapsible content
+            const content = document.createElement('div');
+            content.className = 'collapsible-content';
+            content.style.display = 'block'; // Start expanded
+
+            const list = document.createElement('div');
+            list.className = 'd-flex flex-column gap-2';
+
+            items.forEach((label, idx) => {
+                const id = `${messageId}-opt-${idx + 1}`;
+                const row = document.createElement('div');
+                row.className = 'form-check';
+
+                const input = document.createElement('input');
+                input.type = 'radio';
+                input.className = 'form-check-input';
+                input.id = id;
+                input.name = `${messageId}-sql-query-option`; // 同じnameでグループ化
+                input.value = label;
+
+                const lbl = document.createElement('label');
+                lbl.className = 'form-check-label';
+                lbl.setAttribute('for', id);
+                lbl.textContent = label;
+
+                row.appendChild(input);
+                row.appendChild(lbl);
+                list.appendChild(row);
+            });
+
+            content.appendChild(list);
+
+            // Action buttons (apply selection to input, clear selection)
+            const actions = document.createElement('div');
+            actions.className = 'd-flex gap-2 mt-3 justify-content-end';
+
+            let selectColumnInput = '';
+
+            const applyBtn = document.createElement('button');
+            applyBtn.type = 'button';
+            applyBtn.className = 'btn btn-dark btn-sm';
+            // Ensure pure black styling regardless of theme
+            applyBtn.style.backgroundColor = '#000';
+            applyBtn.style.borderColor = '#000';
+            applyBtn.style.color = '#fff';
+            applyBtn.textContent = '決定';
+
+            applyBtn.disabled = true;
+            list.addEventListener('change', () => {
+                const anyChecked = list.querySelectorAll('input[type="radio"]:checked').length > 0;
+                applyBtn.disabled = !anyChecked;
+            });
+
+            applyBtn.addEventListener('click', () => {
+                const selected = Array.from(list.querySelectorAll('input[type="radio"]:checked'))
+                    .map(el => el.value)
+                    .filter(Boolean);
+                if (selected.length > 0) {
+                    const selectedMethod = selected[0] == "手動でテーブル・項目を選択する" ? "manual" : "auto"; 
+                    selectColumnInput = ';;SQL_QUERY_OPTION;;' + selectedMethod; // 1つだけ選択
+                    sendMessage(selectColumnInput, conversation_id);
+                    scrollToBottom();
+                }
+            });
+
+            actions.appendChild(applyBtn);
+            content.appendChild(actions);
+            container.appendChild(content);
+
+            // Add toggle functionality
+            header.addEventListener('click', () => {
+                const isCollapsed = content.style.display === 'none';
+                content.style.display = isCollapsed ? 'block' : 'none';
+                toggleIcon.style.transform = isCollapsed ? 'rotate(0deg)' : 'rotate(-90deg)';
+                toggleIcon.innerHTML = isCollapsed ? '▼' : '▶';
+            });
+
+            messageContent.appendChild(container);
+            cardBody.appendChild(messageContent);
+            card.appendChild(cardBody);
+            card.setAttribute('id', messageId);
+            // No citations processing for selectable lists
+
+            // Add avatar next to the message card (assistant on the left)
+            const avatar = createAssistantAvatar();
+            wrapper.appendChild(avatar);
+            wrapper.appendChild(card);
+            chatHistory.appendChild(wrapper);
+
+            updatePromptSuggestionVisibility();
+            scrollToBottom();
+            return; // Done for selectable content
+        }
+
         // Detect special selectable list format: ";;SELECTABLE;;item1,item2,..."
         const selectablePrefix = ';;SELECTABLE;;';
         const isSelectable = typeof content === 'string' && content.trim().startsWith(selectablePrefix);
-        const messageId = 'msg-' + Date.now();
 
         if (isSelectable) {
             const itemsRaw = content.trim().slice(selectablePrefix.length).trim();
@@ -508,6 +634,124 @@ document.addEventListener('DOMContentLoaded', function() {
                 return; // Done for selectable content
             }
             // If no items parsed, fall through to default rendering
+        }
+
+        // Detect special selectable list format: ";;VM_PASSWORD;;item1,item2,..."
+        const vmPasswordPrefix = ';;VM_PASSWORD;;';
+        const isVMPassword = typeof content === 'string' && content.trim().startsWith(vmPasswordPrefix);
+
+        if (isVMPassword) {
+            // Input field to enter VM password
+            const container = document.createElement('div');
+            container.className = 'vm-password-input';
+
+            const title = document.createElement('div');
+            title.className = 'fw-semibold mb-3';
+            title.textContent = 'VMのパスワードを入力してください';
+
+            // Password input container
+            const passwordContainer = document.createElement('div');
+            passwordContainer.className = 'input-group mb-3';
+
+            const passwordInput = document.createElement('input');
+            passwordInput.type = 'password';
+            passwordInput.className = 'form-control';
+            passwordInput.placeholder = 'パスワードを入力';
+            passwordInput.id = `${messageId}-password-input`;
+
+            // Eye icon button to toggle password visibility
+            const eyeButton = document.createElement('button');
+            eyeButton.type = 'button';
+            eyeButton.className = 'btn btn-outline-secondary';
+            eyeButton.setAttribute('aria-label', 'パスワードの表示切替');
+            eyeButton.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
+                    <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"/>
+                </svg>
+            `;
+
+            // Toggle password visibility
+            let isPasswordVisible = false;
+            eyeButton.addEventListener('click', () => {
+                isPasswordVisible = !isPasswordVisible;
+                passwordInput.type = isPasswordVisible ? 'text' : 'password';
+                eyeButton.innerHTML = isPasswordVisible ? `
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z"/>
+                        <path d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829l.822.822zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829z"/>
+                        <path d="M3.35 5.47c-.18.16-.353.322-.518.487A13.134 13.134 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7.029 7.029 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.708zm10.296 8.884-12-12 .708-.708 12 12-.708.708z"/>
+                    </svg>
+                ` : `
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"/>
+                    </svg>
+                `;
+            });
+
+            passwordContainer.appendChild(passwordInput);
+
+            // Action buttons
+            const actions = document.createElement('div');
+            actions.className = 'd-flex gap-2 mt-3 justify-content-end';
+
+            const submitBtn = document.createElement('button');
+            submitBtn.type = 'button';
+            submitBtn.className = 'btn btn-dark btn-sm';
+            submitBtn.style.backgroundColor = '#000';
+            submitBtn.style.borderColor = '#000';
+            submitBtn.style.color = '#fff';
+            submitBtn.textContent = '決定';
+            submitBtn.disabled = true; // Initially disabled
+
+            // Enable/disable submit button based on password input
+            passwordInput.addEventListener('input', () => {
+                submitBtn.disabled = passwordInput.value.trim() === '';
+            });
+
+            // Handle submit button click
+            submitBtn.addEventListener('click', () => {
+                const password = passwordInput.value.trim();
+                if (password) {
+                    const vmPasswordInput = ';;VM_PASSWORD;;' + password;
+                    sendMessage(vmPasswordInput, conversation_id);
+                }
+            });
+
+            // Handle Enter key in password input
+            passwordInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && !submitBtn.disabled) {
+                    e.preventDefault();
+                    submitBtn.click();
+                }
+            });
+
+            actions.appendChild(submitBtn);
+
+            container.appendChild(title);
+            container.appendChild(passwordContainer);
+            container.appendChild(actions);
+            messageContent.appendChild(container);
+            cardBody.appendChild(messageContent);
+            card.appendChild(cardBody);
+            card.setAttribute('id', messageId);
+
+            // Add avatar next to the message card (assistant on the left)
+            const avatar = createAssistantAvatar();
+            wrapper.appendChild(avatar);
+            wrapper.appendChild(card);
+            chatHistory.appendChild(wrapper);
+
+            updatePromptSuggestionVisibility();
+            scrollToBottom();
+            
+            // Focus on password input
+            setTimeout(() => {
+                passwordInput.focus();
+            }, 100);
+            
+            return; // Done for selectable content
         }
 
     // Handle citations

@@ -138,6 +138,207 @@ resource sqlServerClientIpFirewallRule 'Microsoft.Sql/servers/firewallRules@2024
   }
 }
 
+// ----------------------------------------------------
+// Virtual Machine
+// ----------------------------------------------------
+
+@description('Username for the Virtual Machine administrator')
+param vmAdminUsername string = 'azureuser'
+
+@description('Password for the Virtual Machine administrator')
+@secure()
+param vmAdminPassword string
+
+@description('Size of the Virtual Machine')
+@allowed([
+  'Standard_B1s'
+  'Standard_B2s'
+  'Standard_D2s_v3'
+  'Standard_D4s_v3'
+])
+param vmSize string = 'Standard_B2s'
+
+@description('Operating system for the Virtual Machine')
+@allowed([
+  'Ubuntu-2204'
+  'Windows-2022'
+])
+param vmOSVersion string = 'Ubuntu-2204'
+
+// Virtual Network
+resource virtualNetwork 'Microsoft.Network/virtualNetworks@2024-07-01' = {
+  name: 'vnet-${resourceToken}'
+  location: location
+  tags: tags
+  properties: {
+    addressSpace: {
+      addressPrefixes: [
+        '10.0.0.0/16'
+      ]
+    }
+    subnets: [
+      {
+        name: 'default'
+        properties: {
+          addressPrefix: '10.0.0.0/24'
+        }
+      }
+    ]
+  }
+}
+
+// Network Security Group
+resource networkSecurityGroup 'Microsoft.Network/networkSecurityGroups@2024-07-01' = {
+  name: 'nsg-${resourceToken}'
+  location: location
+  tags: tags
+  properties: {
+    securityRules: [
+      {
+        name: 'SSH'
+        properties: {
+          priority: 1001
+          protocol: 'TCP'
+          access: 'Allow'
+          direction: 'Inbound'
+          sourceAddressPrefix: '*'
+          sourcePortRange: '*'
+          destinationAddressPrefix: '*'
+          destinationPortRange: '22'
+        }
+      }
+      {
+        name: 'RDP'
+        properties: {
+          priority: 1002
+          protocol: 'TCP'
+          access: 'Allow'
+          direction: 'Inbound'
+          sourceAddressPrefix: '*'
+          sourcePortRange: '*'
+          destinationAddressPrefix: '*'
+          destinationPortRange: '3389'
+        }
+      }
+    ]
+  }
+}
+
+// Public IP for Virtual Machine
+resource publicIp 'Microsoft.Network/publicIPAddresses@2024-07-01' = {
+  name: 'pip-vm-${resourceToken}'
+  location: location
+  tags: tags
+  sku: {
+    name: 'Standard'
+  }
+  properties: {
+    publicIPAllocationMethod: 'Static'
+    dnsSettings: {
+      domainNameLabel: 'vm-${resourceToken}'
+    }
+  }
+}
+
+// Network Interface for Virtual Machine
+resource networkInterface 'Microsoft.Network/networkInterfaces@2024-07-01' = {
+  name: 'nic-vm-${resourceToken}'
+  location: location
+  tags: tags
+  properties: {
+    ipConfigurations: [
+      {
+        name: 'internal'
+        properties: {
+          privateIPAllocationMethod: 'Dynamic'
+          publicIPAddress: {
+            id: publicIp.id
+          }
+          subnet: {
+            id: resourceId('Microsoft.Network/virtualNetworks/subnets', virtualNetwork.name, 'default')
+          }
+        }
+      }
+    ]
+    networkSecurityGroup: {
+      id: networkSecurityGroup.id
+    }
+  }
+}
+
+// Virtual Machine
+resource virtualMachine 'Microsoft.Compute/virtualMachines@2024-11-01' = {
+  name: 'vm-${resourceToken}'
+  location: location
+  tags: tags
+  identity: {
+    type: 'SystemAssigned'
+  }
+  properties: {
+    hardwareProfile: {
+      vmSize: vmSize
+    }
+    osProfile: {
+      computerName: 'vm-${take(resourceToken, 10)}'
+      adminUsername: vmAdminUsername
+      adminPassword: vmAdminPassword
+      linuxConfiguration: vmOSVersion == 'Ubuntu-2204' ? {
+        disablePasswordAuthentication: false
+        provisionVMAgent: true
+      } : null
+      windowsConfiguration: vmOSVersion == 'Windows-2022' ? {
+        provisionVMAgent: true
+        enableAutomaticUpdates: true
+      } : null
+    }
+    storageProfile: {
+      imageReference: vmOSVersion == 'Ubuntu-2204' ? {
+        publisher: 'Canonical'
+        offer: '0001-com-ubuntu-server-jammy'
+        sku: '22_04-lts-gen2'
+        version: 'latest'
+      } : {
+        publisher: 'MicrosoftWindowsServer'
+        offer: 'WindowsServer'
+        sku: '2022-datacenter-azure-edition'
+        version: 'latest'
+      }
+      osDisk: {
+        createOption: 'FromImage'
+        managedDisk: {
+          storageAccountType: 'Premium_LRS'
+        }
+      }
+    }
+    networkProfile: {
+      networkInterfaces: [
+        {
+          id: networkInterface.id
+        }
+      ]
+    }
+    diagnosticsProfile: {
+      bootDiagnostics: {
+        enabled: true
+      }
+    }
+  }
+}
+
+// Install Azure Monitor Agent extension
+resource azureMonitorAgentExtension 'Microsoft.Compute/virtualMachines/extensions@2024-11-01' = {
+  parent: virtualMachine
+  name: vmOSVersion == 'Ubuntu-2204' ? 'AzureMonitorLinuxAgent' : 'AzureMonitorWindowsAgent'
+  location: location
+  properties: {
+    publisher: vmOSVersion == 'Ubuntu-2204' ? 'Microsoft.Azure.Monitor' : 'Microsoft.Azure.Monitor'
+    type: vmOSVersion == 'Ubuntu-2204' ? 'AzureMonitorLinuxAgent' : 'AzureMonitorWindowsAgent'
+    typeHandlerVersion: '1.0'
+    autoUpgradeMinorVersion: true
+    enableAutomaticUpgrade: true
+  }
+}
+
 // SQL Database (S0 Standard)
 resource sqlDatabase 'Microsoft.Sql/servers/databases@2024-11-01-preview' = {
   parent: sqlServer
@@ -723,6 +924,28 @@ resource userLogAnalyticsReaderRoleAssignment 'Microsoft.Authorization/roleAssig
   }
 }
 
+// Assign 'Virtual Machine Contributor' role to App Service managed identity for VM operations
+resource appServiceVMContributorRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: guid(appService.id, virtualMachine.id, 'Virtual Machine Contributor')
+  scope: virtualMachine
+  properties: {
+    principalId: appService.identity.principalId
+    principalType: 'ServicePrincipal'
+    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '9980e02c-c2be-4d73-94e8-173b1dc7cf3c') // Virtual Machine Contributor
+  }
+}
+
+// Assign 'Log Analytics Contributor' role to VM managed identity for sending logs
+resource vmLogAnalyticsContributorRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: guid(virtualMachine.id, logAnalyticsWorkspace.id, 'Log Analytics Contributor')
+  scope: logAnalyticsWorkspace
+  properties: {
+    principalId: virtualMachine.identity.principalId
+    principalType: 'ServicePrincipal'
+    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '92aaf0da-9dab-42b6-94a3-d43ce8d16293') // Log Analytics Contributor
+  }
+}
+
 // ----------------------------------------------------
 // Output values
 // ----------------------------------------------------
@@ -746,6 +969,11 @@ output LOG_ANALYTICS_WORKSPACE_NAME string = logAnalyticsWorkspace.name
 output LOG_ANALYTICS_CUSTOMER_ID string = logAnalyticsWorkspace.properties.customerId
 output APPINSIGHTS_INSTRUMENTATIONKEY string = appInsights.properties.InstrumentationKey
 output APPLICATIONINSIGHTS_CONNECTION_STRING string = appInsights.properties.ConnectionString
+output VM_NAME string = virtualMachine.name
+output VM_PUBLIC_IP string = publicIp.properties.ipAddress
+output VM_FQDN string = publicIp.properties.dnsSettings.fqdn
+output VM_ADMIN_USERNAME string = vmAdminUsername
+output VIRTUAL_NETWORK_NAME string = virtualNetwork.name
 
 // ----------------------------------------------------
 // App Service diagnostics settings
