@@ -57,6 +57,35 @@ jobs:
           AZURE_RESOURCE_GROUP: ${{ secrets.AZURE_RESOURCE_GROUP }}
           AZURE_PRINCIPAL_TYPE: ${{ secrets.AZURE_SERVICE_PRINCIPAL }}
 
+      - name: Refresh Environment State (safe / conditional)
+        shell: pwsh
+        run: |
+          $envName = "${{ secrets.AZURE_ENV_NAME }}"
+          Write-Host "Checking for azd environment '$envName'..."
+          try {
+            $envsJson = azd env list --output json 2>$null
+            if (-not $envsJson) {
+              Write-Host "No azd environments returned; skipping refresh (likely first-run)."
+              exit 0
+            }
+            $envs = $envsJson | ConvertFrom-Json
+          } catch {
+            Write-Host "Unable to list azd environments; skipping refresh. Error: $_"
+            exit 0
+          }
+          if ($envs -and ($envs | Where-Object { $_.name -eq $envName })) {
+            Write-Host "Environment '$envName' found. Running azd env refresh..."
+            azd env refresh --no-prompt
+          } else {
+            Write-Host "Environment '$envName' not found; skipping refresh (likely first-run)."
+          }
+        env:
+          AZURE_ENV_NAME: ${{ secrets.AZURE_ENV_NAME }}
+          AZURE_LOCATION: ${{ secrets.AZURE_LOCATION }}
+          AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          AZURE_RESOURCE_GROUP: ${{ secrets.AZURE_RESOURCE_GROUP }}
+          AZURE_PRINCIPAL_TYPE: ${{ secrets.AZURE_SERVICE_PRINCIPAL }}
+
       - name: Deploy Application
         run: |
           azd deploy --no-prompt
