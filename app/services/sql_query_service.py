@@ -140,10 +140,10 @@ class SQLQueryService:
                 # For AAD token authentication, do NOT include Authentication in the connection string
                 conn_str = (
                     "DRIVER={ODBC Driver 18 for SQL Server};"
-                    f"SERVER={server};DATABASE={self.sql_database};"
+                    f"SERVER={self.sql_server};DATABASE={self.sql_database};"
                     "Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30"
                 )
-                logger.info(f"Attempting AAD authentication to SQL server: {server}")
+                logger.info(f"Attempting AAD authentication to SQL server: {self.sql_server}")
                 logger.info(f"Database: {self.sql_database}")
                 logger.info(f"Connection string: {conn_str}")
                 try:
@@ -163,12 +163,12 @@ class SQLQueryService:
                 raise RuntimeError("SQL authentication is disabled. USE_AAD is False but no SQL credentials are configured.")
         except pyodbc.Error as db_error:
             logger.error(f"Database connection error: {type(db_error).__name__}: {str(db_error)}")
-            logger.error(f"Error details - Server: {server}, Database: {self.sql_database}")
+            logger.error(f"Error details - Server: {self.sql_server}, Database: {self.sql_database}")
             logger.error(f"AAD enabled: {self.use_aad}")
-            raise RuntimeError(f"SQL Database connection failed: {type(db_error).__name__}: {str(db_error)}. Server: {server}, Database: {self.sql_database}, AAD: {self.use_aad}")
+            raise RuntimeError(f"SQL Database connection failed: {type(db_error).__name__}: {str(db_error)}. Server: {self.sql_server}, Database: {self.sql_database}, AAD: {self.use_aad}")
         except Exception as general_error:
             logger.error(f"Unexpected connection error: {type(general_error).__name__}: {str(general_error)}")
-            raise RuntimeError(f"Unexpected SQL connection error: {type(general_error).__name__}: {str(general_error)}. Server: {server}, Database: {self.sql_database}")
+            raise RuntimeError(f"Unexpected SQL connection error: {type(general_error).__name__}: {str(general_error)}. Server: {self.sql_server}, Database: {self.sql_database}")
 
     async def _execute_sql(self, sql: str) -> List[Dict[str, Any]]:
         """Execute SQL synchronously in a thread and return list of dict rows."""
