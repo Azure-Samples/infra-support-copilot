@@ -135,37 +135,32 @@ class SQLQueryService:
     # --- SQL Execution helpers -------------------------------------------------
     def _build_connection(self) -> pyodbc.Connection:
         """Create a new ODBC connection (short-lived)."""
-        server = self.sql_server.replace("tcp:", "")
-        conn_str = (
-            "DRIVER={ODBC Driver 18 for SQL Server};"
-            f"SERVER=tcp:{server},1433;DATABASE={self.sql_database};Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;"
-        )
-        
         try:
             if self.use_aad:
+                # For AAD token authentication, do NOT include Authentication in the connection string
+                conn_str = (
+                    "DRIVER={ODBC Driver 18 for SQL Server};"
+                    f"SERVER={server};DATABASE={self.sql_database};"
+                    "Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30"
+                )
                 logger.info(f"Attempting AAD authentication to SQL server: {server}")
                 logger.info(f"Database: {self.sql_database}")
                 logger.info(f"Connection string: {conn_str}")
-                
                 try:
                     token = self.credential.get_token(self._sql_scope)
                     logger.info(f"Successfully acquired AAD token. Token expires at: {token.expires_on}")
-                    
                     token_bytes = token.token.encode("utf-16-le")
                     token_struct = struct.pack("=i", len(token_bytes)) + token_bytes
                     attrs_before = {1256: token_struct}  # SQL_COPT_SS_ACCESS_TOKEN
-                    
                     logger.info("Attempting to connect with AAD token...")
                     connection = pyodbc.connect(conn_str, attrs_before=attrs_before)
                     logger.info("Successfully connected to SQL database with AAD authentication")
                     return connection
-                    
                 except Exception as token_error:
                     logger.error(f"Failed to acquire AAD token: {type(token_error).__name__}: {str(token_error)}")
                     raise RuntimeError(f"AAD token acquisition failed: {type(token_error).__name__}: {str(token_error)}")
             else:
                 raise RuntimeError("SQL authentication is disabled. USE_AAD is False but no SQL credentials are configured.")
-                
         except pyodbc.Error as db_error:
             logger.error(f"Database connection error: {type(db_error).__name__}: {str(db_error)}")
             logger.error(f"Error details - Server: {server}, Database: {self.sql_database}")
