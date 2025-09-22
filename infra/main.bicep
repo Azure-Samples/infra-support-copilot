@@ -614,6 +614,17 @@ resource appServiceSearchDataReaderRoleAssignment 'Microsoft.Authorization/roleA
   }
 }
 
+// Assign 'SQL DB Contributor' role to App Service so it can access SQL Database using AAD (managed identity)
+resource appServiceSqlDbContributorRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: guid(appService.id, sqlDatabase.id, 'SQL DB Contributor')
+  scope: sqlDatabase
+  properties: {
+    principalId: appService.identity.principalId
+    principalType: 'ServicePrincipal'
+    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '9b7fa17d-e63e-47b0-bb0a-15c516ac86ec') // SQL DB Contributor
+  }
+}
+
 // Assign 'Storage Blob Data Contributor' role to OpenAI for file access
 resource openAIStorageBlobDataContributorRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   name: guid(openAiAccount.id, storageAccount.id, 'Storage Blob Data Contributor')
