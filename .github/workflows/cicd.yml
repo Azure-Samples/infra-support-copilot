@@ -1,5 +1,8 @@
 name: Build and deploy Python app to Azure Web App
 on:
+  pull_request:
+    branches: 
+      - main
   push:
     branches:
       - main
@@ -11,6 +14,17 @@ permissions:
 
 jobs:
   build:
+    # Run the same job across a matrix of GitHub Environments (env names)
+    # Each matrix entry should match a GitHub Environment configured in the repo
+    strategy:
+      fail-fast: false   # continue other matrix jobs if one fails
+      matrix:
+        # Start with a single GitHub Environment `rukasakurai-env`. To add more, append names here
+        # Example: env: [rukasakurai-env, <github-username>-env]
+        env: [rukasakurai-env]
+
+    # Use the environment selected by the matrix so environment-scoped secrets are used
+    environment: ${{ matrix.env }}
     runs-on: windows-latest
 
     steps:
