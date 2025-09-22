@@ -46,9 +46,14 @@ jobs:
           azd auth login --client-id ${{ secrets.AZURE_CLIENT_ID }} --tenant-id ${{ secrets.AZURE_TENANT_ID }} --federated-credential-provider github
         shell: pwsh
 
-      - name: Configure azd environment
+      - name: Initialize azd project
         run: |
-          azd env new ${{ secrets.AZURE_ENV_NAME }} --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }} --location ${{ secrets.AZURE_LOCATION }}
+          azd init --from-code --no-prompt
+        shell: pwsh
+
+      - name: Create azd environment
+        run: |
+          azd env new ${{ secrets.AZURE_ENV_NAME }} --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }} --location ${{ secrets.AZURE_LOCATION }} --no-prompt
         shell: pwsh
 
       - name: Provision Infrastructure
