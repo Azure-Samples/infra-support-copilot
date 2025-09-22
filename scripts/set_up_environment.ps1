@@ -89,14 +89,15 @@ if ($invokeSupportsAccessToken -and -not $ForceSqlcmd) {
     }
     catch {
         Write-Warning ("Invoke-Sqlcmd failed: {0}" -f $_.Exception.Message)
-        Write-Warning "Falling back to sqlcmd (-G) if available..."
+        Write-Warning "Falling back to sqlcmd with access token if available..."
         $sqlcmdPath = Find-SqlcmdPath -Hint $SqlcmdPath
         if ($sqlcmdPath) {
             $tmpFile = New-TemporaryFile
             Set-Content -Path $tmpFile -Value $query -Encoding UTF8
             try {
-                & $sqlcmdPath -S $AZURE_SQL_SERVER -d $AZURE_SQL_DATABASE_NAME -G -C -b -l 30 -i $tmpFile
-                Write-Output "Done (via sqlcmd)."
+                # Use access token with sqlcmd instead of -G flag
+                & $sqlcmdPath -S $AZURE_SQL_SERVER -d $AZURE_SQL_DATABASE_NAME -P $token -C -b -l 30 -i $tmpFile
+                Write-Output "Done (via sqlcmd with access token)."
             }
             finally {
                 Remove-Item $tmpFile -ErrorAction SilentlyContinue
@@ -111,12 +112,13 @@ if ($invokeSupportsAccessToken -and -not $ForceSqlcmd) {
 else {
     $sqlcmdPath = Find-SqlcmdPath -Hint $SqlcmdPath
     if ($sqlcmdPath) {
-        # Use sqlcmd with AAD integrated auth (-G). For Azure SQL, encryption is enforced; -C trusts the server cert.
+        # Use sqlcmd with access token instead of AAD integrated auth (-G)
         Write-Output "Using sqlcmd at: $sqlcmdPath"
         $tmpFile = New-TemporaryFile
         Set-Content -Path $tmpFile -Value $query -Encoding UTF8
         try {
-            & $sqlcmdPath -S $AZURE_SQL_SERVER -d $AZURE_SQL_DATABASE_NAME -G -C -b -l 30 -i $tmpFile
+            # Use access token authentication instead of -G flag
+            & $sqlcmdPath -S $AZURE_SQL_SERVER -d $AZURE_SQL_DATABASE_NAME -P $token -C -b -l 30 -i $tmpFile
             Write-Output "Done."
         }
         finally {
