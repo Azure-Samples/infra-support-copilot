@@ -103,7 +103,7 @@ async def chat_completion(chat_request: ChatRequest):
             "current_working_directory": os.getcwd(),
             "environment_variables": {
                 "AZURE_SQL_SERVER": os.getenv("AZURE_SQL_SERVER", "Not set"),
-                "AZURE_SQL_DATABASE": os.getenv("AZURE_SQL_DATABASE", "Not set"),
+                "AZURE_SQL_DATABASE_NAME": os.getenv("AZURE_SQL_DATABASE_NAME", "Not set"),
                 "USE_AAD": os.getenv("USE_AAD", "Not set"),
                 "AZURE_OPENAI_ENDPOINT": os.getenv("AZURE_OPENAI_ENDPOINT", "Not set"),
                 "AZURE_OPENAI_GPT_DEPLOYMENT": os.getenv("AZURE_OPENAI_GPT_DEPLOYMENT", "Not set"),

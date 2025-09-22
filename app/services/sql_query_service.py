@@ -130,7 +130,7 @@ class SQLQueryService:
         server = self.sql_server.replace("tcp:", "")
         conn_str = (
             "DRIVER={ODBC Driver 18 for SQL Server};"
-            f"SERVER=tcp:{server},1433;DATABASE={self.sql_database};Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;"
+            f"SERVER=tcp:{server},1433;DATABASE={self.sql_database};Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;Authentication=ActiveDirectoryAccessToken;"
         )
         
         try:
