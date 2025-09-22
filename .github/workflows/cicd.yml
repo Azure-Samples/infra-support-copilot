@@ -46,6 +46,18 @@ jobs:
           azd auth login --client-id ${{ secrets.AZURE_CLIENT_ID }} --tenant-id ${{ secrets.AZURE_TENANT_ID }} --federated-credential-provider github
         shell: pwsh
 
+      # Refresh environment state to reconcile any drift and detect resources manually deleted in Azure Portal
+      - name: Refresh Environment State
+        run: |
+          azd env refresh --no-prompt
+        shell: pwsh
+        env:
+          AZURE_ENV_NAME: ${{ secrets.AZURE_ENV_NAME }}
+          AZURE_LOCATION: ${{ secrets.AZURE_LOCATION }}
+          AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          AZURE_RESOURCE_GROUP: ${{ secrets.AZURE_RESOURCE_GROUP }}
+          AZURE_PRINCIPAL_TYPE: ${{ secrets.AZURE_SERVICE_PRINCIPAL }}
+
       - name: Provision Infrastructure
         run: |
           azd provision --no-prompt --force
