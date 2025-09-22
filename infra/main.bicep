@@ -99,6 +99,9 @@ resource sqlServer 'Microsoft.Sql/servers@2024-11-01-preview' = {
   name: sqlServerName
   location: location
   tags: tags
+  identity: {
+    type: 'SystemAssigned' // Add system-assigned managed identity for SQL Server
+  }
   properties: union(sqlServerBaseProps, sqlServerAdminProps)
 }
 
