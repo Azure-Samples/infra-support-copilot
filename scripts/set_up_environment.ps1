@@ -1,3 +1,7 @@
+Write-Output "Searching for all sqlcmd.exe locations in C:\Program Files..."
+Get-ChildItem -Path "C:\Program Files" -Recurse -Filter "sqlcmd.exe" -ErrorAction SilentlyContinue | ForEach-Object {
+    Write-Output "Found: $($_.FullName) Version: $((Get-Item $_.FullName).VersionInfo.FileVersion)"
+}
 param(
     [switch]$ForceSqlcmd,
     [string]$SqlcmdPath
@@ -112,6 +116,7 @@ else {
     $sqlcmdPath = Find-SqlcmdPath -Hint $SqlcmdPath
     if ($sqlcmdPath) {
         # Use sqlcmd with AAD integrated auth (-G). For Azure SQL, encryption is enforced; -C trusts the server cert.
+        Write-Output "Using sqlcmd at: $sqlcmdPath"
         $tmpFile = New-TemporaryFile
         Set-Content -Path $tmpFile -Value $query -Encoding UTF8
         try {
