@@ -48,7 +48,7 @@ jobs:
 
       - name: Provision Infrastructure
         run: |
-          azd down --no-prompt
+          azd down --no-prompt --purge --force
           azd provision --no-prompt
         shell: pwsh
         env:
