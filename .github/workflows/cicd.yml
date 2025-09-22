@@ -60,7 +60,7 @@ jobs:
       - name: Install latest sqlcmd utility
         run: |
           Write-Host "Installing latest sqlcmd utility"
-          $sqlcmdInstallerUrl = "https://github.com/microsoft/sqlcmd/releases/latest/download/sqlcmd-win-x64.msi"
+          $sqlcmdInstallerUrl = "https://go.microsoft.com/fwlink/?linkid=2142258"
           $installerPath = "$env:TEMP\sqlcmd.msi"
           Invoke-WebRequest -Uri $sqlcmdInstallerUrl -OutFile $installerPath
           Start-Process msiexec.exe -ArgumentList "/i", $installerPath, "/quiet", "/norestart" -Wait
