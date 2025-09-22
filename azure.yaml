@@ -34,12 +34,12 @@ hooks:
   preprovision:
     windows:
       shell: pwsh
-      run: .\scripts\get_ip_address.ps1
+      run: Write-Host "preprovision running"; .\scripts\get_ip_address.ps1
       interactive: false  # Set to false to allow execution in CI/CD with --no-prompt. Since `false` is the default, potentially delete this line in the future.
       continueOnError: false
   postprovision:
     windows:
       shell: pwsh
-      run: pwsh -NoProfile -ExecutionPolicy Bypass -File .\scripts\set_up_environment.ps1 -ForceSqlcmd
+      run: Write-Host "postprovision running"; pwsh -NoProfile -ExecutionPolicy Bypass -File .\scripts\set_up_environment.ps1 -ForceSqlcmd
       interactive: false  # Set to false to allow execution in CI/CD with --no-prompt. Since `false` is the default, potentially delete this line in the future.
       continueOnError: false

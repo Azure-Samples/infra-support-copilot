@@ -66,14 +66,3 @@ jobs:
           AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           AZURE_RESOURCE_GROUP: ${{ secrets.AZURE_RESOURCE_GROUP }}
           AZURE_PRINCIPAL_TYPE: ${{ secrets.AZURE_SERVICE_PRINCIPAL }}
-
-      - name: Teardown Azure resources
-        run: |
-          azd down --no-prompt --purge --force
-        shell: pwsh
-        env:
-          AZURE_ENV_NAME: ${{ secrets.AZURE_ENV_NAME }}
-          AZURE_LOCATION: ${{ secrets.AZURE_LOCATION }}
-          AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          AZURE_RESOURCE_GROUP: ${{ secrets.AZURE_RESOURCE_GROUP }}
-          AZURE_PRINCIPAL_TYPE: ${{ secrets.AZURE_SERVICE_PRINCIPAL }}
