@@ -13,7 +13,7 @@ param tags object = {
 }
 
 @description('Principal ID of the user running the deployment (for role assignments)')
-param userPrincipalId string
+param userPrincipalId string = ''
 
 @description('Type of the principal identified by userPrincipalId. Use "User" for human accounts; "ServicePrincipal" for CI/CD service principals.')
 @allowed([
@@ -26,7 +26,6 @@ param userPrincipalId string
 param userPrincipalType string = 'User'
 
 var isUserPrincipal = toLower(userPrincipalType) == 'user'
-var isServicePrincipal = toLower(userPrincipalType) == 'serviceprincipal'
 
 // ----------------------------------------------------
 // App Service and configuration
@@ -97,13 +96,13 @@ var sqlServerBaseProps = {
   minimalTlsVersion: '1.2'
   publicNetworkAccess: 'Enabled'
 }
-var sqlServerAdminProps = (!empty(userPrincipalId) && (isUserPrincipal || isServicePrincipal)) ? {
+var sqlServerAdminProps = (!empty(userPrincipalId) && isUserPrincipal) ? {
   administrators: {
     administratorType: 'ActiveDirectory'
-    login: isUserPrincipal ? 'aad-admin' : 'sp-admin'
+    login: 'aad-admin'
     sid: userPrincipalId
     tenantId: tenant().tenantId
-    principalType: isUserPrincipal ? 'User' : 'Application'
+    principalType: 'User'
     azureADOnlyAuthentication: true
   }
 } : {}
