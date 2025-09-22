@@ -75,8 +75,8 @@ uvicorn app.main:app --reload
 
 Local URL: http://127.0.0.1:8000
 
-[!NOTE]
-It is possible that it takes about 30 minutes to gather data in Log Analytics.
+> [!NOTE]
+> It is possible that it takes about 30 minutes to gather data in Log Analytics.
 
 ---
 
