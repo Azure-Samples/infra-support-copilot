@@ -88,7 +88,28 @@ async def chat_completion(chat_request: ChatRequest):
         
     except Exception as e:
         error_str = str(e).lower()
-        logger.error(f"Error in chat completion: {str(e)}")
+        logger.error(f"Error in chat completion: {type(e).__name__}: {str(e)}")
+        logger.error(f"Chat request: {chat_request}")
+        
+        # Create detailed error information for debugging
+        import traceback
+        import sys
+        import os
+        
+        error_details = {
+            "error_type": type(e).__name__,
+            "error_message": str(e),
+            "python_version": sys.version,
+            "current_working_directory": os.getcwd(),
+            "environment_variables": {
+                "AZURE_SQL_SERVER": os.getenv("AZURE_SQL_SERVER", "Not set"),
+                "AZURE_SQL_DATABASE": os.getenv("AZURE_SQL_DATABASE", "Not set"),
+                "USE_AAD": os.getenv("USE_AAD", "Not set"),
+                "AZURE_OPENAI_ENDPOINT": os.getenv("AZURE_OPENAI_ENDPOINT", "Not set"),
+                "AZURE_OPENAI_GPT_DEPLOYMENT": os.getenv("AZURE_OPENAI_GPT_DEPLOYMENT", "Not set"),
+            },
+            "traceback": traceback.format_exc()
+        }
         
         # Handle specific error types with friendly messages
         if "rate limit" in error_str or "capacity" in error_str or "quota" in error_str:
@@ -101,12 +122,22 @@ async def chat_completion(chat_request: ChatRequest):
                 }]
             }
         else:
-            # Return a standard error response for all other errors
+            # Return a verbose error response for debugging
+            verbose_error = f"DETAILED ERROR INFORMATION (Debug Mode):\n\n"
+            verbose_error += f"Error Type: {error_details['error_type']}\n"
+            verbose_error += f"Error Message: {error_details['error_message']}\n\n"
+            verbose_error += f"Environment Configuration:\n"
+            for key, value in error_details['environment_variables'].items():
+                verbose_error += f"  {key}: {value}\n"
+            verbose_error += f"\nPython Version: {error_details['python_version']}\n"
+            verbose_error += f"Working Directory: {error_details['current_working_directory']}\n\n"
+            verbose_error += f"Full Traceback:\n{error_details['traceback']}"
+            
             return {
                 "choices": [{
                     "message": {
                         "role": "assistant",
-                        "content": f"An error occurred: {str(e)}"
+                        "content": verbose_error
                     }
                 }]
             }

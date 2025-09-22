@@ -132,23 +132,58 @@ class SQLQueryService:
             "DRIVER={ODBC Driver 18 for SQL Server};"
             f"SERVER=tcp:{server},1433;DATABASE={self.sql_database};Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;"
         )
-        if self.use_aad:
-            token = self.credential.get_token(self._sql_scope)
-            token_bytes = token.token.encode("utf-16-le")
-            token_struct = struct.pack("=i", len(token_bytes)) + token_bytes
-            attrs_before = {1256: token_struct}  # SQL_COPT_SS_ACCESS_TOKEN
-            return pyodbc.connect(conn_str, attrs_before=attrs_before)
-        raise RuntimeError("Azure SQL connection failed: AAD enabled but token acquisition failed or SQL Auth credentials missing")
+        
+        try:
+            if self.use_aad:
+                logger.info(f"Attempting AAD authentication to SQL server: {server}")
+                logger.info(f"Database: {self.sql_database}")
+                logger.info(f"Connection string: {conn_str}")
+                
+                try:
+                    token = self.credential.get_token(self._sql_scope)
+                    logger.info(f"Successfully acquired AAD token. Token expires at: {token.expires_on}")
+                    
+                    token_bytes = token.token.encode("utf-16-le")
+                    token_struct = struct.pack("=i", len(token_bytes)) + token_bytes
+                    attrs_before = {1256: token_struct}  # SQL_COPT_SS_ACCESS_TOKEN
+                    
+                    logger.info("Attempting to connect with AAD token...")
+                    connection = pyodbc.connect(conn_str, attrs_before=attrs_before)
+                    logger.info("Successfully connected to SQL database with AAD authentication")
+                    return connection
+                    
+                except Exception as token_error:
+                    logger.error(f"Failed to acquire AAD token: {type(token_error).__name__}: {str(token_error)}")
+                    raise RuntimeError(f"AAD token acquisition failed: {type(token_error).__name__}: {str(token_error)}")
+            else:
+                raise RuntimeError("SQL authentication is disabled. USE_AAD is False but no SQL credentials are configured.")
+                
+        except pyodbc.Error as db_error:
+            logger.error(f"Database connection error: {type(db_error).__name__}: {str(db_error)}")
+            logger.error(f"Error details - Server: {server}, Database: {self.sql_database}")
+            logger.error(f"AAD enabled: {self.use_aad}")
+            raise RuntimeError(f"SQL Database connection failed: {type(db_error).__name__}: {str(db_error)}. Server: {server}, Database: {self.sql_database}, AAD: {self.use_aad}")
+        except Exception as general_error:
+            logger.error(f"Unexpected connection error: {type(general_error).__name__}: {str(general_error)}")
+            raise RuntimeError(f"Unexpected SQL connection error: {type(general_error).__name__}: {str(general_error)}. Server: {server}, Database: {self.sql_database}")
 
     async def _execute_sql(self, sql: str) -> List[Dict[str, Any]]:
         """Execute SQL synchronously in a thread and return list of dict rows."""
         def _work() -> List[Dict[str, Any]]:
-            with self._build_connection() as conn:
-                cur = conn.cursor()
-                cur.execute(sql)
-                cols = [c[0] for c in cur.description] if cur.description else []
-                rows = cur.fetchall() if cols else []
-                return [dict(zip(cols, r)) for r in rows]
+            try:
+                logger.info(f"Executing SQL query: {sql}")
+                with self._build_connection() as conn:
+                    cur = conn.cursor()
+                    cur.execute(sql)
+                    cols = [c[0] for c in cur.description] if cur.description else []
+                    rows = cur.fetchall() if cols else []
+                    result = [dict(zip(cols, r)) for r in rows]
+                    logger.info(f"SQL query executed successfully, returned {len(result)} rows")
+                    return result
+            except Exception as e:
+                logger.error(f"SQL execution failed: {type(e).__name__}: {str(e)}")
+                logger.error(f"Failed query: {sql}")
+                raise RuntimeError(f"SQL execution error: {type(e).__name__}: {str(e)}. Query: {sql}")
         return await asyncio.to_thread(_work)
 
     # --- Safety / formatting ---------------------------------------------------
@@ -185,6 +220,8 @@ class SQLQueryService:
     async def get_chat_completion(self, effective_query: str):
         """End-to-end chat completion with Azure SQL retrieval."""
         try:
+            logger.info(f"Processing query: {effective_query}")
+            
             if effective_query.upper().startswith(";;SQL;;"):     
                 sql_part = effective_query.split(";;SQL;;", 1)[1]
                 items = sql_part.split(',')
@@ -214,7 +251,25 @@ class SQLQueryService:
             else:
                 return [{'title': 'SELECTABLE', 'content': f';;SELECTABLE;;{",".join("dbo." + table for table in self._allowed_tables)}'}]
         except Exception as e:
-            logger.error(f"Error in get_chat_completion: {e}")
-            raise
+            logger.error(f"Error in get_chat_completion: {type(e).__name__}: {str(e)}")
+            logger.error(f"Query that failed: {effective_query}")
+            logger.error(f"SQL Server: {self.sql_server}")
+            logger.error(f"SQL Database: {self.sql_database}")
+            logger.error(f"AAD enabled: {self.use_aad}")
+            
+            # Create detailed error message
+            error_details = {
+                "error_type": type(e).__name__,
+                "error_message": str(e),
+                "query": effective_query,
+                "sql_server": self.sql_server,
+                "sql_database": self.sql_database,
+                "aad_enabled": self.use_aad,
+                "openai_endpoint": self.openai_endpoint,
+                "gpt_deployment": self.gpt_deployment
+            }
+            
+            detailed_error = f"SQL Service Error Details:\n" + "\n".join([f"- {k}: {v}" for k, v in error_details.items()])
+            raise RuntimeError(detailed_error)
 
 sql_query_service = SQLQueryService()
