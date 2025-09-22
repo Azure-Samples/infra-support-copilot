@@ -21,6 +21,11 @@ class SQLQueryService:
         # Store settings
         self.openai_endpoint = settings.azure_openai_endpoint
         self.gpt_deployment = settings.azure_openai_gpt_deployment
+        self.embedding_deployment = settings.azure_openai_embedding_deployment
+        self.search_url = settings.azure_search_service_url
+        self.search_index_name_inventories = settings.azure_search_index_name_inventories
+        self.search_index_name_incidents = settings.azure_search_index_name_incidents
+        self.system_prompt = settings.system_prompt
         self.azure_openai_api_version = settings.azure_openai_api_version
 
         # Create Azure credentials for managed identity
@@ -52,52 +57,51 @@ class SQLQueryService:
 
         self.table_info = (
             "TABLE dbo.virtual_machines (\n"
-            "    resource_id           NVARCHAR(512) NOT NULL PRIMARY KEY, # virtual machine identifier\n"
-            "    name                  NVARCHAR(128), # virtual machine name\n"
-            "    subscription_id       UNIQUEIDENTIFIER NULL, # subscription identifier\n"
-            "    resource_group        NVARCHAR(128), # resource group name\n"
-            "    location              NVARCHAR(64), # Azure region\n"
-            "    vm_size               NVARCHAR(64), # VM size\n"
-            "    os_type               NVARCHAR(32), # OS type\n"
-            "    os_name               NVARCHAR(128), # OS name\n"
-            "    os_version            NVARCHAR(64), # OS version\n"
-            "    provisioning_state    NVARCHAR(32), # Provisioning state\n"
-            "    priority              NVARCHAR(32), # Priority\n"
-            "    time_created          DATETIME2, # Time created\n"
-            "    power_state           NVARCHAR(64), # Power state\n"
-            "    admin_username        NVARCHAR(64), # Admin username\n"
-            "    server_type_tag       NVARCHAR(128), # Server type tag\n"
-            "    tags_json             NVARCHAR(MAX), # Tags JSON\n"
-            "    identity_principal_id UNIQUEIDENTIFIER NULL # Identity principal ID\n"
+            "    resource_id           NVARCHAR(512) NOT NULL PRIMARY KEY,\n"
+            "    name                  NVARCHAR(128),\n"
+            "    subscription_id       UNIQUEIDENTIFIER NULL,\n"
+            "    resource_group        NVARCHAR(128),\n"
+            "    location              NVARCHAR(64),\n"
+            "    vm_size               NVARCHAR(64),\n"
+            "    os_type               NVARCHAR(32),\n"
+            "    os_name               NVARCHAR(128),\n"
+            "    os_version            NVARCHAR(64),\n"
+            "    provisioning_state    NVARCHAR(32),\n"
+            "    priority              NVARCHAR(32),\n"
+            "    time_created          DATETIME2,\n"
+            "    power_state           NVARCHAR(64),\n"
+            "    admin_username        NVARCHAR(64),\n"
+            "    server_type_tag       NVARCHAR(128),\n"
+            "    tags_json             NVARCHAR(MAX),\n"
+            "    identity_principal_id UNIQUEIDENTIFIER NULL\n"
             ");\n\n"
             "TABLE dbo.network_interfaces (\n"
-            "    resource_id        NVARCHAR(512) NOT NULL PRIMARY KEY, # Network interface identifier\n"
-            "    name               NVARCHAR(128), # Network interface name\n"
-            "    subscription_id    UNIQUEIDENTIFIER NULL, # Subscription identifier\n"
-            "    resource_group     NVARCHAR(128), # Resource group name\n"
-            "    location           NVARCHAR(64), # Azure region\n"
-            "    mac_address        NVARCHAR(32), # MAC address\n"
-            "    private_ip         NVARCHAR(64), # Private IP address\n"
-            "    allocation_method  NVARCHAR(32), # Allocation method\n"
-            "    accelerated        BIT, # Accelerated networking\n"
-            "    primary_flag       BIT, # Primary network interface flag\n"
-            "    vm_resource_id     NVARCHAR(512) NULL REFERENCES dbo.virtual_machines(resource_id) # Virtual machine identifier\n"
+            "    resource_id        NVARCHAR(512) NOT NULL PRIMARY KEY,\n"
+            "    name               NVARCHAR(128),\n"
+            "    subscription_id    UNIQUEIDENTIFIER NULL,\n"
+            "    resource_group     NVARCHAR(128),\n"
+            "    location           NVARCHAR(64),\n"
+            "    mac_address        NVARCHAR(32),\n"
+            "    private_ip         NVARCHAR(64),\n"
+            "    allocation_method  NVARCHAR(32),\n"
+            "    accelerated        BIT,\n"
+            "    primary_flag       BIT,\n"
+            "    vm_resource_id     NVARCHAR(512) NULL REFERENCES dbo.virtual_machines(resource_id)\n"
             ");\n\n"
             "TABLE dbo.installed_software (\n"
-            "    id              INT IDENTITY(1,1) PRIMARY KEY, # Software installation identifier\n"
-            "    computer_name   NVARCHAR(256) NOT NULL, # Name of the computer\n"
-            "    software_name   NVARCHAR(512) NOT NULL, # Name of the installed software\n"
-            "    current_version NVARCHAR(256), # Current version of the software\n"
-            "    publisher       NVARCHAR(512) # Publisher of the software\n"
+            "    id              INT IDENTITY(1,1) PRIMARY KEY,\n"
+            "    computer_name   NVARCHAR(256) NOT NULL,\n"
+            "    software_name   NVARCHAR(512) NOT NULL,\n"
+            "    current_version NVARCHAR(256),\n"
+            "    publisher       NVARCHAR(512)\n"
             ");"
         )
 
-    async def _generate_sql(self, wanted_columns: List[str], user_query: str) -> str:
+    async def _generate_sql(self, user_query: str) -> str:
         """Generate a read-only SQL query."""
         prompt = (
             "You are an expert SQL query generator for Azure infrastructure data. Generate a read-only SQL query based on the user's requirements.\n\n"
             f"User Query: {user_query}\n"
-            f"Required Columns: {', '.join(wanted_columns)}\n\n"
             "INSTRUCTIONS:\n"
             "1. Analyze the user query to determine the logical order for the required columns in the SELECT clause\n"
             "2. Use LEFT OUTER JOIN to ensure all columns appear in results, even when related data doesn't exist\n"
@@ -107,22 +111,29 @@ class SQLQueryService:
             "6. Join tables appropriately: vm.resource_id = ni.vm_resource_id for VM-NIC relationship\n"
             f"Available Tables and Schema:\n{self.table_info}\n\n"
             "EXAMPLE OUTPUT FORMATS:\n"
-            "Basic join:\n"
             "SELECT vm.resource_group, vm.name AS resource_name, ni.name AS network_interface_name\n"
             "FROM dbo.virtual_machines AS vm\n"
             "LEFT OUTER JOIN dbo.network_interfaces AS ni ON vm.resource_id = ni.vm_resource_id\n"
             "ORDER BY vm.resource_group, vm.name;\n\n"
             "Generate ONLY the SQL query without any explanation or markdown formatting:"
         )
-        
-        resp_sql = await self.openai_client.chat.completions.create(
-            model=self.gpt_deployment,
-            messages=[{"role": "user", "content": prompt}],
-            temperature=0.1,
-        )
-
-        return resp_sql.choices[0].message.content.strip()
-        
+        try:
+            resp = await self.openai_client.chat.completions.create(
+                model=self.gpt_deployment,
+                messages=[{"role": "user", "content": prompt}]
+            )
+            sql = resp.choices[0].message.content.strip()
+            # Strip code fences if any
+            if sql.startswith("```"):
+                sql = sql.strip("`\n")
+                # remove possible language tag line
+                if sql.lower().startswith("sql"):
+                    sql = "\n".join(sql.splitlines()[1:])
+            return sql
+        except Exception as e:
+            logger.error(f"Failed to generate SQL: {e}")
+            # fallback simple query
+            return f"SELECT TOP {self._default_row_limit} name, location, vm_size, power_state FROM dbo.virtual_machines ORDER BY name;"
 
     # --- SQL Execution helpers -------------------------------------------------
     def _build_connection(self) -> pyodbc.Connection:
@@ -173,48 +184,30 @@ class SQLQueryService:
     def _rows_to_sources(self, rows: List[Dict[str, Any]], max_chars: int = 4000) -> str:
         if not rows:
             return "(no rows)"
-        # simple tabular text (pipe separated, markdown table)
+        # simple tabular text (pipe separated)
         cols = list(rows[0].keys())
-        header = " | ".join(cols)
-        separator = " | ".join(["---"] * len(cols))
-        lines = [header, separator]
+        lines = [" | ".join(cols)]
         for r in rows:
             lines.append(" | ".join(str(r.get(c, "")) for c in cols))
+            if sum(len(line) for line in lines) > max_chars:
+                lines.append("... (truncated) ...")
+                break
         return "\n".join(lines)
 
     async def get_chat_completion(self, effective_query: str):
         """End-to-end chat completion with Azure SQL retrieval."""
         try:
-            if effective_query.upper().startswith(";;SQL;;"):     
-                sql_part = effective_query.split(";;SQL;;", 1)[1]
-                items = sql_part.split(',')
-                quoted_items = [f"'{item[4:].strip()}'" for item in items]
-                sql = f"""
-                    SELECT TABLE_NAME, COLUMN_NAME
-                    FROM INFORMATION_SCHEMA.COLUMNS
-                    WHERE TABLE_NAME IN ({','.join(quoted_items)})
-                    ORDER BY TABLE_NAME, ORDINAL_POSITION;
-                """
-                logger.info(f"Executing SQL for columns: {sql}")
-                rows = await self._execute_sql(sql)
-                columns = self._rows_to_sources(rows)
-                return [{"title": "COLUMNS", "content": f";;COLUMNS;;{columns}"}]
-            elif effective_query.upper().startswith(";;EXECUTE;;"):
-                [wanted_columns, user_query] = effective_query.split("|||")
-                sql = await self._generate_sql(wanted_columns, user_query)
-                if not self._is_safe_sql(sql):
-                    logger.warning(f"Unsafe SQL blocked: {sql}")
-                    sql = f"SELECT TOP {self._default_row_limit} name, location, vm_size, power_state FROM dbo.virtual_machines ORDER BY name;"  # safe fallback
+            sql = await self._generate_sql(effective_query)
+            if not self._is_safe_sql(sql):
+                logger.warning(f"Unsafe SQL blocked: {sql}")
+                sql = f"SELECT TOP {self._default_row_limit} name, location, vm_size, power_state FROM dbo.virtual_machines ORDER BY name;"  # safe fallback
 
-                rows = await self._execute_sql(sql)
+            rows = await self._execute_sql(sql)
+            sources = self._rows_to_sources(rows)
 
-                sources = self._rows_to_sources(rows)
-
-                return [{"title": "SQL Query", "content": f"## SQL Query:\n{sql}\n\n## Results:\n{sources}"}]
-            else:
-                return [{'title': 'SELECTABLE', 'content': f';;SELECTABLE;;{",".join("dbo." + table for table in self._allowed_tables)}'}]
+            return [{"title": "SQL Query", "content": f"SQL Query:\n{sql}\n\nResults:\n{sources}"}]
         except Exception as e:
             logger.error(f"Error in get_chat_completion: {e}")
             raise
 
-sql_query_service = SQLQueryService()
+sql_query_auto_service = SQLQueryService()
