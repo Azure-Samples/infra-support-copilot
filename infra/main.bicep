@@ -100,7 +100,7 @@ var sqlServerAdminProps = (!empty(adminPrincipalId)) ? {
     login: 'aad-admin'
     sid: adminPrincipalId
     tenantId: tenant().tenantId
-    principalType: adminPrincipalType
+    principalType: (adminPrincipalType == 'User') ? adminPrincipalType : 'Application'
     azureADOnlyAuthentication: true
   }
 } : {}
