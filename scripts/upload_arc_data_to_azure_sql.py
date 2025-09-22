@@ -42,20 +42,50 @@ def get_connection() -> pyodbc.Connection:
 	# Normalize server (allow user to omit tcp: prefix)
 	server = server.replace("tcp:", "")
 
-	credential = DefaultAzureCredential(exclude_interactive_browser_credential=False)
-	token = credential.get_token(SCOPE)
+	# Try to get available ODBC drivers
+	available_drivers = [driver for driver in pyodbc.drivers() if 'SQL Server' in driver]
+	print(f"Available ODBC drivers: {available_drivers}")
+	
+	# Prefer ODBC Driver 18, fallback to 17, then any SQL Server driver
+	driver_to_use = None
+	for preferred_driver in ["ODBC Driver 18 for SQL Server", "ODBC Driver 17 for SQL Server"]:
+		if preferred_driver in available_drivers:
+			driver_to_use = preferred_driver
+			break
+	
+	if not driver_to_use and available_drivers:
+		driver_to_use = available_drivers[0]
+		print(f"Using fallback driver: {driver_to_use}")
+	
+	if not driver_to_use:
+		raise RuntimeError("No SQL Server ODBC driver found. Please install Microsoft ODBC Driver for SQL Server.")
 
-	# Build token structure: 4-byte length (little endian) + UTF-16-LE token bytes
-	token_bytes = token.token.encode("utf-16-le")
-	token_struct = struct.pack("=i", len(token_bytes)) + token_bytes
-	attrs_before = {1256: token_struct}  # 1256 = SQL_COPT_SS_ACCESS_TOKEN
+	print(f"Using ODBC driver: {driver_to_use}")
 
-	conn_str = (
-		"DRIVER={ODBC Driver 18 for SQL Server};"
-		f"SERVER=tcp:{server},1433;DATABASE={database};Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;"
-	)
+	try:
+		credential = DefaultAzureCredential(exclude_interactive_browser_credential=False)
+		token = credential.get_token(SCOPE)
+		print("Successfully obtained Azure AD access token")
 
-	return pyodbc.connect(conn_str, attrs_before=attrs_before)
+		# Build token structure: 4-byte length (little endian) + UTF-16-LE token bytes
+		token_bytes = token.token.encode("utf-16-le")
+		token_struct = struct.pack("=i", len(token_bytes)) + token_bytes
+		attrs_before = {1256: token_struct}  # 1256 = SQL_COPT_SS_ACCESS_TOKEN
+
+		conn_str = (
+			f"DRIVER={{{driver_to_use}}};"
+			f"SERVER=tcp:{server},1433;DATABASE={database};Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;"
+		)
+		
+		print(f"Connecting to: {server}/{database}")
+		return pyodbc.connect(conn_str, attrs_before=attrs_before)
+		
+	except Exception as e:
+		print(f"Connection failed: {str(e)}")
+		print(f"Server: {server}")
+		print(f"Database: {database}")
+		print(f"Driver: {driver_to_use}")
+		raise
 
 def ensure_tables(cursor: pyodbc.Cursor) -> None:
 	"""Create tables if they do not exist."""
@@ -282,32 +312,56 @@ IF NOT EXISTS (
 
 
 def main() -> None:
+	print("Starting Azure SQL data upload process...")
+	
+	# Check for required environment variables
+	required_env_vars = ["AZURE_SQL_SERVER", "AZURE_SQL_DATABASE_NAME"]
+	missing_vars = [var for var in required_env_vars if not os.getenv(var)]
+	if missing_vars:
+		print(f"Missing required environment variables: {missing_vars}", file=sys.stderr)
+		sys.exit(1)
+	
+	print(f"SQL Server: {os.getenv('AZURE_SQL_SERVER')}")
+	print(f"Database: {os.getenv('AZURE_SQL_DATABASE_NAME')}")
+	
 	if not VM_FILE.exists() and not NIC_FILE.exists() and not SW_FILE.exists():
 		print("There is no ARC data JSON found (docs/arc/*.json)", file=sys.stderr)
 		sys.exit(1)
 
-	with get_connection() as conn:
-		cursor = conn.cursor()
-		ensure_tables(cursor)
-		conn.commit()
+	try:
+		with get_connection() as conn:
+			print("Successfully connected to Azure SQL Database")
+			cursor = conn.cursor()
+			ensure_tables(cursor)
+			conn.commit()
+			print("Tables ensured successfully")
 
-		vm_rows = load_json_array(VM_FILE)
-		nic_rows = load_json_array(NIC_FILE)
-		# Software is large, so stream processing (bulk loading is also possible)
-		sw_rows = load_json_array(SW_FILE)
+			vm_rows = load_json_array(VM_FILE)
+			nic_rows = load_json_array(NIC_FILE)
+			# Software is large, so stream processing (bulk loading is also possible)
+			sw_rows = load_json_array(SW_FILE)
 
-		total_vm = upsert_virtual_machines(cursor, vm_rows)
-		print("Virtual Machine Data Uploaded.")
-		total_nic = upsert_network_interfaces(cursor, nic_rows)
-		print("Network Interface Data Uploaded.")
-		total_sw = insert_installed_software(cursor, sw_rows)
-		print("Installed Software Data Uploaded.")
-		conn.commit()
+			total_vm = upsert_virtual_machines(cursor, vm_rows)
+			print("Virtual Machine Data Uploaded.")
+			total_nic = upsert_network_interfaces(cursor, nic_rows)
+			print("Network Interface Data Uploaded.")
+			total_sw = insert_installed_software(cursor, sw_rows)
+			print("Installed Software Data Uploaded.")
+			conn.commit()
 
-	print("Import complete:")
-	print(f"  virtual_machines: {total_vm}")
-	print(f"  network_interfaces: {total_nic}")
-	print(f"  installed_software (only new): {total_sw}")
+		print("Import complete:")
+		print(f"  virtual_machines: {total_vm}")
+		print(f"  network_interfaces: {total_nic}")
+		print(f"  installed_software (only new): {total_sw}")
+		
+	except Exception as e:
+		print(f"Error during database operations: {str(e)}", file=sys.stderr)
+		print("This may be due to:")
+		print("1. Missing ODBC driver for SQL Server")
+		print("2. Authentication issues with Azure SQL Database")
+		print("3. Network connectivity problems")
+		print("4. Database permission issues")
+		sys.exit(1)
 
 
 if __name__ == "__main__":

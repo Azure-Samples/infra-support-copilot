@@ -42,6 +42,21 @@ jobs:
           pip install -r requirements.txt
         shell: pwsh
 
+      - name: Install ODBC Driver for SQL Server
+        run: |
+          Write-Host "Installing Microsoft ODBC Driver 18 for SQL Server"
+          # Download and install ODBC Driver 18 for SQL Server
+          $downloadUrl = "https://go.microsoft.com/fwlink/?linkid=2249006"
+          $installerPath = "$env:TEMP\msodbcsql.msi"
+          Invoke-WebRequest -Uri $downloadUrl -OutFile $installerPath
+          Start-Process msiexec.exe -ArgumentList "/i", $installerPath, "/quiet", "/norestart", "IACCEPTMSODBCSQLLICENSETERMS=YES" -Wait
+          Write-Host "ODBC Driver installation completed"
+          
+          # Verify installation
+          Write-Host "Verifying ODBC driver installation..."
+          python -c "import pyodbc; drivers = [d for d in pyodbc.drivers() if 'SQL Server' in d]; print('Available SQL Server drivers:', drivers); exit(0 if drivers else 1)"
+        shell: pwsh
+
       - name: Install azd
         uses: Azure/setup-azd@v2
 
@@ -83,21 +98,21 @@ jobs:
           AZURE_RESOURCE_GROUP: ${{ secrets.AZURE_RESOURCE_GROUP }}
           AZURE_PRINCIPAL_TYPE: ${{ secrets.AZURE_SERVICE_PRINCIPAL }}
 
-      # - name: Manual postprovision hook
-      #   run: |
-      #     Write-Host "Running postprovision hook manually"
-      #     Write-Host "postprovision running"
-      #     # Install SqlServer PowerShell module for better Azure SQL authentication
-      #     Install-Module -Name SqlServer -Force -AllowClobber -Scope CurrentUser
-      #     pwsh -NoProfile -ExecutionPolicy Bypass -File .\scripts\set_up_environment.ps1
-      #   shell: pwsh
-      #   continue-on-error: true
-      #   env:
-      #     AZURE_ENV_NAME: ${{ secrets.AZURE_ENV_NAME }}
-      #     AZURE_LOCATION: ${{ secrets.AZURE_LOCATION }}
-      #     AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-      #     AZURE_RESOURCE_GROUP: ${{ secrets.AZURE_RESOURCE_GROUP }}
-      #     AZURE_PRINCIPAL_TYPE: ${{ secrets.AZURE_SERVICE_PRINCIPAL }}
+      - name: Manual postprovision hook
+        run: |
+          Write-Host "Running postprovision hook manually"
+          Write-Host "postprovision running"
+          # Install SqlServer PowerShell module for better Azure SQL authentication
+          Install-Module -Name SqlServer -Force -AllowClobber -Scope CurrentUser
+          pwsh -NoProfile -ExecutionPolicy Bypass -File .\scripts\set_up_environment.ps1
+        shell: pwsh
+        continue-on-error: true
+        env:
+          AZURE_ENV_NAME: ${{ secrets.AZURE_ENV_NAME }}
+          AZURE_LOCATION: ${{ secrets.AZURE_LOCATION }}
+          AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          AZURE_RESOURCE_GROUP: ${{ secrets.AZURE_RESOURCE_GROUP }}
+          AZURE_PRINCIPAL_TYPE: ${{ secrets.AZURE_SERVICE_PRINCIPAL }}
       - name: Deploy Application
         run: |
           azd deploy --no-prompt
