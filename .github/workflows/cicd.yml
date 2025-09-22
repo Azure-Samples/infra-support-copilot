@@ -65,6 +65,10 @@ jobs:
           Invoke-WebRequest -Uri $sqlcmdInstallerUrl -OutFile $installerPath
           Start-Process msiexec.exe -ArgumentList "/i", $installerPath, "/quiet", "/norestart" -Wait
           Write-Host "sqlcmd installation completed"
+          
+          # Show where sqlcmd was installed
+          $sqlcmd = Get-Command sqlcmd -ErrorAction SilentlyContinue
+          if ($sqlcmd) { Write-Host "sqlcmd installed at: $($sqlcmd.Source)" }
         shell: pwsh
 
       - name: Install azd

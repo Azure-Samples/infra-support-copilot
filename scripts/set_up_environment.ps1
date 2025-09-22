@@ -1,7 +1,3 @@
-Write-Output "Searching for all sqlcmd.exe locations in C:\Program Files..."
-Get-ChildItem -Path "C:\Program Files" -Recurse -Filter "sqlcmd.exe" -ErrorAction SilentlyContinue | ForEach-Object {
-    Write-Output "Found: $($_.FullName) Version: $((Get-Item $_.FullName).VersionInfo.FileVersion)"
-}
 param(
     [switch]$ForceSqlcmd,
     [string]$SqlcmdPath
