@@ -46,9 +46,11 @@ jobs:
           azd auth login --client-id ${{ secrets.AZURE_CLIENT_ID }} --tenant-id ${{ secrets.AZURE_TENANT_ID }} --federated-credential-provider github
         shell: pwsh
 
-      - name: Create azd environment
+      - name: Create and configure azd environment
         run: |
           azd env new ${{ secrets.AZURE_ENV_NAME }} --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }} --location ${{ secrets.AZURE_LOCATION }} --no-prompt
+          azd env set AZURE_RESOURCE_GROUP ${{ secrets.AZURE_RESOURCE_GROUP }}
+          azd env set AZURE_PRINCIPAL_TYPE ${{ secrets.AZURE_SERVICE_PRINCIPAL }}
         shell: pwsh
 
       - name: Manual preprovision hook
@@ -63,6 +65,12 @@ jobs:
         run: |
           azd provision --no-prompt
         shell: pwsh
+        env:
+          AZURE_ENV_NAME: ${{ secrets.AZURE_ENV_NAME }}
+          AZURE_LOCATION: ${{ secrets.AZURE_LOCATION }}
+          AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          AZURE_RESOURCE_GROUP: ${{ secrets.AZURE_RESOURCE_GROUP }}
+          AZURE_PRINCIPAL_TYPE: ${{ secrets.AZURE_SERVICE_PRINCIPAL }}
 
       - name: Manual postprovision hook
         run: |
