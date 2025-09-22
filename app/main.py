@@ -96,6 +96,11 @@ async def chat_completion(chat_request: ChatRequest):
         import sys
         import os
         
+        import pyodbc
+        try:
+            odbc_drivers = pyodbc.drivers()
+        except Exception as od_err:
+            odbc_drivers = f"Error listing ODBC drivers: {od_err}"
         error_details = {
             "error_type": type(e).__name__,
             "error_message": str(e),
@@ -108,6 +113,7 @@ async def chat_completion(chat_request: ChatRequest):
                 "AZURE_OPENAI_ENDPOINT": os.getenv("AZURE_OPENAI_ENDPOINT", "Not set"),
                 "AZURE_OPENAI_GPT_DEPLOYMENT": os.getenv("AZURE_OPENAI_GPT_DEPLOYMENT", "Not set"),
             },
+            "odbc_drivers": odbc_drivers,
             "traceback": traceback.format_exc()
         }
         
@@ -131,6 +137,7 @@ async def chat_completion(chat_request: ChatRequest):
                 verbose_error += f"  {key}: {value}\n"
             verbose_error += f"\nPython Version: {error_details['python_version']}\n"
             verbose_error += f"Working Directory: {error_details['current_working_directory']}\n\n"
+            verbose_error += f"ODBC Drivers: {error_details['odbc_drivers']}\n\n"
             verbose_error += f"Full Traceback:\n{error_details['traceback']}"
             
             return {

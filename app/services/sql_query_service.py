@@ -13,6 +13,12 @@ from app.config import settings
 logger = logging.getLogger(__name__)
 
 class SQLQueryService:
+    def log_odbc_drivers(self):
+        try:
+            drivers = pyodbc.drivers()
+            logger.info(f"Available ODBC drivers: {drivers}")
+        except Exception as e:
+            logger.error(f"Error listing ODBC drivers: {e}")
     """
     Service that provides SQL query capabilities
     """
@@ -30,6 +36,8 @@ class SQLQueryService:
             self.credential,
             "https://cognitiveservices.azure.com/.default"
         )
+        # Log available ODBC drivers for debugging
+        self.log_odbc_drivers()
         
         # Create Azure OpenAI client
         # We use the latest Azure OpenAI Python SDK with async support
