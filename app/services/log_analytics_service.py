@@ -47,11 +47,15 @@ class LogAnalyticsService:
         if not kusto or not kusto.strip():
             return []
 
-        response = self.log_query_client.query_workspace(
-            workspace_id=self.azure_log_analytics_customer_id,
-            query=kusto,
-            timespan=timedelta(days=1),
-        )
+        try:
+            response = self.log_query_client.query_workspace(
+                workspace_id=self.azure_log_analytics_customer_id,
+                query=kusto,
+                timespan=timedelta(days=1),
+            )
+        except Exception as e:
+            logger.error(f"Log Analytics API error: {e}")
+            raise RuntimeError("Log Analytics API call failed") from e
 
         if response.status != LogsQueryStatus.SUCCESS:
             raise RuntimeError(f"Log query failed: status={response.status} partial={getattr(response, 'partial_error', None)}")
@@ -220,15 +224,19 @@ class LogAnalyticsService:
 
             sources = []
 
-            chat_resp = await self.openai_client.chat.completions.create(
-                messages=[
-                    {"role": "system", "content": "Select the single best tool."},
-                    {"role": "user", "content": effective_query}
-                ],
-                model=self.gpt_deployment,
-                tools=tools,
-                tool_choice="auto"
-            )
+            try:
+                chat_resp = await self.openai_client.chat.completions.create(
+                    messages=[
+                        {"role": "system", "content": "Select the single best tool."},
+                        {"role": "user", "content": effective_query}
+                    ],
+                    model=self.gpt_deployment,
+                    tools=tools,
+                    tool_choice="auto"
+                )
+            except Exception as e:
+                logger.error(f"Log Analytics API error: {e}")
+                raise RuntimeError("Log Analytics API call failed") from e
 
             msg = chat_resp.choices[0].message
             tool_calls = getattr(msg, "tool_calls", None)

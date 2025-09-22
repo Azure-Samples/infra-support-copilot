@@ -1,9 +1,8 @@
-name: Build and deploy Python app to Azure Web App - app-m46eayfyi2pcc
-
+name: Build and deploy Python app to Azure Web App
 on:
   push:
     branches:
-      - '**'
+      - main
   workflow_dispatch:
 
 permissions:
@@ -12,17 +11,6 @@ permissions:
 
 jobs:
   build:
-    # Run the same job across a matrix of GitHub Environments (env names)
-    # Each matrix entry should match a GitHub Environment configured in the repo
-    strategy:
-      fail-fast: false   # continue other matrix jobs if one fails
-      matrix:
-        # Start with a single GitHub Environment `rukasakurai-env`. To add more, append names here
-        # Example: env: [rukasakurai-env, <github-username>-env]
-        env: [rukasakurai-env]
-
-    # Use the environment selected by the matrix so environment-scoped secrets are used
-    environment: ${{ matrix.env }}
     runs-on: windows-latest
 
     steps:
@@ -44,18 +32,6 @@ jobs:
           azd auth login --client-id ${{ secrets.AZURE_CLIENT_ID }} --tenant-id ${{ secrets.AZURE_TENANT_ID }} --federated-credential-provider github
         shell: pwsh
 
-      - name: Configure azd environment for CI
-        run: |
-          azd env set AZURE_PRINCIPAL_TYPE ServicePrincipal
-          azd env unset AZURE_PRINCIPAL_ID
-        shell: pwsh
-        env:
-          AZURE_ENV_NAME: ${{ secrets.AZURE_ENV_NAME }}
-          AZURE_LOCATION: ${{ secrets.AZURE_LOCATION }}
-          AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          AZURE_RESOURCE_GROUP: ${{ secrets.AZURE_RESOURCE_GROUP }}
-          AZURE_PRINCIPAL_ID: ${{ secrets.AZURE_PRINCIPAL_ID }}
-
       - name: Provision Infrastructure
         run: |
           azd provision --no-prompt
@@ -65,8 +41,7 @@ jobs:
           AZURE_LOCATION: ${{ secrets.AZURE_LOCATION }}
           AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           AZURE_RESOURCE_GROUP: ${{ secrets.AZURE_RESOURCE_GROUP }}
-          AZURE_PRINCIPAL_TYPE: ${{ secrets.AZURE_PRINCIPAL_TYPE }}
-          AZURE_PRINCIPAL_ID: ${{ secrets.AZURE_PRINCIPAL_ID }}
+          AZURE_PRINCIPAL_TYPE: ${{ secrets.AZURE_SERVICE_PRINCIPAL }}
 
       - name: Deploy Application
         run: |
@@ -77,5 +52,4 @@ jobs:
           AZURE_LOCATION: ${{ secrets.AZURE_LOCATION }}
           AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           AZURE_RESOURCE_GROUP: ${{ secrets.AZURE_RESOURCE_GROUP }}
-          AZURE_PRINCIPAL_TYPE: ${{ secrets.AZURE_PRINCIPAL_TYPE }}
-          AZURE_PRINCIPAL_ID: ${{ secrets.AZURE_PRINCIPAL_ID }}
+          AZURE_PRINCIPAL_TYPE: ${{ secrets.AZURE_SERVICE_PRINCIPAL }}
