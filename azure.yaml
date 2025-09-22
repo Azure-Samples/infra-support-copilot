@@ -35,11 +35,11 @@ hooks:
     windows:
       shell: pwsh
       run: .\scripts\get_ip_address.ps1
-      interactive: true
+      interactive: true  # Consider setting to false in future - script is fully automated and could run in CI/CD
       continueOnError: false
   postprovision:
     windows:
       shell: pwsh
       run: pwsh -NoProfile -ExecutionPolicy Bypass -File .\scripts\set_up_environment.ps1 -ForceSqlcmd
-      interactive: true
+      interactive: false  # Set to false to allow execution in CI/CD with --no-prompt. Since `false` is the default, potentially delete this line in the future.
       continueOnError: false
