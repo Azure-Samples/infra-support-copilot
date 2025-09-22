@@ -48,7 +48,7 @@ jobs:
 
       - name: Provision Infrastructure
         run: |
-          azd provision --no-prompt
+          azd provision --no-prompt --force
         shell: pwsh
         env:
           AZURE_ENV_NAME: ${{ secrets.AZURE_ENV_NAME }}
