@@ -70,6 +70,7 @@ function Find-SqlcmdPath {
     $cmd = Get-Command sqlcmd -ErrorAction SilentlyContinue | Select-Object -First 1 -ExpandProperty Source
     if ($cmd) { $candidates += $cmd }
     $candidates += @(
+        "$env:ProgramFiles\Microsoft SQL Server\180\Tools\Binn\sqlcmd.exe", # ODBC 18 preferred
         "$env:ProgramFiles\sqlcmd\sqlcmd.exe",
         "$env:LOCALAPPDATA\Programs\sqlcmd\sqlcmd.exe",
         "$env:ProgramFiles\Microsoft SQLCMD\sqlcmd.exe",

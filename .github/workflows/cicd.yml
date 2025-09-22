@@ -13,7 +13,7 @@ permissions:
   contents: read
 
 jobs:
-  build:
+  provision-and-deploy: # Potentially split into separate jobs for clarity in the future
     # Run the same job across a matrix of GitHub Environments (env names)
     # Each matrix entry should match a GitHub Environment configured in the repo
     strategy:
