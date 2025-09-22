@@ -57,6 +57,16 @@ jobs:
           python -c "import pyodbc; drivers = [d for d in pyodbc.drivers() if 'SQL Server' in d]; print('Available SQL Server drivers:', drivers); exit(0 if drivers else 1)"
         shell: pwsh
 
+      - name: Install latest sqlcmd utility
+        run: |
+          Write-Host "Installing latest sqlcmd utility"
+          $sqlcmdInstallerUrl = "https://github.com/microsoft/sqlcmd/releases/latest/download/sqlcmd-win-x64.msi"
+          $installerPath = "$env:TEMP\sqlcmd.msi"
+          Invoke-WebRequest -Uri $sqlcmdInstallerUrl -OutFile $installerPath
+          Start-Process msiexec.exe -ArgumentList "/i", $installerPath, "/quiet", "/norestart" -Wait
+          Write-Host "sqlcmd installation completed"
+        shell: pwsh
+
       - name: Install azd
         uses: Azure/setup-azd@v2
 
