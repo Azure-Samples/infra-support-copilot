@@ -21,7 +21,7 @@ jobs:
       matrix:
         # Start with a single GitHub Environment `rukasakurai-env`. To add more, append names here
         # Example: env: [rukasakurai-env, <github-username>-env]
-        env: [rukasakurai-env]
+        env: [0017-alt-env]
 
     # Use the environment selected by the matrix so environment-scoped secrets are used
     environment: ${{ matrix.env }}
