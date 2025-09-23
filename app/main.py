@@ -15,6 +15,7 @@ from opencensus.trace import config_integration
 
 from app.models.chat_models import ChatRequest
 from app.services.decide_tool import decide_tool
+from app.services.sql_query_service import sql_query_service
 
 load_dotenv()
 
@@ -116,6 +117,11 @@ async def chat_completion(chat_request: ChatRequest):
             "odbc_drivers": odbc_drivers,
             "traceback": traceback.format_exc()
         }
+        # Attach runtime SQL diagnostics (best-effort)
+        try:
+            error_details["sql_diagnostics"] = sql_query_service.runtime_self_test()
+        except Exception as diag_err:
+            error_details["sql_diagnostics"] = {"error": f"Diagnostics failed: {type(diag_err).__name__}: {diag_err}"}
         
         # Handle specific error types with friendly messages
         if "rate limit" in error_str or "capacity" in error_str or "quota" in error_str:
@@ -138,7 +144,21 @@ async def chat_completion(chat_request: ChatRequest):
             verbose_error += f"\nPython Version: {error_details['python_version']}\n"
             verbose_error += f"Working Directory: {error_details['current_working_directory']}\n\n"
             verbose_error += f"ODBC Drivers: {error_details['odbc_drivers']}\n\n"
-            verbose_error += f"Full Traceback:\n{error_details['traceback']}"
+            # Include condensed diagnostics summary
+            sql_diag = error_details.get('sql_diagnostics', {})
+            verbose_error += "SQL Diagnostics Summary:\n"
+            if isinstance(sql_diag, dict):
+                for k, v in sql_diag.items():
+                    try:
+                        if isinstance(v, dict):
+                            status = 'PASS' if v.get('ok') else 'FAIL'
+                            msg = v.get('message') or v.get('issues') or ''
+                            verbose_error += f"  {k}: {status} - {msg}\n"
+                        else:
+                            verbose_error += f"  {k}: {v}\n"
+                    except Exception:
+                        verbose_error += f"  {k}: (unprintable)\n"
+            verbose_error += f"\nFull Traceback:\n{error_details['traceback']}"
             
             return {
                 "choices": [{
