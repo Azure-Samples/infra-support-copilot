@@ -673,16 +673,6 @@ resource userLogAnalyticsReaderRoleAssignment 'Microsoft.Authorization/roleAssig
   }
 }
 
-// Module for subscription-level Directory Readers role assignment
-module directoryReadersRoleAssignment 'modules/directoryReaders.bicep' = if (!empty(adminPrincipalId)) {
-  name: 'directoryReadersRoleAssignment'
-  scope: subscription()
-  params: {
-    principalId: adminPrincipalId
-    principalType: adminPrincipalType
-  }
-}
-
 // ----------------------------------------------------
 // Output values
 // ----------------------------------------------------

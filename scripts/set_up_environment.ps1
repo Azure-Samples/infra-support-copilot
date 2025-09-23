@@ -101,157 +101,31 @@ function Get-RequiredValues($envMap) {
     }
 }
 
-function Get-AadSqlToken {
-    $token = az account get-access-token --resource https://database.windows.net/ --query accessToken -o tsv 2>$null
-    if (-not $token) { Fail 'Failed to get AAD access token (az account get-access-token)' }
-    return $token
-}
-
-function Build-Tsql($appName, $isServicePrincipal = $false) {
-    $escaped = ($appName -replace '\]', ']]')
-    $identifier = "[$escaped]"
-    
-    # サービスプリンシパルかApp Serviceかでコメントを変更
-    $principalType = if ($isServicePrincipal) { "Service Principal" } else { "App Service Managed Identity" }
-    
-@"
--- Create $principalType user: $appName
-IF NOT EXISTS (SELECT 1 FROM sys.database_principals WHERE name = N'$appName')
-BEGIN
-    CREATE USER $identifier FROM EXTERNAL PROVIDER;
-    PRINT 'Created user: $appName';
-END
-ELSE
-BEGIN
-    PRINT 'User already exists: $appName';
-END;
-
-IF NOT EXISTS (
-  SELECT 1 FROM sys.database_role_members rm
-  JOIN sys.database_principals r ON rm.role_principal_id = r.principal_id
-  JOIN sys.database_principals m ON rm.member_principal_id = m.principal_id
-  WHERE r.name = N'db_datareader' AND m.name = N'$appName'
-)
-BEGIN
-    ALTER ROLE db_datareader ADD MEMBER $identifier;
-    PRINT 'Added to db_datareader: $appName';
-END
-ELSE
-BEGIN
-    PRINT 'Already member of db_datareader: $appName';
-END;
-"@
-}
-
-function Find-Sqlcmd {
-    param([string]$Hint)
-    if ($Hint -and (Test-Path -LiteralPath $Hint)) { return (Resolve-Path -LiteralPath $Hint).Path }
-    $cmd = Get-Command sqlcmd -ErrorAction SilentlyContinue | Select-Object -First 1 -ExpandProperty Source
-    if ($cmd) { return $cmd }
-    $candidates = @(
-        "$env:ProgramFiles\sqlcmd\sqlcmd.exe",
-        "$env:LOCALAPPDATA\Programs\sqlcmd\sqlcmd.exe",
-        "$env:ProgramFiles\Microsoft SQLCMD\sqlcmd.exe",
-        "$env:ProgramFiles\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\sqlcmd.exe",
-        "$env:ProgramFiles\Microsoft SQL Server\160\Tools\Binn\sqlcmd.exe",
-        "$env:ProgramFiles(x86)\Microsoft SQL Server\150\Tools\Binn\sqlcmd.exe"
-    )
-    foreach ($p in $candidates) { if (Test-Path -LiteralPath $p) { return $p } }
-    return $null
-}
-
-function Invoke-With-InvokeSqlcmd {
-    param($server,$db,$token,$query)
-    $cmd = Get-Command Invoke-Sqlcmd -ErrorAction SilentlyContinue
-    if (-not $cmd) { return $false }
-    if (-not $cmd.Parameters['AccessToken']) { return $false }
-    Write-Section 'Execute T-SQL via Invoke-Sqlcmd (AccessToken)'
-    Invoke-Sqlcmd -ServerInstance $server -Database $db -AccessToken $token -Query $query
-    return $true
-}
-
-function Invoke-With-Sqlcmd {
-    param($server,$db,$token,$query,[string]$SqlcmdPath)
-    $sqlcmd = Find-Sqlcmd -Hint $SqlcmdPath
-    if (-not $sqlcmd) { Fail 'sqlcmd not found. Install Microsoft sqlcmd (winget install Microsoft.sqlcmd) & ODBC Driver 18.' }
-    Write-Section 'Execute T-SQL via sqlcmd'
-    
-    # ツール情報をログ出力
-    $sqlcmdVersion = & $sqlcmd -? 2>&1 | Out-String
-    Write-Host "Using sqlcmd at: $sqlcmd" -ForegroundColor Gray
-    
-    $tmp = New-TemporaryFile
-    Set-Content -Path $tmp -Value $query -Encoding UTF8
-    try {
-        $isCI = Test-CiEnvironment
-        $supportsAccessToken = $sqlcmdVersion -match '--access-token'
-        
-        Write-Host "CI Environment: $isCI" -ForegroundColor Gray
-        Write-Host "Supports --access-token: $supportsAccessToken" -ForegroundColor Gray
-        
-        if ($supportsAccessToken) {
-            Write-Host "Using --access-token authentication (most reliable)" -ForegroundColor Green
-            & $sqlcmd --access-token $token -S $server -d $db -C -b -l 30 -i $tmp
-        } elseif ($isCI) {
-            # CI環境で古いsqlcmdの場合、エラーメッセージを改善
-            Write-Warning "CI environment detected but sqlcmd doesn't support --access-token"
-            Write-Warning "This may fail with ActiveDirectoryIntegrated error. Consider updating sqlcmd."
-            Write-Host "Attempting -G (Interactive) authentication..." -ForegroundColor Yellow
-            & $sqlcmd -S $server -d $db -G -C -b -l 30 -i $tmp
-        } else {
-            Write-Host "Using -G (Azure AD) authentication" -ForegroundColor Yellow
-            & $sqlcmd -S $server -d $db -G -C -b -l 30 -i $tmp
-        }
-    }
-    finally { Remove-Item $tmp -ErrorAction SilentlyContinue }
-}
-
-function Ensure-DbUser {
-    param($info)
-    $token = Get-AadSqlToken
-    $query = Build-Tsql -appName $info.AppName -isServicePrincipal $info.IsServicePrincipal
-    $isCI = Test-CiEnvironment
-    
-    Write-Host "Creating database user for: $($info.AppName)" -ForegroundColor Cyan
-    if ($info.IsServicePrincipal) {
-        Write-Host "  Type: Service Principal (CI Environment)" -ForegroundColor Yellow
-    } else {
-        Write-Host "  Type: App Service Managed Identity" -ForegroundColor Green
-    }
-    
-    # CI環境では積極的にInvoke-Sqlcmdを試行（AccessToken使用）
-    if (-not $ForceSqlcmd) {
-        $ok = $false
-        try { 
-            $ok = Invoke-With-InvokeSqlcmd -server $info.SqlServer -db $info.Database -token $token -query $query 
-        }
-        catch {
-            Write-Warning "Invoke-Sqlcmd failed: $($_.Exception.Message)"
-            if ($isCI) {
-                Write-Warning "This is expected in CI if SqlServer module is not properly installed"
-            }
-        }
-        if ($ok) { Write-Host 'Done.' -ForegroundColor Green; return }
-        Write-Host 'Falling back to sqlcmd...' -ForegroundColor Yellow
-    }
-    
-    # CI環境での警告メッセージ
-    if ($isCI) {
-        Write-Warning "CI Environment: sqlcmd fallback may fail if --access-token is not supported"
-        Write-Host "Ensure SqlServer PowerShell module (>=22.x) is installed for best results" -ForegroundColor Yellow
-    }
-    
-    Invoke-With-Sqlcmd -server $info.SqlServer -db $info.Database -token $token -query $query -SqlcmdPath $SqlcmdPath
-    Write-Host 'Done.' -ForegroundColor Green
-}
-
 try {
     Save-AzdEnv
     Run-DataIngestion
     $envMap = Load-DotEnv
     $info = Get-RequiredValues -envMap $envMap
     Write-Section "Target: $($info.SqlServer)/$($info.Database) (AppUser: $($info.AppName))"
-    Ensure-DbUser -info $info
+    
+    # Call Python script instead of PowerShell function
+    Write-Section 'Ensure Database User (Python)'
+    $pythonArgs = @(
+        "./scripts/ensure_db_user.py",
+        "--server", $info.SqlServer,
+        "--database", $info.Database,
+        "--app-name", $info.AppName
+    )
+    
+    # Add verbose flag if CI environment
+    if ($isCI) {
+        $pythonArgs += "--verbose"
+    }
+    
+    python @pythonArgs
+    if ($LASTEXITCODE -ne 0) {
+        Fail "Python database user creation script failed with exit code $LASTEXITCODE"
+    }
 }
 catch {
     Write-Error "FAILED: $($_.Exception.Message)"
