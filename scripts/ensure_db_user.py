@@ -156,7 +156,7 @@ def ensure_db_user(server: str, database: str, app_name: str) -> bool:
         logger.info(f"Creating database user for: {app_name}")
 
         # Build connection string
-        conn_string = get_sql_connection_string(server, database, "")  # Token not needed here
+        conn_string = get_sql_connection_string(server, database)  # Token not needed here
         logger.info(f"  Connecting to: {server}/{database}")
         
         # Build SQL command
