@@ -9,6 +9,8 @@ import os
 import sys
 import argparse
 import logging
+import subprocess
+import json
 from pathlib import Path
 from typing import Optional, Dict
 
@@ -39,6 +41,33 @@ def load_env_file(env_path: str = ".env") -> Dict[str, str]:
     return env_vars
 
 
+def get_azure_access_token() -> str:
+    """
+    Get Azure access token for SQL Database using Azure CLI.
+    
+    Returns:
+        Access token string
+    
+    Raises:
+        Exception: If token retrieval fails
+    """
+    try:
+        logger.debug("Getting Azure access token via Azure CLI")
+        result = subprocess.run(
+            ['az', 'account', 'get-access-token', '--resource', 'https://database.windows.net/', '--query', 'accessToken', '-o', 'tsv'],
+            capture_output=True, text=True, check=True
+        )
+        token = result.stdout.strip()
+        if not token:
+            raise Exception("Empty token received from Azure CLI")
+        logger.debug("Successfully obtained access token")
+        return token
+    except subprocess.CalledProcessError as e:
+        raise Exception(f"Azure CLI command failed: {e.stderr}")
+    except Exception as e:
+        raise Exception(f"Failed to get access token: {str(e)}")
+
+
 def get_current_principal() -> Optional[str]:
     """
     Get current principal (Service Principal or User).
@@ -52,10 +81,6 @@ def get_current_principal() -> Optional[str]:
         logger.info("CI environment detected - using Service Principal authentication")
         try:
             # Try to get service principal info from Azure CLI
-            import subprocess
-            import json
-            
-            # Get account info
             result = subprocess.run(
                 ['az', 'account', 'show', '--query', 'user', '-o', 'json'],
                 capture_output=True, text=True, check=True
@@ -66,6 +91,9 @@ def get_current_principal() -> Optional[str]:
                 logger.info(f"Service Principal detected: {account_info['name']}")
                 return account_info['name']  # This is the Object ID
             
+        except subprocess.CalledProcessError as e:
+            logger.warning(f"Azure CLI command failed in CI environment: {e.stderr}")
+            return None
         except Exception as e:
             logger.warning(f"Could not determine current principal in CI environment: {e}")
             return None
@@ -119,26 +147,28 @@ END;"""
     return sql
 
 
-def get_sql_connection_string(server: str, database: str) -> str:
+def get_sql_connection_string(server: str, database: str, access_token: str) -> str:
     """
-    Build SQL connection string with Azure AD authentication.
+    Build SQL connection string with access token authentication.
     
     Args:
         server: SQL Server name
         database: Database name
+        access_token: Azure AD access token
     
     Returns:
-        Connection string
+        Connection string and token as tuple
     """
-    return (
+    # Connection string without authentication parameter
+    conn_string = (
         f"DRIVER={{ODBC Driver 18 for SQL Server}};"
         f"SERVER={server};"
         f"DATABASE={database};"
-        f"Authentication=ActiveDirectoryDefault;"
         f"Encrypt=yes;"
         f"TrustServerCertificate=no;"
         f"Connection Timeout=30;"
     )
+    return conn_string
 
 
 def ensure_db_user(server: str, database: str, app_name: str, is_service_principal: bool = False) -> bool:
@@ -159,15 +189,22 @@ def ensure_db_user(server: str, database: str, app_name: str, is_service_princip
         principal_type = "Service Principal (CI Environment)" if is_service_principal else "App Service Managed Identity"
         logger.info(f"  Type: {principal_type}")
         
+        # Get access token
+        access_token = get_azure_access_token()
+        
         # Build connection string
-        conn_string = get_sql_connection_string(server, database)
+        conn_string = get_sql_connection_string(server, database, access_token)
         logger.info(f"  Connecting to: {server}/{database}")
         
         # Build SQL command
         sql_command = build_user_creation_sql(app_name, is_service_principal)
         
-        # Connect and execute
-        with pyodbc.connect(conn_string) as conn:
+        # Connect and execute with access token
+        # For pyodbc with access token, we need to use SQL_COPT_SS_ACCESS_TOKEN
+        SQL_COPT_SS_ACCESS_TOKEN = 1256  # Constant for access token
+        token_bytes = access_token.encode('utf-16-le')
+        
+        with pyodbc.connect(conn_string, attrs_before={SQL_COPT_SS_ACCESS_TOKEN: token_bytes}) as conn:
             cursor = conn.cursor()
             
             # Execute SQL in parts to handle PRINT statements
@@ -190,6 +227,10 @@ def ensure_db_user(server: str, database: str, app_name: str, is_service_princip
     except ClientAuthenticationError as e:
         logger.error(f"Azure authentication failed: {e}")
         logger.error("Make sure you are logged in with 'az login' and have proper permissions")
+        return False
+    except subprocess.CalledProcessError as e:
+        logger.error(f"Azure CLI error: {e}")
+        logger.error("Make sure Azure CLI is installed and you are logged in with 'az login'")
         return False
     except pyodbc.Error as e:
         logger.error(f"SQL Server error: {e}")

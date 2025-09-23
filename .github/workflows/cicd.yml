@@ -114,22 +114,6 @@ jobs:
           AZURE_RESOURCE_GROUP: ${{ secrets.AZURE_RESOURCE_GROUP }}
           AZURE_PRINCIPAL_TYPE: ${{ secrets.AZURE_PRINCIPAL_TYPE }}
 
-      - name: Setup Environment and Database User
-        run: |
-          Write-Host "Running environment setup script with enhanced CI support"
-          # Import SqlServer module if available
-          if (Get-Module -ListAvailable -Name SqlServer) {
-            Import-Module SqlServer -Force
-            $sqlModule = Get-Module SqlServer
-            Write-Host "SqlServer module imported: Version $($sqlModule.Version)"
-          } else {
-            Write-Warning "SqlServer module not found - will fall back to sqlcmd"
-          }
-          
-          # Run the setup script
-          pwsh .\scripts\set_up_environment.ps1
-        shell: pwsh
-      
       - name: Deploy Application
         run: |
           azd deploy --no-prompt
