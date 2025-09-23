@@ -122,6 +122,16 @@ try {
         $pythonArgs += "--verbose"
     }
     
+    # Set environment variables for CI
+    if ($isCI) {
+        Write-Host "CI Environment detected - setting environment variables for Python script" -ForegroundColor Yellow
+        $env:CI = 'true'
+        $env:GITHUB_ACTIONS = $env:GITHUB_ACTIONS
+        if ($env:AZURE_CLIENT_ID) {
+            Write-Host "  AZURE_CLIENT_ID: $($env:AZURE_CLIENT_ID)" -ForegroundColor Gray
+        }
+    }
+    
     python @pythonArgs
     if ($LASTEXITCODE -ne 0) {
         Fail "Python database user creation script failed with exit code $LASTEXITCODE"

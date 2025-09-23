@@ -53,8 +53,17 @@ def get_azure_access_token() -> str:
     """
     try:
         logger.debug("Getting Azure access token via Azure CLI")
+        
+        # Check if we're on Windows and use appropriate shell
+        is_windows = os.name == 'nt'
+        if is_windows:
+            # Use PowerShell on Windows for better compatibility
+            cmd = ['pwsh', '-Command', 'az account get-access-token --resource https://database.windows.net/ --query accessToken -o tsv']
+        else:
+            cmd = ['az', 'account', 'get-access-token', '--resource', 'https://database.windows.net/', '--query', 'accessToken', '-o', 'tsv']
+        
         result = subprocess.run(
-            ['az', 'account', 'get-access-token', '--resource', 'https://database.windows.net/', '--query', 'accessToken', '-o', 'tsv'],
+            cmd,
             capture_output=True, text=True, check=True
         )
         token = result.stdout.strip()
@@ -79,24 +88,37 @@ def get_current_principal() -> Optional[str]:
     
     if is_ci:
         logger.info("CI environment detected - using Service Principal authentication")
+        
+        # First try to get from environment variables (more reliable in CI)
+        azure_client_id = os.getenv('AZURE_CLIENT_ID')
+        if azure_client_id:
+            logger.info(f"Using Service Principal from environment: {azure_client_id}")
+            return azure_client_id
+        
+        # Fallback to Azure CLI
         try:
             # Try to get service principal info from Azure CLI
+            is_windows = os.name == 'nt'
+            if is_windows:
+                # Use PowerShell on Windows for better compatibility
+                cmd = ['pwsh', '-Command', 'az account show --query user -o json']
+            else:
+                cmd = ['az', 'account', 'show', '--query', 'user', '-o', 'json']
+            
             result = subprocess.run(
-                ['az', 'account', 'show', '--query', 'user', '-o', 'json'],
+                cmd,
                 capture_output=True, text=True, check=True
             )
             account_info = json.loads(result.stdout)
             
             if account_info.get('type') == 'servicePrincipal':
-                logger.info(f"Service Principal detected: {account_info['name']}")
+                logger.info(f"Service Principal detected via Azure CLI: {account_info['name']}")
                 return account_info['name']  # This is the Object ID
             
         except subprocess.CalledProcessError as e:
             logger.warning(f"Azure CLI command failed in CI environment: {e.stderr}")
-            return None
         except Exception as e:
             logger.warning(f"Could not determine current principal in CI environment: {e}")
-            return None
     
     return None  # For local environments, use App Service name
 
