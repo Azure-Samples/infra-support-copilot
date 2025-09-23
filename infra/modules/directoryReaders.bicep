@@ -15,7 +15,7 @@ resource directoryReadersRoleAssignment 'Microsoft.Authorization/roleAssignments
   properties: {
     principalId: principalId
     principalType: principalType
-    roleDefinitionId: tenantResourceId('Microsoft.Authorization/roleDefinitions', '88d8e3e3-8f55-4a1e-953a-9b9898b8876b') // Directory Readers
+    roleDefinitionId: '/providers/Microsoft.Authorization/roleDefinitions/88d8e3e3-8f55-4a1e-953a-9b9898b8876b' // Directory Readers
   }
 }
 
