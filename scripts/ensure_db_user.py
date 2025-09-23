@@ -42,57 +42,7 @@ def load_env_file(env_path: str = ".env") -> Dict[str, str]:
     
     return env_vars
 
-def get_current_principal() -> Optional[str]:
-    """
-    Get current principal (Service Principal or User).
-    In CI environments, returns Service Principal Object ID.
-    """
-    # Check if running in CI environment
-    ci_indicators = ['CI', 'GITHUB_ACTIONS', 'TF_BUILD']
-    is_ci = any(os.getenv(indicator) == 'true' for indicator in ci_indicators)
-    
-    if is_ci:
-        logger.info("CI environment detected - using Service Principal authentication")
-        
-        # First try to get from environment variables (more reliable in CI)
-        azure_client_id = os.getenv('AZURE_CLIENT_ID')
-        if azure_client_id:
-            logger.info(f"Using Service Principal from environment: {azure_client_id}")
-            return azure_client_id
-        
-        # Fallback to Azure CLI
-        try:
-            # Try to get service principal info from Azure CLI
-            is_windows = os.name == 'nt'
-            if is_windows:
-                # Use PowerShell on Windows for better compatibility
-                cmd = ['pwsh', '-Command', 'az account show --query user -o json']
-            else:
-                cmd = ['az', 'account', 'show', '--query', 'user', '-o', 'json']
-            
-            result = subprocess.run(
-                cmd,
-                capture_output=True, text=True, check=True, timeout=30  # Add timeout
-            )
-            account_info = json.loads(result.stdout)
-            
-            if account_info.get('type') == 'servicePrincipal':
-                logger.info(f"Service Principal detected via Azure CLI: {account_info['name']}")
-                return account_info['name']  # This is the Object ID
-            
-        except subprocess.TimeoutExpired:
-            logger.warning("Azure CLI command timed out")
-        except subprocess.CalledProcessError as e:
-            logger.warning(f"Azure CLI command failed in CI environment: {e.stderr}")
-        except json.JSONDecodeError as e:
-            logger.warning(f"Failed to parse Azure CLI JSON output: {e}")
-        except Exception as e:
-            logger.warning(f"Could not determine current principal in CI environment: {e}")
-    
-    return None  # For local environments, use App Service name
-
-
-def build_user_creation_sql(app_name: str, is_service_principal: bool = False) -> str:
+def build_user_creation_sql(app_name: str) -> str:
     """
     Build T-SQL for creating user and assigning roles.
     
@@ -107,7 +57,7 @@ def build_user_creation_sql(app_name: str, is_service_principal: bool = False) -
     escaped_name = app_name.replace(']', ']]')
     identifier = f"[{escaped_name}]"
     
-    principal_type = "Service Principal" if is_service_principal else "App Service Managed Identity"
+    principal_type = "App Service Managed Identity"
     
     sql = f"""-- Create {principal_type} user: {app_name}
 IF NOT EXISTS (SELECT 1 FROM sys.database_principals WHERE name = N'{app_name}')
@@ -189,7 +139,7 @@ def get_conn(connection_string):
         logger.error(f"Azure credential failed: {e}")
         raise
 
-def ensure_db_user(server: str, database: str, app_name: str, is_service_principal: bool = False) -> bool:
+def ensure_db_user(server: str, database: str, app_name: str) -> bool:
     """
     Ensure database user exists and has proper roles.
     
@@ -204,15 +154,13 @@ def ensure_db_user(server: str, database: str, app_name: str, is_service_princip
     """
     try:
         logger.info(f"Creating database user for: {app_name}")
-        principal_type = "Service Principal (CI Environment)" if is_service_principal else "App Service Managed Identity"
-        logger.info(f"  Type: {principal_type}")
-        
+
         # Build connection string
         conn_string = get_sql_connection_string(server, database, "")  # Token not needed here
         logger.info(f"  Connecting to: {server}/{database}")
         
         # Build SQL command
-        sql_command = build_user_creation_sql(app_name, is_service_principal)
+        sql_command = build_user_creation_sql(app_name)
         
         # Enhanced connection attempt with better error handling
         try:
@@ -324,31 +272,8 @@ def main():
             logger.error("  --app-name or AZURE_APP_SERVICE_NAME environment variable")
         sys.exit(1)
     
-    # Determine if we're using Service Principal (CI environment) or Managed Identity (App Service)
-    current_principal = get_current_principal()
-    
-    # For App Service, use the App Service name (which should match the Managed Identity)
-    is_app_service = os.getenv('WEBSITE_INSTANCE_ID') is not None
-    
-    if current_principal:
-        logger.info(f"CI Environment: Using Service Principal ID instead of App Service name")
-        logger.info(f"  App Service Name: {app_service_name}")
-        logger.info(f"  Service Principal: {current_principal}")
-        principal_name = current_principal
-        is_service_principal = True
-    elif is_app_service:
-        logger.info(f"App Service Environment: Using App Service Managed Identity")
-        logger.info(f"  App Service Name: {app_service_name}")
-        principal_name = app_service_name
-        is_service_principal = False
-    else:
-        logger.info(f"Local Environment: Using App Service name")
-        logger.info(f"  App Service Name: {app_service_name}")
-        principal_name = app_service_name
-        is_service_principal = False
-    
     # Ensure database user
-    success = ensure_db_user(server, database, principal_name, is_service_principal)
+    success = ensure_db_user(server, database, app_service_name)
     
     if success:
         logger.info("Done.")
