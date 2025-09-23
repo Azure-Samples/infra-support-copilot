@@ -42,6 +42,15 @@ jobs:
           pip install -r requirements.txt
         shell: pwsh
 
+      - name: Install SqlServer PowerShell Module
+        run: |
+          Write-Host "Installing SqlServer PowerShell module (>=22) for AccessToken support"
+          Install-Module SqlServer -Scope CurrentUser -Force -AllowClobber -MinimumVersion 22.0
+          Import-Module SqlServer
+          $version = (Get-Module SqlServer).Version
+          Write-Host "SqlServer module version: $version"
+        shell: pwsh
+
       - name: Install ODBC Driver for SQL Server
         run: |
           Write-Host "Installing Microsoft ODBC Driver 18 for SQL Server"
@@ -104,6 +113,22 @@ jobs:
           AZURE_RESOURCE_GROUP: ${{ secrets.AZURE_RESOURCE_GROUP }}
           AZURE_PRINCIPAL_TYPE: ${{ secrets.AZURE_PRINCIPAL_TYPE }}
 
+      - name: Setup Environment and Database User
+        run: |
+          Write-Host "Running environment setup script with enhanced CI support"
+          # Import SqlServer module if available
+          if (Get-Module -ListAvailable -Name SqlServer) {
+            Import-Module SqlServer -Force
+            $sqlModule = Get-Module SqlServer
+            Write-Host "SqlServer module imported: Version $($sqlModule.Version)"
+          } else {
+            Write-Warning "SqlServer module not found - will fall back to sqlcmd"
+          }
+          
+          # Run the setup script
+          pwsh .\scripts\set_up_environment.ps1
+        shell: pwsh
+      
       - name: Deploy Application
         run: |
           azd deploy --no-prompt

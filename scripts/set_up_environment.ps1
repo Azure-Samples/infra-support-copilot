@@ -32,6 +32,23 @@ $ErrorActionPreference = 'Stop'
 function Write-Section($msg) { Write-Host "`n=== $msg ===" -ForegroundColor Cyan }
 function Fail($msg) { Write-Error $msg; exit 1 }
 
+# CI環境（GitHub Actions等）を検出
+function Test-CiEnvironment {
+    return ($env:CI -eq 'true' -or $env:GITHUB_ACTIONS -eq 'true' -or $env:TF_BUILD -eq 'True')
+}
+
+# CI環境では統合認証が使用できないため、情報を表示
+$isCI = Test-CiEnvironment
+if ($isCI) {
+    Write-Section 'CI Environment Detected'
+    Write-Host "Running in CI environment - will prioritize token-based authentication" -ForegroundColor Yellow
+    Write-Host "Environment variables detected:" -ForegroundColor Gray
+    @('CI', 'GITHUB_ACTIONS', 'TF_BUILD') | ForEach-Object {
+        $val = [Environment]::GetEnvironmentVariable($_)
+        if ($val) { Write-Host "  $_=$val" -ForegroundColor Gray }
+    }
+}
+
 function Load-DotEnv {
     if (-not (Test-Path .env)) { return @{} }
     $h = @{}
@@ -125,14 +142,31 @@ function Invoke-With-Sqlcmd {
     $sqlcmd = Find-Sqlcmd -Hint $SqlcmdPath
     if (-not $sqlcmd) { Fail 'sqlcmd not found. Install Microsoft sqlcmd (winget install Microsoft.sqlcmd) & ODBC Driver 18.' }
     Write-Section 'Execute T-SQL via sqlcmd'
+    
+    # ツール情報をログ出力
+    $sqlcmdVersion = & $sqlcmd -? 2>&1 | Out-String
+    Write-Host "Using sqlcmd at: $sqlcmd" -ForegroundColor Gray
+    
     $tmp = New-TemporaryFile
     Set-Content -Path $tmp -Value $query -Encoding UTF8
     try {
-        # Try new go-sqlcmd first (supports --access-token). If it fails quickly, fallback to -G.
-        $versionOut = & $sqlcmd -? 2>&1 | Out-String
-        if ($versionOut -match '--access-token') {
+        $isCI = Test-CiEnvironment
+        $supportsAccessToken = $sqlcmdVersion -match '--access-token'
+        
+        Write-Host "CI Environment: $isCI" -ForegroundColor Gray
+        Write-Host "Supports --access-token: $supportsAccessToken" -ForegroundColor Gray
+        
+        if ($supportsAccessToken) {
+            Write-Host "Using --access-token authentication (most reliable)" -ForegroundColor Green
             & $sqlcmd --access-token $token -S $server -d $db -C -b -l 30 -i $tmp
+        } elseif ($isCI) {
+            # CI環境で古いsqlcmdの場合、エラーメッセージを改善
+            Write-Warning "CI environment detected but sqlcmd doesn't support --access-token"
+            Write-Warning "This may fail with ActiveDirectoryIntegrated error. Consider updating sqlcmd."
+            Write-Host "Attempting -G (Interactive) authentication..." -ForegroundColor Yellow
+            & $sqlcmd -S $server -d $db -G -C -b -l 30 -i $tmp
         } else {
+            Write-Host "Using -G (Azure AD) authentication" -ForegroundColor Yellow
             & $sqlcmd -S $server -d $db -G -C -b -l 30 -i $tmp
         }
     }
@@ -143,15 +177,30 @@ function Ensure-DbUser {
     param($info)
     $token = Get-AadSqlToken
     $query = Build-Tsql -appName $info.AppName
+    $isCI = Test-CiEnvironment
+    
+    # CI環境では積極的にInvoke-Sqlcmdを試行（AccessToken使用）
     if (-not $ForceSqlcmd) {
         $ok = $false
-        try { $ok = Invoke-With-InvokeSqlcmd -server $info.SqlServer -db $info.Database -token $token -query $query }
+        try { 
+            $ok = Invoke-With-InvokeSqlcmd -server $info.SqlServer -db $info.Database -token $token -query $query 
+        }
         catch {
             Write-Warning "Invoke-Sqlcmd failed: $($_.Exception.Message)"
+            if ($isCI) {
+                Write-Warning "This is expected in CI if SqlServer module is not properly installed"
+            }
         }
         if ($ok) { Write-Host 'Done.' -ForegroundColor Green; return }
         Write-Host 'Falling back to sqlcmd...' -ForegroundColor Yellow
     }
+    
+    # CI環境での警告メッセージ
+    if ($isCI) {
+        Write-Warning "CI Environment: sqlcmd fallback may fail if --access-token is not supported"
+        Write-Host "Ensure SqlServer PowerShell module (>=22.x) is installed for best results" -ForegroundColor Yellow
+    }
+    
     Invoke-With-Sqlcmd -server $info.SqlServer -db $info.Database -token $token -query $query -SqlcmdPath $SqlcmdPath
     Write-Host 'Done.' -ForegroundColor Green
 }

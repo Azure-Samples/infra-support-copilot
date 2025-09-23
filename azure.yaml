@@ -37,9 +37,3 @@ hooks:
       run: .\scripts\get_ip_address.ps1
       interactive: true
       continueOnError: false
-  postprovision:
-    windows:
-      shell: pwsh
-      run: pwsh -NoProfile -ExecutionPolicy Bypass -File .\scripts\set_up_environment.ps1 -ForceSqlcmd
-      interactive: true
-      continueOnError: false
