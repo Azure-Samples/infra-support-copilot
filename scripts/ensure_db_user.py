@@ -14,7 +14,7 @@ import json
 from pathlib import Path
 from typing import Optional, Dict
 import struct
-from azure import identity
+from azure.identity import DefaultAzureCredential
 
 import pyodbc
 from azure.core.exceptions import ClientAuthenticationError
@@ -209,7 +209,7 @@ def get_sql_connection_string(server: str, database: str, access_token: str) -> 
     return conn_string
 
 def get_conn(connection_string):
-    credential = identity.DefaultAzureCredential(exclude_interactive_browser_credential=False)
+    credential = DefaultAzureCredential(exclude_interactive_browser_credential=False)
     token_bytes = credential.get_token("https://database.windows.net/.default").token.encode("UTF-16-LE")
     token_struct = struct.pack(f'<I{len(token_bytes)}s', len(token_bytes), token_bytes)
     SQL_COPT_SS_ACCESS_TOKEN = 1256  # This connection option is defined by microsoft in msodbcsql.h
@@ -243,11 +243,6 @@ def ensure_db_user(server: str, database: str, app_name: str, is_service_princip
         
         # Build SQL command
         sql_command = build_user_creation_sql(app_name, is_service_principal)
-        
-        # Connect and execute with access token
-        # For pyodbc with access token, we need to use SQL_COPT_SS_ACCESS_TOKEN
-        SQL_COPT_SS_ACCESS_TOKEN = 1256  # Constant for access token
-        token_bytes = access_token.encode('utf-16-le')
         
         logger.debug(f"Connecting with connection string: {conn_string}")
         logger.debug(f"Using access token of length: {len(access_token)}")
