@@ -172,7 +172,6 @@ def ensure_db_user(server: str, database: str, app_name: str) -> bool:
                 for statement in sql_command.split('\n\n'):
                     if statement.strip():
                         try:
-                            logger.debug(f"Executing SQL: {statement[:100]}...")
                             cursor.execute(statement)
                             # Try to fetch any messages
                             while cursor.nextset():

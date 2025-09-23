@@ -23,7 +23,17 @@ class SQLQueryService:
         self.openai_endpoint = settings.azure_openai_endpoint
         self.gpt_deployment = settings.azure_openai_gpt_deployment
         self.azure_openai_api_version = settings.azure_openai_api_version
-        self.credential = DefaultAzureCredential()
+        # Create Azure credentials - use Managed Identity approach consistently
+        # In CI: authenticate as the App Service's Managed Identity using Service Principal
+        # In App Service: use DefaultAzureCredential (Managed Identity)
+        is_github_actions = os.getenv('GITHUB_ACTIONS') == 'true'
+        
+        if is_github_actions:
+            logger.info("GitHub Actions environment: Using AzureCliCredential to represent App Service Managed Identity")
+            self.credential = AzureCliCredential()
+        else:
+            logger.info("Using DefaultAzureCredential (Managed Identity) for authentication")
+            self.credential = DefaultAzureCredential()
         token_provider = get_bearer_token_provider(
             self.credential,
             "https://cognitiveservices.azure.com/.default"

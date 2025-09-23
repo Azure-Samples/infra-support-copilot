@@ -221,6 +221,10 @@ resource appService 'Microsoft.Web/sites@2022-03-01' = {
           name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
           value: appInsights.properties.ConnectionString
         }
+        {
+          name: 'GITHUB_ACTIONS'
+          value: 'true'
+        }
       ]
     }
   }
