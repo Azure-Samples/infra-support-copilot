@@ -3,10 +3,11 @@
 import logging
 import asyncio
 import struct
+import os
 from typing import List, Any, Dict
 
 import pyodbc  # type: ignore
-from azure.identity import DefaultAzureCredential, get_bearer_token_provider
+from azure.identity import AzureCliCredential, DefaultAzureCredential, get_bearer_token_provider
 from openai import AsyncAzureOpenAI
 from app.config import settings
 
@@ -23,9 +24,17 @@ class SQLQueryService:
         self.gpt_deployment = settings.azure_openai_gpt_deployment
         self.azure_openai_api_version = settings.azure_openai_api_version
 
-        # Create Azure credentials for managed identity
-        # This allows secure, passwordless authentication to Azure services
-        self.credential = DefaultAzureCredential()
+        # Create Azure credentials - choose based on environment
+        # In development/CI: use Azure CLI, in production App Service: use DefaultAzureCredential (for Managed Identity)
+        ci_indicators = ['CI', 'GITHUB_ACTIONS', 'TF_BUILD']
+        is_ci_or_local = any(os.getenv(indicator) == 'true' for indicator in ci_indicators)
+        
+        if is_ci_or_local:
+            logger.info("Using AzureCliCredential for authentication")
+            self.credential = AzureCliCredential()
+        else:
+            logger.info("Using DefaultAzureCredential (Managed Identity) for authentication")
+            self.credential = DefaultAzureCredential()
         token_provider = get_bearer_token_provider(
             self.credential,
             "https://cognitiveservices.azure.com/.default"
@@ -134,8 +143,9 @@ class SQLQueryService:
         )
         if self.use_aad:
             token = self.credential.get_token(self._sql_scope)
-            token_bytes = token.token.encode("utf-16-le")
-            token_struct = struct.pack("=i", len(token_bytes)) + token_bytes
+            # Use the same token encoding method as ensure_db_user.py
+            token_bytes = token.token.encode("UTF-16-LE")
+            token_struct = struct.pack(f'<I{len(token_bytes)}s', len(token_bytes), token_bytes)
             attrs_before = {1256: token_struct}  # SQL_COPT_SS_ACCESS_TOKEN
             return pyodbc.connect(conn_str, attrs_before=attrs_before)
         raise RuntimeError("Azure SQL connection failed: AAD enabled but token acquisition failed or SQL Auth credentials missing")

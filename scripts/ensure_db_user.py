@@ -14,7 +14,7 @@ import json
 from pathlib import Path
 from typing import Optional, Dict
 import struct
-from azure.identity import DefaultAzureCredential
+from azure.identity import AzureCliCredential, DefaultAzureCredential
 
 import pyodbc
 from azure.core.exceptions import ClientAuthenticationError
@@ -41,51 +41,6 @@ def load_env_file(env_path: str = ".env") -> Dict[str, str]:
                 env_vars[key.strip()] = value.strip().strip('"').strip("'")
     
     return env_vars
-
-
-def get_azure_access_token() -> str:
-    """
-    Get Azure access token for SQL Database using Azure CLI.
-    
-    Returns:
-        Access token string
-    
-    Raises:
-        Exception: If token retrieval fails
-    """
-    try:
-        logger.debug("Getting Azure access token via Azure CLI")
-        
-        # Check if we're on Windows and use appropriate shell
-        is_windows = os.name == 'nt'
-        if is_windows:
-            # Use PowerShell on Windows for better compatibility
-            cmd = ['pwsh', '-Command', 'az account get-access-token --resource https://database.windows.net/ --query accessToken -o tsv']
-        else:
-            cmd = ['az', 'account', 'get-access-token', '--resource', 'https://database.windows.net/', '--query', 'accessToken', '-o', 'tsv']
-        
-        result = subprocess.run(
-            cmd,
-            capture_output=True, text=True, check=True, timeout=60  # Add timeout
-        )
-        token = result.stdout.strip()
-        if not token:
-            raise Exception("Empty token received from Azure CLI")
-        
-        # Basic token validation
-        if len(token) < 100:  # Azure tokens are typically much longer
-            raise Exception(f"Token appears invalid (length: {len(token)})")
-        
-        logger.debug("Successfully obtained access token")
-        return token
-    except subprocess.TimeoutExpired:
-        raise Exception("Azure CLI command timed out (60 seconds)")
-    except subprocess.CalledProcessError as e:
-        error_msg = e.stderr.strip() if e.stderr else "Unknown error"
-        raise Exception(f"Azure CLI command failed: {error_msg}")
-    except Exception as e:
-        raise Exception(f"Failed to get access token: {str(e)}")
-
 
 def get_current_principal() -> Optional[str]:
     """
@@ -183,17 +138,17 @@ END;"""
     return sql
 
 
-def get_sql_connection_string(server: str, database: str, access_token: str) -> str:
+def get_sql_connection_string(server: str, database: str, access_token: str = "") -> str:
     """
-    Build SQL connection string with access token authentication.
+    Build SQL connection string for Azure SQL Server.
     
     Args:
         server: SQL Server name
         database: Database name
-        access_token: Azure AD access token
+        access_token: Entra ID access token (not used with AzureCliCredential)
     
     Returns:
-        Connection string and token as tuple
+        Connection string
     """
     # Enhanced connection string for better compatibility
     conn_string = (
@@ -209,12 +164,30 @@ def get_sql_connection_string(server: str, database: str, access_token: str) -> 
     return conn_string
 
 def get_conn(connection_string):
-    credential = DefaultAzureCredential(exclude_interactive_browser_credential=False)
-    token_bytes = credential.get_token("https://database.windows.net/.default").token.encode("UTF-16-LE")
-    token_struct = struct.pack(f'<I{len(token_bytes)}s', len(token_bytes), token_bytes)
-    SQL_COPT_SS_ACCESS_TOKEN = 1256  # This connection option is defined by microsoft in msodbcsql.h
-    conn = pyodbc.connect(connection_string, attrs_before={SQL_COPT_SS_ACCESS_TOKEN: token_struct})
-    return conn
+    """
+    Get database connection using appropriate Azure credentials.
+    Uses Azure CLI in development/CI, Managed Identity in production App Service.
+    """
+    try:
+        # Detect environment type
+        ci_indicators = ['CI', 'GITHUB_ACTIONS', 'TF_BUILD']
+        is_ci_or_local = any(os.getenv(indicator) == 'true' for indicator in ci_indicators) or os.getenv('WEBSITE_INSTANCE_ID') is None
+        
+        if is_ci_or_local:
+            logger.debug("Using AzureCliCredential for database connection")
+            credential = AzureCliCredential()
+        else:
+            logger.debug("Using DefaultAzureCredential (Managed Identity) for database connection")
+            credential = DefaultAzureCredential()
+        
+        token_bytes = credential.get_token("https://database.windows.net/.default").token.encode("UTF-16-LE")
+        token_struct = struct.pack(f'<I{len(token_bytes)}s', len(token_bytes), token_bytes)
+        SQL_COPT_SS_ACCESS_TOKEN = 1256  # This connection option is defined by microsoft in msodbcsql.h
+        conn = pyodbc.connect(connection_string, attrs_before={SQL_COPT_SS_ACCESS_TOKEN: token_struct})
+        return conn
+    except Exception as e:
+        logger.error(f"Azure credential failed: {e}")
+        raise
 
 def ensure_db_user(server: str, database: str, app_name: str, is_service_principal: bool = False) -> bool:
     """
@@ -234,18 +207,12 @@ def ensure_db_user(server: str, database: str, app_name: str, is_service_princip
         principal_type = "Service Principal (CI Environment)" if is_service_principal else "App Service Managed Identity"
         logger.info(f"  Type: {principal_type}")
         
-        # Get access token
-        access_token = get_azure_access_token()
-        
         # Build connection string
-        conn_string = get_sql_connection_string(server, database, access_token)
+        conn_string = get_sql_connection_string(server, database, "")  # Token not needed here
         logger.info(f"  Connecting to: {server}/{database}")
         
         # Build SQL command
         sql_command = build_user_creation_sql(app_name, is_service_principal)
-        
-        logger.debug(f"Connecting with connection string: {conn_string}")
-        logger.debug(f"Using access token of length: {len(access_token)}")
         
         # Enhanced connection attempt with better error handling
         try:
@@ -357,15 +324,26 @@ def main():
             logger.error("  --app-name or AZURE_APP_SERVICE_NAME environment variable")
         sys.exit(1)
     
-    # Determine if we're using Service Principal (CI environment)
+    # Determine if we're using Service Principal (CI environment) or Managed Identity (App Service)
     current_principal = get_current_principal()
+    
+    # For App Service, use the App Service name (which should match the Managed Identity)
+    is_app_service = os.getenv('WEBSITE_INSTANCE_ID') is not None
+    
     if current_principal:
         logger.info(f"CI Environment: Using Service Principal ID instead of App Service name")
         logger.info(f"  App Service Name: {app_service_name}")
         logger.info(f"  Service Principal: {current_principal}")
         principal_name = current_principal
         is_service_principal = True
+    elif is_app_service:
+        logger.info(f"App Service Environment: Using App Service Managed Identity")
+        logger.info(f"  App Service Name: {app_service_name}")
+        principal_name = app_service_name
+        is_service_principal = False
     else:
+        logger.info(f"Local Environment: Using App Service name")
+        logger.info(f"  App Service Name: {app_service_name}")
         principal_name = app_service_name
         is_service_principal = False
     
