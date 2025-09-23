@@ -88,7 +88,7 @@ END;"""
     return sql
 
 
-def get_sql_connection_string(server: str, database: str, access_token: str = "") -> str:
+def get_sql_connection_string(server: str, database: str) -> str:
     """
     Build SQL connection string for Azure SQL Server.
     

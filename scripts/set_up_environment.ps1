@@ -48,7 +48,7 @@ try {
         "./scripts/ensure_db_user.py",
         "--server", $envMap.AZURE_SQL_SERVER,
         "--database", $envMap.AZURE_SQL_DATABASE_NAME,
-        "--app-name", $envMap.AZURE_APP_SERVICE_NAME,
+        "--app-name", $envMap.AZURE_APP_SERVICE_PRINCIPAL_ID,
         "--verbose"
     )
     
