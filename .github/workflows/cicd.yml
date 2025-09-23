@@ -42,15 +42,6 @@ jobs:
           pip install -r requirements.txt
         shell: pwsh
 
-      - name: Install SqlServer PowerShell Module
-        run: |
-          Write-Host "Installing SqlServer PowerShell module (>=22) for AccessToken support"
-          Install-Module SqlServer -Scope CurrentUser -Force -AllowClobber -MinimumVersion 22.0
-          Import-Module SqlServer
-          $version = (Get-Module SqlServer).Version
-          Write-Host "SqlServer module version: $version"
-        shell: pwsh
-
       - name: Install ODBC Driver for SQL Server
         run: |
           Write-Host "Installing Microsoft ODBC Driver 18 for SQL Server"
@@ -64,20 +55,6 @@ jobs:
           # Verify installation
           Write-Host "Verifying ODBC driver installation..."
           python -c "import pyodbc; drivers = [d for d in pyodbc.drivers() if 'SQL Server' in d]; print('Available SQL Server drivers:', drivers); exit(0 if drivers else 1)"
-        shell: pwsh
-
-      - name: Install latest sqlcmd utility
-        run: |
-          Write-Host "Installing latest sqlcmd utility"
-          $sqlcmdInstallerUrl = "https://go.microsoft.com/fwlink/?linkid=2142258"
-          $installerPath = "$env:TEMP\sqlcmd.msi"
-          Invoke-WebRequest -Uri $sqlcmdInstallerUrl -OutFile $installerPath
-          Start-Process msiexec.exe -ArgumentList "/i", $installerPath, "/quiet", "/norestart" -Wait
-          Write-Host "sqlcmd installation completed"
-          
-          # Show where sqlcmd was installed
-          $sqlcmd = Get-Command sqlcmd -ErrorAction SilentlyContinue
-          if ($sqlcmd) { Write-Host "sqlcmd installed at: $($sqlcmd.Source)" }
         shell: pwsh
 
       - name: Install azd

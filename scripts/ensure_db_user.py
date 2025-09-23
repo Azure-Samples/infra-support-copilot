@@ -23,6 +23,30 @@ def is_ci_environment() -> bool:
     ci_indicators = ['CI', 'GITHUB_ACTIONS', 'TF_BUILD']
     return any(os.getenv(var) == 'true' for var in ci_indicators)
 
+def get_best_odbc_driver() -> str:
+    """Get the best available ODBC driver that supports ActiveDirectoryDefault."""
+    drivers = pyodbc.drivers()
+    print(f"Available ODBC drivers: {drivers}")
+    
+    # Prefer ODBC Driver 18 (supports ActiveDirectoryDefault)
+    for driver in drivers:
+        if "ODBC Driver 18 for SQL Server" in driver:
+            print(f"Using: {driver}")
+            return driver
+    
+    # Fall back to ODBC Driver 17 (limited auth support)
+    for driver in drivers:
+        if "ODBC Driver 17 for SQL Server" in driver:
+            print(f"WARNING: Using {driver} - ActiveDirectoryDefault may not be supported")
+            return driver
+    
+    # Last resort
+    for driver in drivers:
+        if "SQL Server" in driver:
+            print(f"WARNING: Using {driver} - limited authentication support")
+            return driver
+    
+    raise RuntimeError("No compatible SQL Server ODBC driver found")
 
 def get_current_principal() -> Optional[str]:
     """Get current principal (Service Principal in CI, None for local)."""
@@ -116,8 +140,11 @@ END;"""
 def execute_sql(server: str, database: str, query: str) -> None:
     """Execute SQL query using Azure Active Directory Default authentication."""
     # Build connection string with Azure AD Default authentication
+    driver = get_best_odbc_driver()
+    print(f"Using ODBC Driver: {driver}")
+
     connection_string = (
-        f"Driver={{ODBC Driver 17 for SQL Server}};"
+        f"Driver={{{driver}}};"
         f"Server=tcp:{server},1433;"
         f"Database={database};"
         f"Authentication=ActiveDirectoryDefault;"
