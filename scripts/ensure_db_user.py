@@ -147,7 +147,6 @@ def execute_sql(server: str, database: str, query: str) -> None:
         f"Driver={{{driver}}};"
         f"Server=tcp:{server},1433;"
         f"Database={database};"
-        f"Authentication=ActiveDirectoryDefault;"
         f"Encrypt=yes;"
         f"TrustServerCertificate=no;"
         f"Connection Timeout=30;"
