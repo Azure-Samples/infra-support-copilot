@@ -3,14 +3,26 @@ param(
     [string]$SqlcmdPath
 )
 
-# Prepare environment and run data ingestion steps
+# ============================================================================
+# PART 1: BLOB STORAGE AND SEARCH INDEX SETUP
+# ============================================================================
+
+# Prepare environment
 azd env get-values > .env
 Write-Output "Generate .env file"
-python ./scripts/upload_data_to_blob_storage.py
-python ./scripts/create_index.py
-Write-Output "Uploading to SQL Database..."
-python ./scripts/upload_arc_data_to_azure_sql.py
 
+# Upload data to blob storage and create search indexes
+Write-Output "Uploading data to blob storage..."
+python ./scripts/upload_data_to_blob_storage.py
+
+Write-Output "Creating search indexes..."
+python ./scripts/create_index.py
+
+# ============================================================================
+# PART 2: SQL DATABASE SETUP AND DATA UPLOAD
+# ============================================================================
+
+# Get configuration values for SQL setup
 $AZURE_APP_SERVICE_NAME = (Get-Content .env | Where-Object { $_ -match "^AZURE_APP_SERVICE_NAME=" } | ForEach-Object { $_ -replace "^AZURE_APP_SERVICE_NAME=", "" } | Select-Object -First 1)
 $AZURE_APP_SERVICE_NAME = $AZURE_APP_SERVICE_NAME.Trim().Trim('"').Trim("'")
 Write-Output "App Service Name: $AZURE_APP_SERVICE_NAME"
@@ -28,6 +40,9 @@ if ([string]::IsNullOrWhiteSpace($AZURE_APP_SERVICE_NAME) -or [string]::IsNullOr
     Write-Error "Missing one or more required values in .env (AZURE_APP_SERVICE_NAME / AZURE_SQL_SERVER / AZURE_SQL_DATABASE_NAME)."
     exit 1
 }
+
+# Configure App Service database permissions first
+Write-Output "Setting up App Service database permissions..."
 
 # Escape the app service name for T-SQL identifier (handles '-') and closing brackets
 $escapedName = $AZURE_APP_SERVICE_NAME -replace '\\]', ']]'
@@ -60,9 +75,7 @@ END;
 
 Write-Output "Executing T-SQL against $AZURE_SQL_SERVER/$AZURE_SQL_DATABASE_NAME as AAD token user..."
 
-# Prefer Invoke-Sqlcmd with -AccessToken when available; otherwise fall back to sqlcmd if installed.
-$invokeSupportsAccessToken = ($null -ne ((Get-Command Invoke-Sqlcmd -ErrorAction SilentlyContinue).Parameters["AccessToken"]))
-
+# Helper function to find sqlcmd executable
 function Find-SqlcmdPath {
     param([string]$Hint)
     if ($Hint -and (Test-Path -LiteralPath $Hint)) { return (Resolve-Path -LiteralPath $Hint).Path }
@@ -70,7 +83,8 @@ function Find-SqlcmdPath {
     $cmd = Get-Command sqlcmd -ErrorAction SilentlyContinue | Select-Object -First 1 -ExpandProperty Source
     if ($cmd) { $candidates += $cmd }
     $candidates += @(
-        "$env:ProgramFiles\sqlcmd\sqlcmd.exe",
+        "$env:ProgramFiles\sqlcmd\sqlcmd.exe", # New standalone sqlcmd (ODBC 18 compatible)
+        "$env:ProgramFiles\Microsoft SQL Server\180\Tools\Binn\sqlcmd.exe", # ODBC 18 preferred
         "$env:LOCALAPPDATA\Programs\sqlcmd\sqlcmd.exe",
         "$env:ProgramFiles\Microsoft SQLCMD\sqlcmd.exe",
         "$env:ProgramFiles\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\sqlcmd.exe",
@@ -81,6 +95,9 @@ function Find-SqlcmdPath {
     return $null
 }
 
+# Execute database permissions setup
+$invokeSupportsAccessToken = ($null -ne ((Get-Command Invoke-Sqlcmd -ErrorAction SilentlyContinue).Parameters["AccessToken"]))
+
 if ($invokeSupportsAccessToken -and -not $ForceSqlcmd) {
     try {
         Invoke-Sqlcmd -ServerInstance $AZURE_SQL_SERVER -Database $AZURE_SQL_DATABASE_NAME -AccessToken $token -Query $query -ErrorAction Stop
@@ -88,14 +105,15 @@ if ($invokeSupportsAccessToken -and -not $ForceSqlcmd) {
     }
     catch {
         Write-Warning ("Invoke-Sqlcmd failed: {0}" -f $_.Exception.Message)
-        Write-Warning "Falling back to sqlcmd (-G) if available..."
+        Write-Warning "Falling back to sqlcmd with access token if available..."
         $sqlcmdPath = Find-SqlcmdPath -Hint $SqlcmdPath
         if ($sqlcmdPath) {
             $tmpFile = New-TemporaryFile
             Set-Content -Path $tmpFile -Value $query -Encoding UTF8
             try {
-                & $sqlcmdPath -S $AZURE_SQL_SERVER -d $AZURE_SQL_DATABASE_NAME -G -C -b -l 30 -i $tmpFile
-                Write-Output "Done (via sqlcmd)."
+                # Use access token with sqlcmd instead of -G flag
+                & $sqlcmdPath -S $AZURE_SQL_SERVER -d $AZURE_SQL_DATABASE_NAME -P $token -C -b -l 30 -i $tmpFile
+                Write-Output "Done (via sqlcmd with access token)."
             }
             finally {
                 Remove-Item $tmpFile -ErrorAction SilentlyContinue
@@ -110,11 +128,13 @@ if ($invokeSupportsAccessToken -and -not $ForceSqlcmd) {
 else {
     $sqlcmdPath = Find-SqlcmdPath -Hint $SqlcmdPath
     if ($sqlcmdPath) {
-        # Use sqlcmd with AAD integrated auth (-G). For Azure SQL, encryption is enforced; -C trusts the server cert.
+        # Use sqlcmd with access token instead of AAD integrated auth (-G)
+        Write-Output "Using sqlcmd at: $sqlcmdPath"
         $tmpFile = New-TemporaryFile
         Set-Content -Path $tmpFile -Value $query -Encoding UTF8
         try {
-            & $sqlcmdPath -S $AZURE_SQL_SERVER -d $AZURE_SQL_DATABASE_NAME -G -C -b -l 30 -i $tmpFile
+            # Use access token authentication instead of -G flag
+            & $sqlcmdPath -S $AZURE_SQL_SERVER -d $AZURE_SQL_DATABASE_NAME -P $token -C -b -l 30 -i $tmpFile
             Write-Output "Done."
         }
         finally {
@@ -126,3 +146,9 @@ else {
         exit 1
     }
 }
+
+# Now upload data to SQL Database (after permissions are configured)
+Write-Output "Uploading data to SQL Database..."
+python ./scripts/upload_arc_data_to_azure_sql.py
+
+Write-Output "Environment setup complete!"

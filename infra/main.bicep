@@ -12,10 +12,10 @@ param tags object = {
   'azd-env-name': environmentName
 }
 
-@description('Principal ID of the user running the deployment (for role assignments)')
-param userPrincipalId string = ''
+@description('Principal ID of the identity running the deployment (for role assignments)')
+param adminPrincipalId string
 
-@description('Type of the principal identified by userPrincipalId. Use "User" for human accounts; "ServicePrincipal" for CI/CD service principals.')
+@description('Type of the principal identified by adminPrincipalId. Use "User" for human accounts; "ServicePrincipal" for CI/CD service principals.')
 @allowed([
   'User'
   'ServicePrincipal'
@@ -23,9 +23,7 @@ param userPrincipalId string = ''
   'ForeignGroup'
   'Device'
 ])
-param userPrincipalType string = 'User'
-
-var isUserPrincipal = toLower(userPrincipalType) == 'user'
+param adminPrincipalType string
 
 // ----------------------------------------------------
 // App Service and configuration
@@ -35,18 +33,7 @@ var isUserPrincipal = toLower(userPrincipalType) == 'user'
 param appServiceName string = 'app-${resourceToken}'
 
 @description('App Service Plan SKU')
-@allowed([
-  'B1'
-  'B2'
-  'B3'
-  'S1'
-  'S2'
-  'S3'
-  'P1v2'
-  'P2v2'
-  'P3v2'
-])
-param appServicePlanSku string = 'P2v2'
+param appServicePlanSku string = 'P1v3'
 
 // Create App Service Plan
 resource appServicePlan 'Microsoft.Web/serverfarms@2022-03-01' = {
@@ -96,13 +83,13 @@ var sqlServerBaseProps = {
   minimalTlsVersion: '1.2'
   publicNetworkAccess: 'Enabled'
 }
-var sqlServerAdminProps = (!empty(userPrincipalId) && isUserPrincipal) ? {
+var sqlServerAdminProps = (!empty(adminPrincipalId)) ? {
   administrators: {
     administratorType: 'ActiveDirectory'
     login: 'aad-admin'
-    sid: userPrincipalId
+    sid: adminPrincipalId
     tenantId: tenant().tenantId
-    principalType: 'User'
+    principalType: (adminPrincipalType == 'User') ? adminPrincipalType : 'Application'
     azureADOnlyAuthentication: true
   }
 } : {}
@@ -112,6 +99,9 @@ resource sqlServer 'Microsoft.Sql/servers@2024-11-01-preview' = {
   name: sqlServerName
   location: location
   tags: tags
+  identity: {
+    type: 'SystemAssigned' // Add system-assigned managed identity for SQL Server
+  }
   properties: union(sqlServerBaseProps, sqlServerAdminProps)
 }
 
@@ -658,45 +648,45 @@ resource searchStorageBlobDataReaderRoleAssignment 'Microsoft.Authorization/role
 }
 
 // Assign 'Storage Blob Data Contributor' role to the user running the deployment
-resource userStorageBlobDataContributorRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = if (!empty(userPrincipalId) && isUserPrincipal) {
-  name: guid(storageAccount.id, userPrincipalId, 'Storage Blob Data Contributor')
+resource userStorageBlobDataContributorRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = if (!empty(adminPrincipalId)) {
+  name: guid(storageAccount.id, adminPrincipalId, 'Storage Blob Data Contributor')
   scope: storageAccount
   properties: {
-    principalId: userPrincipalId
-    principalType: 'User'
+    principalId: adminPrincipalId
+    principalType: adminPrincipalType
     roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'ba92f5b4-2d11-453d-a403-e96b0029c9fe') // Storage Blob Data Contributor
   }
 }
 
 // Assign 'Search Service Contributor' role to the user running the deployment
-resource userSearchServiceContributorRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = if (!empty(userPrincipalId) && isUserPrincipal) {
-  name: guid(searchService.id, userPrincipalId, 'Search Service Contributor')
+resource userSearchServiceContributorRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = if (!empty(adminPrincipalId)) {
+  name: guid(searchService.id, adminPrincipalId, 'Search Service Contributor')
   scope: searchService
   properties: {
-    principalId: userPrincipalId
-    principalType: 'User'
+    principalId: adminPrincipalId
+    principalType: adminPrincipalType
     roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '7ca78c08-252a-4471-8644-bb5ff32d4ba0') // Search Service Contributor
   }
 }
 
 // Assign 'Search Index Data Reader' role to the user running the deployment so local CLI-based execution can query index documents
-resource userSearchIndexDataReaderRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = if (!empty(userPrincipalId) && isUserPrincipal) {
-  name: guid(searchService.id, userPrincipalId, 'Search Index Data Reader')
+resource userSearchIndexDataReaderRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = if (!empty(adminPrincipalId)) {
+  name: guid(searchService.id, adminPrincipalId, 'Search Index Data Reader')
   scope: searchService
   properties: {
-    principalId: userPrincipalId
-    principalType: 'User'
+    principalId: adminPrincipalId
+    principalType: adminPrincipalType
     roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '1407120a-92aa-4202-b7e9-c0e197c71c8f') // Search Index Data Reader
   }
 }
 
 // Assign 'Cognitive Services OpenAI Contributor' role to the user running the deployment
-resource userOpenAIContributorRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = if (!empty(userPrincipalId) && isUserPrincipal) {
-  name: guid(openAiAccount.id, userPrincipalId, 'Cognitive Services OpenAI Contributor')
+resource userOpenAIContributorRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = if (!empty(adminPrincipalId)) {
+  name: guid(openAiAccount.id, adminPrincipalId, 'Cognitive Services OpenAI Contributor')
   scope: openAiAccount
   properties: {
-    principalId: userPrincipalId
-    principalType: 'User'
+    principalId: adminPrincipalId
+    principalType: adminPrincipalType
     roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'a001fd3d-188f-4b5d-821b-7da978bf7442') // Cognitive Services OpenAI Contributor
   }
 }
@@ -713,12 +703,12 @@ resource appServiceLogAnalyticsReaderRoleAssignment 'Microsoft.Authorization/rol
 }
 
 // Optionally grant the deploying user read access to the Log Analytics workspace
-resource userLogAnalyticsReaderRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = if (!empty(userPrincipalId) && isUserPrincipal) {
-  name: guid(logAnalyticsWorkspace.id, userPrincipalId, 'Log Analytics Reader')
+resource userLogAnalyticsReaderRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = if (!empty(adminPrincipalId)) {
+  name: guid(logAnalyticsWorkspace.id, adminPrincipalId, 'Log Analytics Reader')
   scope: logAnalyticsWorkspace
   properties: {
-    principalId: userPrincipalId
-    principalType: 'User'
+    principalId: adminPrincipalId
+    principalType: adminPrincipalType
     roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '73c42c96-874c-492b-b04d-ab87d138a893') // Log Analytics Reader
   }
 }
@@ -733,7 +723,9 @@ output AZURE_OPENAI_EMBEDDING_DEPLOYMENT string = openAiEmbeddingDeploymentName
 output AZURE_SEARCH_INDEX_NAME_INVENTORIES string = 'index-inventories'
 output AZURE_SEARCH_INDEX_NAME_INCIDENTS string = 'index-incidents'
 output AZURE_SEARCH_SERVICE_URL string = 'https://${searchService.name}.search.windows.net'
+output AZURE_SEARCH_SERVICE_ENDPOINT string = 'https://${searchService.name}.search.windows.net'
 output AZURE_STORAGE_ACCOUNT_NAME string = storageAccount.name
+output AZURE_STORAGE_ACCOUNT_RESOURCE_ID string = storageAccount.id
 output AZURE_SEARCH_SERVICE_NAME string = searchService.name
 output AZURE_SQL_DATABASE_NAME string = sqlDatabaseName
 output AZURE_SQL_SERVER string = '${sqlServer.name}${environment().suffixes.sqlServerHostname}'

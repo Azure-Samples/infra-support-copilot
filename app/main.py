@@ -15,6 +15,7 @@ from opencensus.trace import config_integration
 
 from app.models.chat_models import ChatRequest
 from app.services.decide_tool import decide_tool
+from app.services.sql_query_service import sql_query_service
 
 load_dotenv()
 
@@ -88,7 +89,39 @@ async def chat_completion(chat_request: ChatRequest):
         
     except Exception as e:
         error_str = str(e).lower()
-        logger.error(f"Error in chat completion: {str(e)}")
+        logger.error(f"Error in chat completion: {type(e).__name__}: {str(e)}")
+        logger.error(f"Chat request: {chat_request}")
+        
+        # Create detailed error information for debugging
+        import traceback
+        import sys
+        import os
+        
+        import pyodbc
+        try:
+            odbc_drivers = pyodbc.drivers()
+        except Exception as od_err:
+            odbc_drivers = f"Error listing ODBC drivers: {od_err}"
+        error_details = {
+            "error_type": type(e).__name__,
+            "error_message": str(e),
+            "python_version": sys.version,
+            "current_working_directory": os.getcwd(),
+            "environment_variables": {
+                "AZURE_SQL_SERVER": os.getenv("AZURE_SQL_SERVER", "Not set"),
+                "AZURE_SQL_DATABASE_NAME": os.getenv("AZURE_SQL_DATABASE_NAME", "Not set"),
+                "USE_AAD": os.getenv("USE_AAD", "Not set"),
+                "AZURE_OPENAI_ENDPOINT": os.getenv("AZURE_OPENAI_ENDPOINT", "Not set"),
+                "AZURE_OPENAI_GPT_DEPLOYMENT": os.getenv("AZURE_OPENAI_GPT_DEPLOYMENT", "Not set"),
+            },
+            "odbc_drivers": odbc_drivers,
+            "traceback": traceback.format_exc()
+        }
+        # Attach runtime SQL diagnostics (best-effort)
+        try:
+            error_details["sql_diagnostics"] = sql_query_service.runtime_self_test()
+        except Exception as diag_err:
+            error_details["sql_diagnostics"] = {"error": f"Diagnostics failed: {type(diag_err).__name__}: {diag_err}"}
         
         # Handle specific error types with friendly messages
         if "rate limit" in error_str or "capacity" in error_str or "quota" in error_str:
@@ -101,12 +134,37 @@ async def chat_completion(chat_request: ChatRequest):
                 }]
             }
         else:
-            # Return a standard error response for all other errors
+            # Return a verbose error response for debugging
+            verbose_error = f"DETAILED ERROR INFORMATION (Debug Mode):\n\n"
+            verbose_error += f"Error Type: {error_details['error_type']}\n"
+            verbose_error += f"Error Message: {error_details['error_message']}\n\n"
+            verbose_error += f"Environment Configuration:\n"
+            for key, value in error_details['environment_variables'].items():
+                verbose_error += f"  {key}: {value}\n"
+            verbose_error += f"\nPython Version: {error_details['python_version']}\n"
+            verbose_error += f"Working Directory: {error_details['current_working_directory']}\n\n"
+            verbose_error += f"ODBC Drivers: {error_details['odbc_drivers']}\n\n"
+            # Include condensed diagnostics summary
+            sql_diag = error_details.get('sql_diagnostics', {})
+            verbose_error += "SQL Diagnostics Summary:\n"
+            if isinstance(sql_diag, dict):
+                for k, v in sql_diag.items():
+                    try:
+                        if isinstance(v, dict):
+                            status = 'PASS' if v.get('ok') else 'FAIL'
+                            msg = v.get('message') or v.get('issues') or ''
+                            verbose_error += f"  {k}: {status} - {msg}\n"
+                        else:
+                            verbose_error += f"  {k}: {v}\n"
+                    except Exception:
+                        verbose_error += f"  {k}: (unprintable)\n"
+            verbose_error += f"\nFull Traceback:\n{error_details['traceback']}"
+            
             return {
                 "choices": [{
                     "message": {
                         "role": "assistant",
-                        "content": f"An error occurred: {str(e)}"
+                        "content": verbose_error
                     }
                 }]
             }

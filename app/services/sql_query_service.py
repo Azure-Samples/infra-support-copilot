@@ -3,7 +3,11 @@
 import logging
 import asyncio
 import struct
-from typing import List, Any, Dict
+from typing import List, Any, Dict, Optional
+import socket
+import time
+import json
+import base64
 
 import pyodbc  # type: ignore
 from azure.identity import DefaultAzureCredential, get_bearer_token_provider
@@ -13,6 +17,12 @@ from app.config import settings
 logger = logging.getLogger(__name__)
 
 class SQLQueryService:
+    def log_odbc_drivers(self):
+        try:
+            drivers = pyodbc.drivers()
+            logger.info(f"Available ODBC drivers: {drivers}")
+        except Exception as e:
+            logger.error(f"Error listing ODBC drivers: {e}")
     """
     Service that provides SQL query capabilities
     """
@@ -30,6 +40,8 @@ class SQLQueryService:
             self.credential,
             "https://cognitiveservices.azure.com/.default"
         )
+        # Log available ODBC drivers for debugging
+        self.log_odbc_drivers()
         
         # Create Azure OpenAI client
         # We use the latest Azure OpenAI Python SDK with async support
@@ -92,6 +104,182 @@ class SQLQueryService:
             ");"
         )
 
+    # -------------------- Diagnostics helpers --------------------
+    def _safe_error(self, e: Exception) -> str:
+        return f"{type(e).__name__}: {str(e)}"
+
+    def _diag_driver(self) -> Dict[str, Any]:
+        try:
+            drivers = pyodbc.drivers()
+            required = "ODBC Driver 18 for SQL Server"
+            ok = required in drivers
+            msg = "driver present" if ok else f"Missing required driver '{required}'"
+            return {"ok": ok, "drivers": drivers, "message": msg}
+        except Exception as e:
+            return {"ok": False, "message": self._safe_error(e)}
+
+    def _diag_network(self, timeout: float = 5.0) -> Dict[str, Any]:
+        host = self.sql_server
+        result: Dict[str, Any] = {"ok": False, "server": host}
+        try:
+            # DNS resolve
+            try:
+                infos = socket.getaddrinfo(host, 1433, type=socket.SOCK_STREAM)
+                ips = sorted({i[4][0] for i in infos})
+                result["resolved_ips"] = ips
+            except Exception as e:
+                result["message"] = f"DNS resolution failed: {self._safe_error(e)}"
+                return result
+            # TCP connect attempt (short)
+            start = time.time()
+            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            sock.settimeout(timeout)
+            try:
+                sock.connect((ips[0], 1433))
+                elapsed = round(time.time() - start, 3)
+                result.update({"ok": True, "latency_seconds": elapsed, "message": "tcp/1433 connect succeeded"})
+            except Exception as ce:
+                result.update({"ok": False, "message": f"TCP connect failed: {self._safe_error(ce)}"})
+            finally:
+                try:
+                    sock.close()
+                except Exception:
+                    pass
+            return result
+        except Exception as e:
+            result["message"] = self._safe_error(e)
+            return result
+
+    def _decode_jwt_unverified(self, token: str) -> Optional[Dict[str, Any]]:
+        try:
+            parts = token.split('.')
+            if len(parts) < 2:
+                return None
+            payload_b64 = parts[1] + '==='  # pad
+            payload_bytes = base64.urlsafe_b64decode(payload_b64)
+            return json.loads(payload_bytes.decode('utf-8'))
+        except Exception:
+            return None
+
+    def _diag_mi_token(self) -> Dict[str, Any]:
+        try:
+            token = self.credential.get_token(self._sql_scope)
+            decoded = self._decode_jwt_unverified(token.token) or {}
+            exp = decoded.get('exp')
+            now = int(time.time())
+            exp_in = exp - now if isinstance(exp, int) else None
+            return {
+                "ok": True,
+                "tenant_id": decoded.get('tid'),
+                "object_id": decoded.get('oid'),
+                "expires_in_seconds": exp_in,
+                "message": "managed identity token acquired"
+            }
+        except Exception as e:
+            return {"ok": False, "message": self._safe_error(e)}
+
+    def _diag_connstring(self) -> Dict[str, Any]:
+        issues: List[str] = []
+        server = self.sql_server
+        # Build the effective connection string (same as _build_connection for AAD)
+        conn_str = (
+            "DRIVER={ODBC Driver 18 for SQL Server};"
+            f"SERVER={self.sql_server};DATABASE={self.sql_database};"
+            "Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30"
+        )
+        if not server.endswith('.database.windows.net'):
+            issues.append("Server should be the FQDN ending in .database.windows.net (avoid IP or short name)")
+        # Basic flags check
+        if 'Encrypt=yes' not in conn_str:
+            issues.append("Encrypt=yes missing")
+        if 'TrustServerCertificate=no' not in conn_str:
+            issues.append("TrustServerCertificate=no missing")
+        # We deliberately avoid Authentication=ActiveDirectoryMsi when supplying access token
+        if 'Authentication=' in conn_str:
+            issues.append("Remove Authentication= when supplying access token via attrs_before")
+        ok = len(issues) == 0
+        return {"ok": ok, "issues": issues, "message": "valid" if ok else " ; ".join(issues)}
+
+    def _diag_connectivity(self) -> Dict[str, Any]:
+        if not self.use_aad:
+            return {"ok": False, "message": "USE_AAD disabled"}
+        try:
+            with self._build_connection() as conn:
+                cur = conn.cursor()
+                cur.execute("SELECT DB_NAME();")
+                row = cur.fetchone()
+                db_name = row[0] if row else None
+                ok = (db_name == self.sql_database)
+                return {"ok": ok, "db_name": db_name, "message": "connected and verified database" if ok else f"Connected but DB_NAME() returned {db_name}"}
+        except Exception as e:
+            return {"ok": False, "message": self._safe_error(e)}
+
+    def _diag_identity(self) -> Dict[str, Any]:
+        if not self.use_aad:
+            return {"ok": False, "message": "USE_AAD disabled"}
+        try:
+            with self._build_connection() as conn:
+                cur = conn.cursor()
+                cur.execute("SELECT SUSER_SNAME(), DB_NAME();")
+                row = cur.fetchone()
+                login = row[0] if row else None
+                db_name = row[1] if row and len(row) > 1 else None
+                # lightweight permission signal
+                perm_ok = False
+                perm_message = ""
+                try:
+                    cur.execute("SELECT TOP 1 name FROM sys.tables;")
+                    _ = cur.fetchone()
+                    perm_ok = True
+                    perm_message = "basic read succeeded"
+                except Exception as pe:
+                    perm_message = f"read failed: {self._safe_error(pe)}"
+                return {
+                    "ok": perm_ok,
+                    "login": login,
+                    "db_name": db_name,
+                    "permission_check": perm_message,
+                    "message": "identity mapped and has read" if perm_ok else "identity mapping or permission issue"
+                }
+        except Exception as e:
+            return {"ok": False, "message": self._safe_error(e)}
+
+    def _diag_token_lifecycle(self) -> Dict[str, Any]:
+        try:
+            t1 = self.credential.get_token(self._sql_scope)
+            time.sleep(0.5)
+            t2 = self.credential.get_token(self._sql_scope)
+            d1 = self._decode_jwt_unverified(t1.token) or {}
+            d2 = self._decode_jwt_unverified(t2.token) or {}
+            exp1 = d1.get('exp')
+            exp2 = d2.get('exp')
+            same = exp1 == exp2
+            return {
+                "ok": True,
+                "exp1": exp1,
+                "exp2": exp2,
+                "same_expiry": same,
+                "message": "tokens acquired" if not same else "tokens acquired (same expiry - expected for close calls)"
+            }
+        except Exception as e:
+            return {"ok": False, "message": self._safe_error(e)}
+
+    def runtime_self_test(self) -> Dict[str, Any]:
+        """Run non-invasive diagnostics verifying connectivity prerequisites."""
+        try:
+            return {
+                "driver": self._diag_driver(),
+                "network": self._diag_network(),
+                "mi_token": self._diag_mi_token(),
+                "connstring": self._diag_connstring(),
+                "connectivity": self._diag_connectivity(),
+                "identity": self._diag_identity(),
+                "token_lifecycle": self._diag_token_lifecycle(),
+            }
+        except Exception as e:
+            # Should never raise; wrap any surprise
+            return {"error": self._safe_error(e)}
+
     async def _generate_sql(self, wanted_columns: List[str], user_query: str) -> str:
         """Generate a read-only SQL query."""
         prompt = (
@@ -127,28 +315,58 @@ class SQLQueryService:
     # --- SQL Execution helpers -------------------------------------------------
     def _build_connection(self) -> pyodbc.Connection:
         """Create a new ODBC connection (short-lived)."""
-        server = self.sql_server.replace("tcp:", "")
-        conn_str = (
-            "DRIVER={ODBC Driver 18 for SQL Server};"
-            f"SERVER=tcp:{server},1433;DATABASE={self.sql_database};Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;"
-        )
-        if self.use_aad:
-            token = self.credential.get_token(self._sql_scope)
-            token_bytes = token.token.encode("utf-16-le")
-            token_struct = struct.pack("=i", len(token_bytes)) + token_bytes
-            attrs_before = {1256: token_struct}  # SQL_COPT_SS_ACCESS_TOKEN
-            return pyodbc.connect(conn_str, attrs_before=attrs_before)
-        raise RuntimeError("Azure SQL connection failed: AAD enabled but token acquisition failed or SQL Auth credentials missing")
+        try:
+            if self.use_aad:
+                # For AAD token authentication, do NOT include Authentication in the connection string
+                conn_str = (
+                    "DRIVER={ODBC Driver 18 for SQL Server};"
+                    f"SERVER={self.sql_server};DATABASE={self.sql_database};"
+                    "Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30"
+                )
+                logger.info(f"Attempting AAD authentication to SQL server: {self.sql_server}")
+                logger.info(f"Database: {self.sql_database}")
+                logger.info(f"Connection string: {conn_str}")
+                try:
+                    token = self.credential.get_token(self._sql_scope)
+                    logger.info(f"Successfully acquired AAD token. Token expires at: {token.expires_on}")
+                    token_bytes = token.token.encode("utf-16-le")
+                    token_struct = struct.pack("=i", len(token_bytes)) + token_bytes
+                    attrs_before = {1256: token_struct}  # SQL_COPT_SS_ACCESS_TOKEN
+                    logger.info("Attempting to connect with AAD token...")
+                    connection = pyodbc.connect(conn_str, attrs_before=attrs_before)
+                    logger.info("Successfully connected to SQL database with AAD authentication")
+                    return connection
+                except Exception as token_error:
+                    logger.error(f"Failed to acquire AAD token: {type(token_error).__name__}: {str(token_error)}")
+                    raise RuntimeError(f"AAD token acquisition failed: {type(token_error).__name__}: {str(token_error)}")
+            else:
+                raise RuntimeError("SQL authentication is disabled. USE_AAD is False but no SQL credentials are configured.")
+        except pyodbc.Error as db_error:
+            logger.error(f"Database connection error: {type(db_error).__name__}: {str(db_error)}")
+            logger.error(f"Error details - Server: {self.sql_server}, Database: {self.sql_database}")
+            logger.error(f"AAD enabled: {self.use_aad}")
+            raise RuntimeError(f"SQL Database connection failed: {type(db_error).__name__}: {str(db_error)}. Server: {self.sql_server}, Database: {self.sql_database}, AAD: {self.use_aad}")
+        except Exception as general_error:
+            logger.error(f"Unexpected connection error: {type(general_error).__name__}: {str(general_error)}")
+            raise RuntimeError(f"Unexpected SQL connection error: {type(general_error).__name__}: {str(general_error)}. Server: {self.sql_server}, Database: {self.sql_database}")
 
     async def _execute_sql(self, sql: str) -> List[Dict[str, Any]]:
         """Execute SQL synchronously in a thread and return list of dict rows."""
         def _work() -> List[Dict[str, Any]]:
-            with self._build_connection() as conn:
-                cur = conn.cursor()
-                cur.execute(sql)
-                cols = [c[0] for c in cur.description] if cur.description else []
-                rows = cur.fetchall() if cols else []
-                return [dict(zip(cols, r)) for r in rows]
+            try:
+                logger.info(f"Executing SQL query: {sql}")
+                with self._build_connection() as conn:
+                    cur = conn.cursor()
+                    cur.execute(sql)
+                    cols = [c[0] for c in cur.description] if cur.description else []
+                    rows = cur.fetchall() if cols else []
+                    result = [dict(zip(cols, r)) for r in rows]
+                    logger.info(f"SQL query executed successfully, returned {len(result)} rows")
+                    return result
+            except Exception as e:
+                logger.error(f"SQL execution failed: {type(e).__name__}: {str(e)}")
+                logger.error(f"Failed query: {sql}")
+                raise RuntimeError(f"SQL execution error: {type(e).__name__}: {str(e)}. Query: {sql}")
         return await asyncio.to_thread(_work)
 
     # --- Safety / formatting ---------------------------------------------------
@@ -185,6 +403,8 @@ class SQLQueryService:
     async def get_chat_completion(self, effective_query: str):
         """End-to-end chat completion with Azure SQL retrieval."""
         try:
+            logger.info(f"Processing query: {effective_query}")
+            
             if effective_query.upper().startswith(";;SQL;;"):     
                 sql_part = effective_query.split(";;SQL;;", 1)[1]
                 items = sql_part.split(',')
@@ -212,9 +432,27 @@ class SQLQueryService:
 
                 return [{"title": "SQL Query", "content": f"## SQL Query:\n{sql}\n\n## Results:\n{sources}"}]
             else:
-                return [{'title': 'SELECTABLE', 'content': f';;SELECTABLE;;{",".join("dbo." + table for table in self._allowed_tables)}'}]
+                return [{'title': 'SELECTABLE', 'content': f";;SELECTABLE;;{','.join('dbo.' + table for table in self._allowed_tables)}"}]
         except Exception as e:
-            logger.error(f"Error in get_chat_completion: {e}")
-            raise
+            logger.error(f"Error in get_chat_completion: {type(e).__name__}: {str(e)}")
+            logger.error(f"Query that failed: {effective_query}")
+            logger.error(f"SQL Server: {self.sql_server}")
+            logger.error(f"SQL Database: {self.sql_database}")
+            logger.error(f"AAD enabled: {self.use_aad}")
+            
+            # Create detailed error message
+            error_details = {
+                "error_type": type(e).__name__,
+                "error_message": str(e),
+                "query": effective_query,
+                "sql_server": self.sql_server,
+                "sql_database": self.sql_database,
+                "aad_enabled": self.use_aad,
+                "openai_endpoint": self.openai_endpoint,
+                "gpt_deployment": self.gpt_deployment
+            }
+            
+            detailed_error = f"SQL Service Error Details:\n" + "\n".join([f"- {k}: {v}" for k, v in error_details.items()])
+            raise RuntimeError(detailed_error)
 
 sql_query_service = SQLQueryService()
