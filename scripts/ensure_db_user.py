@@ -13,6 +13,8 @@ import subprocess
 import json
 from pathlib import Path
 from typing import Optional, Dict
+import struct
+from azure import identity
 
 import pyodbc
 from azure.core.exceptions import ClientAuthenticationError
@@ -206,6 +208,13 @@ def get_sql_connection_string(server: str, database: str, access_token: str) -> 
     )
     return conn_string
 
+def get_conn(connection_string):
+    credential = identity.DefaultAzureCredential(exclude_interactive_browser_credential=False)
+    token_bytes = credential.get_token("https://database.windows.net/.default").token.encode("UTF-16-LE")
+    token_struct = struct.pack(f'<I{len(token_bytes)}s', len(token_bytes), token_bytes)
+    SQL_COPT_SS_ACCESS_TOKEN = 1256  # This connection option is defined by microsoft in msodbcsql.h
+    conn = pyodbc.connect(connection_string, attrs_before={SQL_COPT_SS_ACCESS_TOKEN: token_struct})
+    return conn
 
 def ensure_db_user(server: str, database: str, app_name: str, is_service_principal: bool = False) -> bool:
     """
@@ -245,7 +254,7 @@ def ensure_db_user(server: str, database: str, app_name: str, is_service_princip
         
         # Enhanced connection attempt with better error handling
         try:
-            with pyodbc.connect(conn_string, attrs_before={SQL_COPT_SS_ACCESS_TOKEN: token_bytes}) as conn:
+            with get_conn(conn_string) as conn:
                 logger.debug("Successfully connected to database")
                 cursor = conn.cursor()
                 
