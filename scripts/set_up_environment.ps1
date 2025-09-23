@@ -1,26 +1,3 @@
-<#
-    set_up_environment.ps1
-    Purpose:
-      1. 生成した Azure Developer CLI 環境値を .env に書き出し
-      2. 初期データ投入 (Blob / Search Index / Azure SQL)
-      3. App Service のマネージド ID (名前) を Azure SQL Database に外部ユーザーとして作成し db_datareader 付与 (冪等)
-
-    使い方:
-      pwsh ./scripts/set_up_environment.ps1
-      pwsh ./scripts/set_up_environment.ps1 -ForceSqlcmd
-      pwsh ./scripts/set_up_environment.ps1 -SqlcmdPath "C:\tools\sqlcmd.exe"
-
-    前提:
-      - az login 済み
-      - 対象 DB に対する Azure AD / Entra 管理者を設定済み
-      - SqlServer PowerShell モジュール (>=22) か 新 sqlcmd (go-sqlcmd) または従来 sqlcmd が利用可能
-
-    シンプル方針:
-      * まずトークン取得 → Invoke-Sqlcmd (AccessToken) トライ
-      * 失敗 / 強制 fallback 指定時 → sqlcmd (--access-token があればそれ, なければ -G)
-      * 最低限の関数化 & 明確なログ
-#>
-
 param(
     [switch]$ForceSqlcmd,
     [string]$SqlcmdPath
@@ -47,6 +24,31 @@ if ($isCI) {
         $val = [Environment]::GetEnvironmentVariable($_)
         if ($val) { Write-Host "  $_=$val" -ForegroundColor Gray }
     }
+}
+
+# CI環境でのサービスプリンシパル情報取得
+function Get-CurrentPrincipal {
+    $isCI = Test-CiEnvironment
+    if ($isCI) {
+        # CI環境ではサービスプリンシパルのObject IDを取得
+        try {
+            $spInfo = az ad signed-in-user show --query objectId -o tsv 2>$null
+            if (-not $spInfo) {
+                # サービスプリンシパル情報を別の方法で取得
+                $accountInfo = az account show --query user -o json | ConvertFrom-Json
+                if ($accountInfo.type -eq "servicePrincipal") {
+                    Write-Host "Service Principal detected: $($accountInfo.name)" -ForegroundColor Yellow
+                    return $accountInfo.name  # サービスプリンシパルのObject ID
+                }
+            }
+            return $spInfo
+        }
+        catch {
+            Write-Warning "Could not determine current principal in CI environment"
+            return $null
+        }
+    }
+    return $null  # ローカル環境では従来の App Service名を使用
 }
 
 function Load-DotEnv {
@@ -76,10 +78,26 @@ function Run-DataIngestion {
 function Get-RequiredValues($envMap) {
     $required = 'AZURE_APP_SERVICE_NAME','AZURE_SQL_SERVER','AZURE_SQL_DATABASE_NAME'
     foreach ($k in $required) { if (-not $envMap[$k]) { Fail "Missing $k in .env" } }
+    
+    # CI環境では適切なプリンシパルを使用
+    $isCI = Test-CiEnvironment
+    $principalName = $envMap.AZURE_APP_SERVICE_NAME
+    
+    if ($isCI) {
+        $currentPrincipal = Get-CurrentPrincipal
+        if ($currentPrincipal) {
+            Write-Host "CI Environment: Using Service Principal ID instead of App Service name" -ForegroundColor Yellow
+            Write-Host "  App Service Name: $($envMap.AZURE_APP_SERVICE_NAME)" -ForegroundColor Gray
+            Write-Host "  Service Principal: $currentPrincipal" -ForegroundColor Yellow
+            $principalName = $currentPrincipal
+        }
+    }
+    
     return [PSCustomObject]@{
-        AppName = $envMap.AZURE_APP_SERVICE_NAME
+        AppName = $principalName
         SqlServer = $envMap.AZURE_SQL_SERVER
         Database = $envMap.AZURE_SQL_DATABASE_NAME
+        IsServicePrincipal = $isCI
     }
 }
 
@@ -89,13 +107,23 @@ function Get-AadSqlToken {
     return $token
 }
 
-function Build-Tsql($appName) {
+function Build-Tsql($appName, $isServicePrincipal = $false) {
     $escaped = ($appName -replace '\]', ']]')
     $identifier = "[$escaped]"
+    
+    # サービスプリンシパルかApp Serviceかでコメントを変更
+    $principalType = if ($isServicePrincipal) { "Service Principal" } else { "App Service Managed Identity" }
+    
 @"
+-- Create $principalType user: $appName
 IF NOT EXISTS (SELECT 1 FROM sys.database_principals WHERE name = N'$appName')
 BEGIN
     CREATE USER $identifier FROM EXTERNAL PROVIDER;
+    PRINT 'Created user: $appName';
+END
+ELSE
+BEGIN
+    PRINT 'User already exists: $appName';
 END;
 
 IF NOT EXISTS (
@@ -106,6 +134,11 @@ IF NOT EXISTS (
 )
 BEGIN
     ALTER ROLE db_datareader ADD MEMBER $identifier;
+    PRINT 'Added to db_datareader: $appName';
+END
+ELSE
+BEGIN
+    PRINT 'Already member of db_datareader: $appName';
 END;
 "@
 }
@@ -176,8 +209,15 @@ function Invoke-With-Sqlcmd {
 function Ensure-DbUser {
     param($info)
     $token = Get-AadSqlToken
-    $query = Build-Tsql -appName $info.AppName
+    $query = Build-Tsql -appName $info.AppName -isServicePrincipal $info.IsServicePrincipal
     $isCI = Test-CiEnvironment
+    
+    Write-Host "Creating database user for: $($info.AppName)" -ForegroundColor Cyan
+    if ($info.IsServicePrincipal) {
+        Write-Host "  Type: Service Principal (CI Environment)" -ForegroundColor Yellow
+    } else {
+        Write-Host "  Type: App Service Managed Identity" -ForegroundColor Green
+    }
     
     # CI環境では積極的にInvoke-Sqlcmdを試行（AccessToken使用）
     if (-not $ForceSqlcmd) {

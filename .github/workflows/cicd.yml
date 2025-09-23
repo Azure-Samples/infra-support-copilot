@@ -100,6 +100,7 @@ jobs:
           azd env new ${{ secrets.AZURE_ENV_NAME }} --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }} --location ${{ secrets.AZURE_LOCATION }} --no-prompt
           azd env set AZURE_RESOURCE_GROUP ${{ secrets.AZURE_RESOURCE_GROUP }}
           azd env set AZURE_PRINCIPAL_TYPE ${{ secrets.AZURE_PRINCIPAL_TYPE }}
+          azd env set AZURE_PRINCIPAL_ID ${{ secrets.AZURE_CLIENT_ID }}
         shell: pwsh
 
       - name: Provision Infrastructure
