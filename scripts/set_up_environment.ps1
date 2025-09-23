@@ -49,7 +49,6 @@ try {
         "--server", $envMap.AZURE_SQL_SERVER,
         "--database", $envMap.AZURE_SQL_DATABASE_NAME,
         "--app-name", $envMap.AZURE_APP_SERVICE_NAME,
-        "--force-managed-identity",  # Force Managed Identity user creation
         "--verbose"
     )
     
