@@ -132,13 +132,6 @@ resource sqlDatabase 'Microsoft.Sql/servers/databases@2024-11-01-preview' = {
 }
 
 // Create App Service
-@description('GitHub Actions enabled flag')
-@allowed([
-  'true'
-  'false'
-])
-param githubActionsEnabled string = 'false'
-
 resource appService 'Microsoft.Web/sites@2022-03-01' = {
   name: appServiceName
   location: location
@@ -230,10 +223,6 @@ resource appService 'Microsoft.Web/sites@2022-03-01' = {
         {
           name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
           value: appInsights.properties.ConnectionString
-        }
-        {
-          name: 'GITHUB_ACTIONS'
-          value: githubActionsEnabled
         }
       ]
     }

@@ -107,7 +107,6 @@ jobs:
           AZURE_RESOURCE_GROUP: ${{ secrets.AZURE_RESOURCE_GROUP }}
           AZURE_PRINCIPAL_TYPE: ${{ secrets.AZURE_PRINCIPAL_TYPE }}
           AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-          GITHUB_ACTIONS: 'true'
 
       - name: Deploy Application
         run: |
@@ -120,4 +119,3 @@ jobs:
           AZURE_RESOURCE_GROUP: ${{ secrets.AZURE_RESOURCE_GROUP }}
           AZURE_PRINCIPAL_TYPE: ${{ secrets.AZURE_PRINCIPAL_TYPE }}
           AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-          GITHUB_ACTIONS: 'true'

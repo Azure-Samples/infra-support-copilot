@@ -13,7 +13,7 @@ import subprocess
 from pathlib import Path
 from typing import Dict
 import struct
-from azure.identity import AzureCliCredential, DefaultAzureCredential
+from azure.identity import DefaultAzureCredential
 
 import pyodbc
 from azure.core.exceptions import ClientAuthenticationError
@@ -95,7 +95,7 @@ def get_sql_connection_string(server: str, database: str) -> str:
     Args:
         server: SQL Server name
         database: Database name
-        access_token: Entra ID access token (not used with AzureCliCredential)
+        access_token: Entra ID access token
     
     Returns:
         Connection string
@@ -119,18 +119,7 @@ def get_conn(connection_string):
     Uses Azure CLI in development/CI, Managed Identity in production App Service.
     """
     try:
-        # Detect environment type
-        ci_indicators = ['CI', 'GITHUB_ACTIONS', 'TF_BUILD']
-        is_ci_or_local = any(os.getenv(indicator) == 'true' for indicator in ci_indicators) or os.getenv('WEBSITE_INSTANCE_ID') is None
-        
-        # DefaultAzureCredentials needs storing role assignment
-        if is_ci_or_local:
-            logger.debug("Using AzureCliCredential for database connection")
-            credential = AzureCliCredential()
-        else:
-            logger.debug("Using DefaultAzureCredential (Managed Identity) for database connection")
-            credential = DefaultAzureCredential()
-        
+        credential = DefaultAzureCredential()
         token_bytes = credential.get_token("https://database.windows.net/.default").token.encode("UTF-16-LE")
         token_struct = struct.pack(f'<I{len(token_bytes)}s', len(token_bytes), token_bytes)
         SQL_COPT_SS_ACCESS_TOKEN = 1256  # This connection option is defined by microsoft in msodbcsql.h

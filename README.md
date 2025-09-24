@@ -86,7 +86,6 @@ az group create -n <resource-group-name> -l <location>
 ```
 
 Alternatively, set `AZURE_RESOURCE_GROUP` (for local env or CI environment secrets) to the name of an existing resource group. If you prefer `azd` to create resources automatically, ensure your `azure.yaml`/environment configuration does not point to a pre-existing group.
-If you are developing locally, set the value of `githubActionsEnabled` in `main.bicep` as `false`.
 
 Initial full provision + deploy:
 ```pwsh
