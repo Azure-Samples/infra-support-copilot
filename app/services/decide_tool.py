@@ -49,6 +49,60 @@ class DecideTool:
             api_version=self.azure_openai_api_version
         )
 
+        self.tools = [
+            {
+                "type": "function",
+                "function": {
+                    "name": "rag_chat_service.get_chat_completion",
+                    "description": "Search RAG index for relevant documents (inventories, ownership, contacts, incidents).",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "query": {
+                                "type": "string",
+                                "description": "The search query."
+                            }
+                        },
+                        "required": ["query"]
+                    }
+                }
+            },
+            {
+                "type": "function",
+                "function": {
+                    "name": "sql_query_service.get_chat_completion",
+                    "description": "Query SQL database to get statistical information (servers, virtual machines, installed softwares).",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "query": {
+                                "type": "string",
+                                "description": "The search query."
+                            }
+                        },
+                        "required": ["query"]
+                    }
+                }
+            },
+            {
+                "type": "function",
+                "function": {
+                    "name": "log_analytics_service.get_chat_completion",
+                    "description": "Query Log Analytics to get log information (AppServiceAuditLogs, AppServiceConsoleLogs, AppServiceHttpLogs, AppServicePlatformLogs, AzureDiagnostics, AzureMetrics, Usage).",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "query": {
+                                "type": "string",
+                                "description": "The search query."
+                            }
+                        },
+                        "required": ["query"]
+                    }
+                }
+            }
+        ]
+
     def emit(self, event: str, payload: dict):
         logger.info(json.dumps({"event": event, **payload}, ensure_ascii=False))
 
@@ -86,6 +140,89 @@ class DecideTool:
                 logger.error(f"OpenAI API call failed: {e}")
                 raise
 
+    async def _get_final_response(self, history: List[ChatMessage], sources: str, conversation_id: str, sources_parts: List[dict], user_query_index: int) -> dict:
+        final_content = self.system_prompt.format(
+            query=history[user_query_index].content,
+            sources=sources
+        )
+
+        trimmed_history = self._trim_history_for_prompt(history)
+        final_messages = trimmed_history[:-1] + [{"role": "user", "content": final_content}]
+
+        final_response = await self._retry_openai_call(
+            lambda: self.openai_client.chat.completions.create(
+                messages=final_messages,
+                model=self.gpt_deployment,
+            )
+        )
+
+        # Extract assistant content from SDK object
+        base_content = final_response.choices[0].message.content if final_response.choices and final_response.choices[0].message else ""
+
+        # Build references section (1-based indexing for [docN])
+        references_suffix = ""
+        if sources_parts:
+            refs = "".join(f"[doc{idx+1}]" for idx in range(len(sources_parts)))
+            references_suffix = f"\n\nReferences: {refs}"
+
+        # Build citations array expected by the frontend (title/filePath/url optional)
+        citations = [{"title": s['title'], "content": s['content']} for s in sources_parts]
+
+        self.emit("chat_prompt", {
+            "conversation_id": conversation_id,
+            "turn_id": str(uuid.uuid4()),
+            "user_id": 'assistant',
+            "prompt": base_content,
+            "prompt_chars": len(base_content),
+            "metadata": {},
+        })
+
+        # Return a plain JSON-serializable structure used by the UI
+        return {
+            "choices": [
+                {
+                    "message": {
+                        "role": "assistant",
+                        "content": f"{base_content}{references_suffix}",
+                        "context": {"citations": citations}
+                    }
+                }
+            ]
+        }
+
+    async def _sql_query_option_handler(self, history: List[ChatMessage], conversation_id: str) -> dict:
+        try:
+            if history[-1].content == ";;SQL_QUERY_OPTION;;manual":    
+                sql_results = await sql_query_manual_service.get_chat_completion(history[-3].content)
+                return {
+                    "choices": [
+                        {
+                            "message": {
+                                "role": "assistant",
+                                "content": f"{sql_results[0]['content']}",
+                                "context": {"citations": []},
+                                "metadata": {"conversation_id": conversation_id}
+                            }
+                        }
+                    ]
+                }
+            elif history[-1].content == ";;SQL_QUERY_OPTION;;auto":
+                sql_results = await sql_query_auto_service.get_chat_completion(history[-3].content)
+                citations = [{"title": sql_results[0]['title'], "content": sql_results[0]['content']}]
+                sources = "\n\n".join(f"{src['title']}:\n{src['content']}" for src in citations)
+                return await self._get_final_response(history, sources, conversation_id, citations, -3)
+        except Exception as se:
+            logger.error(f"Search query failed for SQL database: {se}")
+
+    async def _sql_query_execute_handler(self, history: List[ChatMessage], conversation_id: str) -> dict:
+        try:
+            sql_results = await sql_query_manual_service.get_chat_completion(f"{history[-1].content}|||{history[-7].content}")
+            citations = [{"title": sql_results[0]['title'], "content": sql_results[0]['content']}]
+            sources = "\n\n".join(f"{src['title']}:\n{src['content']}" for src in citations)
+            return await self._get_final_response(history, sources, conversation_id, citations, -7)
+        except Exception as e:
+            logger.error(f"SQL execution failed: {e}")
+
     async def get_chat_completion(self, history: List[ChatMessage], conversation_id: str = "") -> dict:
         """Multi-turn RAG flow considering recent chat history.
         Steps:
@@ -98,64 +235,7 @@ class DecideTool:
             new_conversation_id = str(uuid.uuid4())
 
             if history[-1].content.startswith(";;SQL_QUERY_OPTION;;"):
-                try:
-                    if history[-1].content == ";;SQL_QUERY_OPTION;;manual":    
-                        sql_results = await sql_query_manual_service.get_chat_completion(history[-3].content)
-                        return {
-                            "choices": [
-                                {
-                                    "message": {
-                                        "role": "assistant",
-                                        "content": f"{sql_results[0]['content']}",
-                                        "context": {"citations": []},
-                                        "metadata": {"conversation_id": conversation_id}
-                                    }
-                                }
-                            ]
-                        }
-                    elif history[-1].content == ";;SQL_QUERY_OPTION;;auto":
-                        sql_results = await sql_query_auto_service.get_chat_completion(history[-3].content)
-                        citations = [{"title": sql_results[0]['title'], "content": sql_results[0]['content']}]
-                        sources = "\n\n".join(f"{src['title']}:\n{src['content']}" for src in citations)
-
-                        # Final answer request
-                        final_content = self.system_prompt.format(
-                            query=history[-3].content,
-                            sources=sources
-                        )
-
-                        chat_resp = await self._retry_openai_call(
-                            lambda: self.openai_client.chat.completions.create(
-                                messages=[{"role": "user", "content": final_content}],
-                                model=self.gpt_deployment
-                            )
-                        )
-
-                        # Extract assistant content from SDK object
-                        base_content = chat_resp.choices[0].message.content if chat_resp.choices and chat_resp.choices[0].message else ""
-
-                        self.emit("chat_prompt", {
-                            "conversation_id": conversation_id,
-                            "turn_id": str(uuid.uuid4()),
-                            "user_id": 'assistant',
-                            "prompt": base_content,
-                            "prompt_chars": len(base_content),
-                            "metadata": {},
-                        })
-
-                        return {
-                            "choices": [
-                                {
-                                    "message": {
-                                        "role": "assistant",
-                                        "content": f"{base_content}\nReferences: [doc1]",
-                                        "context": {"citations": citations}
-                                    }
-                                }
-                            ]
-                        }
-                except Exception as se:
-                    logger.error(f"Search query failed for SQL database: {se}")
+                return await self._sql_query_option_handler(history, conversation_id)
 
             if history[-1].content.startswith(";;SQL;;"):
                 sql_results = await sql_query_manual_service.get_chat_completion(history[-1].content)
@@ -173,47 +253,7 @@ class DecideTool:
                 }
             
             if history[-1].content.startswith(";;EXECUTE;;"):
-                sql_results = await sql_query_manual_service.get_chat_completion(f"{history[-1].content}|||{history[-7].content}")
-                citations = [{"title": sql_results[0]['title'], "content": sql_results[0]['content']}]
-                sources = "\n\n".join(f"{src['title']}:\n{src['content']}" for src in citations)
-
-                # Final answer request
-                final_content = self.system_prompt.format(
-                    query=history[-7].content,
-                    sources=sources
-                )
-
-                chat_resp = await self._retry_openai_call(
-                    lambda: self.openai_client.chat.completions.create(
-                        messages=[{"role": "user", "content": final_content}],
-                        model=self.gpt_deployment
-                    )
-                )
-
-                # Extract assistant content from SDK object
-                base_content = chat_resp.choices[0].message.content if chat_resp.choices and chat_resp.choices[0].message else ""
-
-                self.emit("chat_prompt", {
-                    "conversation_id": conversation_id,
-                    "turn_id": str(uuid.uuid4()),
-                    "user_id": 'assistant',
-                    "prompt": base_content,
-                    "prompt_chars": len(base_content),
-                    "metadata": {},
-                })
-
-
-                return {
-                    "choices": [
-                        {
-                            "message": {
-                                "role": "assistant",
-                                "content": f"{base_content}\nReferences: [doc1]",
-                                "context": {"citations": citations}
-                            }
-                        }
-                    ]
-                }
+                return await self._sql_query_execute_handler(history, conversation_id)
         
             self.emit("chat_prompt", {
                 "conversation_id": new_conversation_id,
@@ -223,60 +263,6 @@ class DecideTool:
                 "prompt_chars": len(history[-1].content),
                 "metadata": {},
             })
-
-            tools = [
-                {
-                    "type": "function",
-                    "function": {
-                        "name": "rag_chat_service.get_chat_completion",
-                        "description": "Search RAG index for relevant documents (inventories, ownership, contacts, incidents).",
-                        "parameters": {
-                            "type": "object",
-                            "properties": {
-                                "query": {
-                                    "type": "string",
-                                    "description": "The search query."
-                                }
-                            },
-                            "required": ["query"]
-                        }
-                    }
-                },
-                {
-                    "type": "function",
-                    "function": {
-                        "name": "sql_query_service.get_chat_completion",
-                        "description": "Query SQL database to get statistical information (servers, virtual machines, installed softwares).",
-                        "parameters": {
-                            "type": "object",
-                            "properties": {
-                                "query": {
-                                    "type": "string",
-                                    "description": "The search query."
-                                }
-                            },
-                            "required": ["query"]
-                        }
-                    }
-                },
-                {
-                    "type": "function",
-                    "function": {
-                        "name": "log_analytics_service.get_chat_completion",
-                        "description": "Query Log Analytics to get log information (AppServiceAuditLogs, AppServiceConsoleLogs, AppServiceHttpLogs, AppServicePlatformLogs, AzureDiagnostics, AzureMetrics, Usage).",
-                        "parameters": {
-                            "type": "object",
-                            "properties": {
-                                "query": {
-                                    "type": "string",
-                                    "description": "The search query."
-                                }
-                            },
-                            "required": ["query"]
-                        }
-                    }
-                }
-            ]
 
             sources_parts: List[dict] = []
 
@@ -288,7 +274,7 @@ class DecideTool:
                 lambda: self.openai_client.chat.completions.create(
                     messages=messages,
                     model=self.gpt_deployment,
-                    tools=tools,
+                    tools=self.tools,
                     tool_choice="auto",
                 )
             )
@@ -366,54 +352,8 @@ class DecideTool:
             sources_joined = "\n\n".join(f"{src['title']}:\n{src['content']}" for src in sources_parts)
             sources = self._truncate_text(sources_joined)
 
-            final_content = self.system_prompt.format(
-                query=history[-1].content,
-                sources=sources
-            )
-
-            trimmed_history = self._trim_history_for_prompt(history)
-            final_messages = trimmed_history[:-1] + [{"role": "user", "content": final_content}]
-
-            final_response = await self._retry_openai_call(
-                lambda: self.openai_client.chat.completions.create(
-                    messages=final_messages,
-                    model=self.gpt_deployment,
-                )
-            )
-
-            # Extract assistant content from SDK object
-            base_content = final_response.choices[0].message.content if final_response.choices and final_response.choices[0].message else ""
-
-            # Build references section (1-based indexing for [docN])
-            references_suffix = ""
-            if sources_parts:
-                refs = "".join(f"[doc{idx+1}]" for idx in range(len(sources_parts)))
-                references_suffix = f"\n\nReferences: {refs}"
-
-            # Build citations array expected by the frontend (title/filePath/url optional)
-            citations = [{"title": s['title'], "content": s['content']} for s in sources_parts]
-
-            self.emit("chat_prompt", {
-                "conversation_id": new_conversation_id,
-                "turn_id": str(uuid.uuid4()),
-                "user_id": 'assistant',
-                "prompt": base_content,
-                "prompt_chars": len(base_content),
-                "metadata": {},
-            })
-
-            # Return a plain JSON-serializable structure used by the UI
-            return {
-                "choices": [
-                    {
-                        "message": {
-                            "role": "assistant",
-                            "content": f"{base_content}{references_suffix}",
-                            "context": {"citations": citations}
-                        }
-                    }
-                ]
-            }
+            return await self._get_final_response(history, sources, conversation_id or new_conversation_id, sources_parts, -1)
+            
         except Exception as e:
             if hasattr(e, 'status_code'):
                 logger.error(f"Error in get_chat_completion (status {getattr(e, 'status_code', 'n/a')}): {e}")
