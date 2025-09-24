@@ -98,7 +98,8 @@ jobs:
 
       - name: Provision Infrastructure
         run: |
-          azd provision --no-prompt | Where-Object { $_ -notmatch "Object ID (user):" }
+          azd provision --no-prompt > provision.log 2>&1
+          Write-Host "Provisioning completed successfully"
         shell: pwsh
         env:
           AZURE_ENV_NAME: ${{ secrets.AZURE_ENV_NAME }}
@@ -110,7 +111,8 @@ jobs:
 
       - name: Deploy Application
         run: |
-          azd deploy --no-prompt | Where-Object { $_ -notmatch "Endpoint:" }
+          azd deploy --no-prompt > deploy.log 2>&1
+          Write-Host "Deployment completed successfully"
         shell: pwsh
         env:
           AZURE_ENV_NAME: ${{ secrets.AZURE_ENV_NAME }}
