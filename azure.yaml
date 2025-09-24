@@ -40,6 +40,6 @@ hooks:
   postprovision:
     windows:
       shell: pwsh
-      run: pwsh -NoProfile -ExecutionPolicy Bypass -File .\scripts\set_up_environment.ps1 -ForceSqlcmd
+      run: .\scripts\set_up_environment.ps1
       interactive: true
       continueOnError: false

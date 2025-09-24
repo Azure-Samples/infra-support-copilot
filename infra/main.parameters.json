@@ -38,10 +38,10 @@
     "searchIndexName": {
       "value": "${SEARCH_INDEX_NAME}"
     },
-    "userPrincipalId": {
+    "adminPrincipalId": {
       "value": "${AZURE_PRINCIPAL_ID}"
     },
-    "userPrincipalType": {
+    "adminPrincipalType": {
       "value": "${AZURE_PRINCIPAL_TYPE}"
     },
     "clientPublicIp": {

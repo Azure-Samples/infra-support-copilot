@@ -79,7 +79,6 @@ uvicorn app.main:app --reload
 Local URL: http://127.0.0.1:8000
 
 ## Quick Start (Manual deployment to Azure)
-
 Important: Ensure the target Azure resource group exists before running `azd up` or `azd provision`. `azd` validates the deployment against the configured resource group and will fail if it doesn't exist (see error in the issue report). Create the resource group with the Azure CLI before provisioning:
 
 ```pwsh
@@ -116,6 +115,8 @@ azd env get-values
 ```
 
 Logs (App Service via Log Analytics): Use the Portal or `az monitor log-analytics query` (workspace defined in Bicep).
+> [!NOTE]
+> It is possible that it takes about 30 minutes to gather data in Log Analytics.
 
 ## Quick Start (GitHub Environments & Multi-subscription CI/CD)
 
@@ -128,9 +129,10 @@ Recommended setup:
   - AZURE_CLIENT_ID (service principal client ID)
   - AZURE_TENANT_ID (tenant ID)
   - AZURE_SUBSCRIPTION_ID (target subscription ID)
-   - AZURE_RESOURCE_GROUP (resource group name to deploy into)
-   - AZURE_ENV_NAME (azd environment name, e.g. `rukasakurai-env`)
-   - AZURE_LOCATION (region, e.g. `japaneast`)
+  - AZURE_RESOURCE_GROUP (resource group name to deploy into)
+  - AZURE_ENV_NAME (azd environment name, e.g. `rukasakurai-env`)
+  - AZURE_LOCATION (region, e.g. `japaneast`)
+3. Assign `Directory Readers` role to the SQL server's principal id.
 
 Notes:
 - Environment-scoped secrets are available only to workflow runs that specify `environment: <env>`; the CI workflow is configured to use `environment: ${{ matrix.env }}` so each matrix job automatically uses the matching environment's secrets.

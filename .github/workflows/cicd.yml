@@ -13,7 +13,7 @@ permissions:
   contents: read
 
 jobs:
-  build:
+  provision-and-deploy: # Potentially split into separate jobs for clarity in the future
     # Run the same job across a matrix of GitHub Environments (env names)
     # Each matrix entry should match a GitHub Environment configured in the repo
     strategy:
@@ -31,6 +31,48 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+        shell: pwsh
+
+      - name: Install ODBC Driver for SQL Server
+        run: |
+          Write-Host "Installing Microsoft ODBC Driver 18 for SQL Server"
+          # Download and install ODBC Driver 18 for SQL Server
+          $downloadUrl = "https://go.microsoft.com/fwlink/?linkid=2249006"
+          $installerPath = "$env:TEMP\msodbcsql.msi"
+          Write-Host "Downloading ODBC driver from: $downloadUrl"
+          Invoke-WebRequest -Uri $downloadUrl -OutFile $installerPath
+          Write-Host "Installing ODBC driver..."
+          Start-Process msiexec.exe -ArgumentList "/i", $installerPath, "/quiet", "/norestart", "IACCEPTMSODBCSQLLICENSETERMS=YES" -Wait
+          Write-Host "ODBC Driver installation completed"
+          
+          # Wait a moment for installation to complete
+          Start-Sleep -Seconds 5
+          
+          # Verify installation
+          Write-Host "Verifying ODBC driver installation..."
+          try {
+              $drivers = python -c "import pyodbc; drivers = [d for d in pyodbc.drivers() if 'SQL Server' in d]; print(';'.join(drivers)); exit(0 if drivers else 1)"
+              Write-Host "Available SQL Server drivers: $drivers"
+              if (-not $drivers) {
+                  throw "No SQL Server drivers found"
+              }
+          } catch {
+              Write-Error "ODBC driver verification failed: $_"
+              Write-Host "Listing all available ODBC drivers:"
+              python -c "import pyodbc; print('\n'.join(pyodbc.drivers()))"
+              exit 1
+          }
+        shell: pwsh
+
       - name: Install azd
         uses: Azure/setup-azd@v2
 
@@ -46,6 +88,14 @@ jobs:
           azd auth login --client-id ${{ secrets.AZURE_CLIENT_ID }} --tenant-id ${{ secrets.AZURE_TENANT_ID }} --federated-credential-provider github
         shell: pwsh
 
+      - name: Create and configure azd environment
+        run: |
+          azd env new ${{ secrets.AZURE_ENV_NAME }} --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }} --location ${{ secrets.AZURE_LOCATION }} --no-prompt
+          azd env set AZURE_RESOURCE_GROUP ${{ secrets.AZURE_RESOURCE_GROUP }}
+          azd env set AZURE_PRINCIPAL_TYPE ${{ secrets.AZURE_PRINCIPAL_TYPE }}
+          azd env set AZURE_PRINCIPAL_ID ${{ secrets.AZURE_CLIENT_ID }}
+        shell: pwsh
+
       - name: Provision Infrastructure
         run: |
           azd provision --no-prompt
@@ -55,7 +105,8 @@ jobs:
           AZURE_LOCATION: ${{ secrets.AZURE_LOCATION }}
           AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           AZURE_RESOURCE_GROUP: ${{ secrets.AZURE_RESOURCE_GROUP }}
-          AZURE_PRINCIPAL_TYPE: ${{ secrets.AZURE_SERVICE_PRINCIPAL }}
+          AZURE_PRINCIPAL_TYPE: ${{ secrets.AZURE_PRINCIPAL_TYPE }}
+          AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
 
       - name: Deploy Application
         run: |
@@ -66,4 +117,5 @@ jobs:
           AZURE_LOCATION: ${{ secrets.AZURE_LOCATION }}
           AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           AZURE_RESOURCE_GROUP: ${{ secrets.AZURE_RESOURCE_GROUP }}
-          AZURE_PRINCIPAL_TYPE: ${{ secrets.AZURE_SERVICE_PRINCIPAL }}
+          AZURE_PRINCIPAL_TYPE: ${{ secrets.AZURE_PRINCIPAL_TYPE }}
+          AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
