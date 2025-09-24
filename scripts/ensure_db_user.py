@@ -162,8 +162,6 @@ def ensure_db_user(server: str, database: str, app_name: str) -> bool:
         
         # Build SQL command
         sql_command = build_user_creation_sql(app_name)
-
-        logger.info(f"Executing SQL command...: {sql_command}")
         
         # Enhanced connection attempt with better error handling
         try:
@@ -178,7 +176,6 @@ def ensure_db_user(server: str, database: str, app_name: str) -> bool:
                 for statement in sql_command.split('\n\n'):
                     if statement.strip():
                         try:
-                            logger.info(f"Executing statement: {statement}")
                             # -----message handling------
                             try:    
                                 cursor.execute(statement)

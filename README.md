@@ -86,6 +86,7 @@ az group create -n <resource-group-name> -l <location>
 ```
 
 Alternatively, set `AZURE_RESOURCE_GROUP` (for local env or CI environment secrets) to the name of an existing resource group. If you prefer `azd` to create resources automatically, ensure your `azure.yaml`/environment configuration does not point to a pre-existing group.
+If you are developing locally, set the value of `githubActionsEnabled` in `main.bicep` as `false`.
 
 Initial full provision + deploy:
 ```pwsh
@@ -129,9 +130,10 @@ Recommended setup:
   - AZURE_CLIENT_ID (service principal client ID)
   - AZURE_TENANT_ID (tenant ID)
   - AZURE_SUBSCRIPTION_ID (target subscription ID)
-   - AZURE_RESOURCE_GROUP (resource group name to deploy into)
-   - AZURE_ENV_NAME (azd environment name, e.g. `rukasakurai-env`)
-   - AZURE_LOCATION (region, e.g. `japaneast`)
+  - AZURE_RESOURCE_GROUP (resource group name to deploy into)
+  - AZURE_ENV_NAME (azd environment name, e.g. `rukasakurai-env`)
+  - AZURE_LOCATION (region, e.g. `japaneast`)
+3. Assign `Directory Readers` role to the SQL server's principal id.
 
 Notes:
 - Environment-scoped secrets are available only to workflow runs that specify `environment: <env>`; the CI workflow is configured to use `environment: ${{ matrix.env }}` so each matrix job automatically uses the matching environment's secrets.
