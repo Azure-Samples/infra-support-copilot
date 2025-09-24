@@ -103,7 +103,7 @@ azd env get-values
 
 Logs (App Service via Log Analytics): Use Portal or `az monitor log-analytics query` (workspace defined in Bicep).
 
-## Quick Start (GitHub Environments & Multi-subscription CI)
+## Quick Start (GitHub Environments & Multi-subscription CICD)
 
 This repository includes a GitHub Actions workflow that can deploy the same `azd` project to multiple Azure subscriptions in parallel by using a matrix of GitHub Environments. To use it safely and predictably, create one GitHub Environment per target subscription and set subscription-scoped secrets/variables into those environments.
 
