@@ -23,8 +23,6 @@ load_dotenv()
 # ----------------------------------------------------------------------------------
 ai_connection_string = os.getenv("APPLICATIONINSIGHTS_CONNECTION_STRING")
 root_logger = logging.getLogger()
-for h in root_logger.handlers[:]:
-    root_logger.removeHandler(h)
  
 logging.basicConfig(
     level=logging.INFO,
