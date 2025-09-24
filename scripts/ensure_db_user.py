@@ -58,15 +58,16 @@ def build_user_creation_sql(app_name: str) -> str:
     
     principal_type = "App Service Managed Identity"
     
+    # Use RAISERROR with severity 10 for informational messages that can be captured
     sql = f"""-- Create {principal_type} user: {app_name}
 IF NOT EXISTS (SELECT 1 FROM sys.database_principals WHERE name = N'{app_name}')
 BEGIN
     CREATE USER {identifier} FROM EXTERNAL PROVIDER;
-    PRINT 'Created user: {app_name}';
+    RAISERROR('Created user: {app_name}', 10, 1) WITH NOWAIT;
 END
 ELSE
 BEGIN
-    PRINT 'User already exists: {app_name}';
+    RAISERROR('User already exists: {app_name}', 10, 1) WITH NOWAIT;
 END;
 
 IF NOT EXISTS (
@@ -77,11 +78,11 @@ IF NOT EXISTS (
 )
 BEGIN
     ALTER ROLE db_datareader ADD MEMBER {identifier};
-    PRINT 'Added to db_datareader: {app_name}';
+    RAISERROR('Added to db_datareader: {app_name}', 10, 1) WITH NOWAIT;
 END
 ELSE
 BEGIN
-    PRINT 'Already member of db_datareader: {app_name}';
+    RAISERROR('Already member of db_datareader: {app_name}', 10, 1) WITH NOWAIT;
 END;"""
     
     return sql
@@ -122,7 +123,7 @@ def get_conn(connection_string):
         ci_indicators = ['CI', 'GITHUB_ACTIONS', 'TF_BUILD']
         is_ci_or_local = any(os.getenv(indicator) == 'true' for indicator in ci_indicators) or os.getenv('WEBSITE_INSTANCE_ID') is None
         
-        # 強い権限が必要だったので  <- 改善
+        # DefaultAzureCredentials needs storing role assignment
         if is_ci_or_local:
             logger.debug("Using AzureCliCredential for database connection")
             credential = AzureCliCredential()
@@ -169,13 +170,50 @@ def ensure_db_user(server: str, database: str, app_name: str) -> bool:
             with get_conn(conn_string) as conn:
                 logger.debug("Successfully connected to database")
                 cursor = conn.cursor()
+
+                # Enable SQL Server message handling
+                conn.autocommit = False
                 
                 # Execute SQL in parts to handle PRINT statements
                 for statement in sql_command.split('\n\n'):
                     if statement.strip():
                         try:
                             logger.info(f"Executing statement: {statement}")
-                            cursor.execute(statement)
+                            # --message handling--
+                            try:    
+                                # For pyodbc, we'll capture messages through different methods
+                                cursor.execute(statement)
+
+                                if hasattr(cursor, 'messages') and cursor.messages:
+                                    for message in cursor.messages:
+                                        if isinstance(message, tuple) and len(message) >= 3:
+                                            sql_state, error_code, msg_text = message[0], message[1], message[2]
+                                            if sql_state == '01000' or error_code == 0 or str(error_code).startswith('5001'):  # Informational or RAISERROR
+                                                logger.info(f"SQL Message: {msg_text}")
+                                            else:
+                                                logger.warning(f"SQL Warning [{sql_state}][{error_code}]: {msg_text}")
+                                        else:
+                                            logger.info(f"SQL Message: {message}")
+                                    cursor.messages.clear()
+                            except pyodbc.Error as e:
+                                logger.error(f"SQL execution error: {e}")
+                                # Check for any remaining messages even on error
+                                if hasattr(cursor, 'messages') and cursor.messages:
+                                    for message in cursor.messages:
+                                        logger.error(f"SQL Error Message: {message}")
+                                
+                                # For RAISERROR messages, they might be in the exception itself
+                                error_msg = str(e)
+                                if 'Created user:' in error_msg or 'User already exists:' in error_msg or 'Added to db_datareader:' in error_msg or 'Already member of db_datareader:' in error_msg:
+                                    # Extract informational messages from the exception
+                                    lines = error_msg.split('\n')
+                                    for line in lines:
+                                        line = line.strip()
+                                        if any(keyword in line for keyword in ['Created user:', 'User already exists:', 'Added to db_datareader:', 'Already member of db_datareader:']):
+                                            logger.info(f"SQL Info (from exception): {line}")
+                                else:
+                                    raise
+                            # -----------------------------
                             # Try to fetch any messages
                             while cursor.nextset():
                                 pass
