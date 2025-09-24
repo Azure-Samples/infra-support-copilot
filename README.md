@@ -4,7 +4,7 @@ This project is an Azure-based Retrieval Augmented Generation (RAG) web applicat
 
 ![structure](structure.png)
 
-## Important Security Notice
+## Important
 
 We strongly advise users of this demo to not to make this code part of their production environments without implementing or enabling additional well-architected (e.g., security, resiliency) features. See the [Azure Well-Architected Framework guidance](https://learn.microsoft.com/azure/well-architected/what-is-well-architected-framework) for tips, and consult the [Azure OpenAI Landing Zone reference architecture](https://techcommunity.microsoft.com/blog/azurearchitectureblog/azure-openai-landing-zone-reference-architecture/3882102) for more best practices.
 
