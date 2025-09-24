@@ -179,9 +179,8 @@ def ensure_db_user(server: str, database: str, app_name: str) -> bool:
                     if statement.strip():
                         try:
                             logger.info(f"Executing statement: {statement}")
-                            # --message handling--
+                            # -----message handling------
                             try:    
-                                # For pyodbc, we'll capture messages through different methods
                                 cursor.execute(statement)
 
                                 if hasattr(cursor, 'messages') and cursor.messages:
@@ -214,7 +213,7 @@ def ensure_db_user(server: str, database: str, app_name: str) -> bool:
                                 else:
                                     raise
                             # -----------------------------
-                            # Try to fetch any messages
+                        
                             while cursor.nextset():
                                 pass
                         except pyodbc.Error as e:

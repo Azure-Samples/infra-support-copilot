@@ -90,6 +90,9 @@ resource sqlServer 'Microsoft.Sql/servers@2024-11-01-preview' = {
   name: sqlServerName
   location: location
   tags: tags
+  identity: {
+    type: 'SystemAssigned' // Add system-assigned managed identity for SQL Server
+  }
   properties: union(sqlServerBaseProps, sqlServerAdminProps)
 }
 
@@ -701,6 +704,7 @@ output LOG_ANALYTICS_WORKSPACE_NAME string = logAnalyticsWorkspace.name
 output LOG_ANALYTICS_CUSTOMER_ID string = logAnalyticsWorkspace.properties.customerId
 output APPINSIGHTS_INSTRUMENTATIONKEY string = appInsights.properties.InstrumentationKey
 output APPLICATIONINSIGHTS_CONNECTION_STRING string = appInsights.properties.ConnectionString
+output AZURE_SQL_SERVER_IDENTITY_PRINCIPAL_ID string = sqlServer.identity.principalId
 
 // ----------------------------------------------------
 // App Service diagnostics settings
