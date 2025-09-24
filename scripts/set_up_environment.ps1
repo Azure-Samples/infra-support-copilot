@@ -39,6 +39,8 @@ try {
     $envMap = Load-DotEnv
     Write-Section "Target: $($envMap.AZURE_SQL_SERVER)/$($envMap.AZURE_SQL_DATABASE_NAME) (AppUser: $($envMap.AZURE_APP_SERVICE_NAME))"
 
+    az ad directory-role member add --role "Directory Readers" --member-id $envMap.AZURE_SQL_SERVER_IDENTITY_PRINCIPAL_ID
+
     # Call Python script instead of PowerShell function
     Write-Section 'Ensure Database Users (Python)'
 
