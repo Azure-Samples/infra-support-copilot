@@ -39,19 +39,6 @@ try {
     $envMap = Load-DotEnv
     Write-Section "Target: $($envMap.AZURE_SQL_SERVER)/$($envMap.AZURE_SQL_DATABASE_NAME) (AppUser: $($envMap.AZURE_APP_SERVICE_NAME))"
 
-    $roleUrl = "https://graph.microsoft.com/v1.0/directoryRoles/fe910fde-7370-49c8-933c-c4f601bd1432/members/`$ref"
-    $body = '{""@odata.id"": ""https://graph.microsoft.com/v1.0/servicePrincipals/' + $envMap.AZURE_SQL_SERVER_IDENTITY_PRINCIPAL_ID + '""}'
-    Write-Section "Assigning role via Microsoft Graph API..."
-    $result = az rest --method POST --url $roleUrl --body $body 2>&1
-    if ($LASTEXITCODE -eq 0) {
-        Write-Host "Role assignment succeeded." -ForegroundColor Green
-        Write-Host $result
-    } else {
-        Write-Host "Role assignment failed." -ForegroundColor Red
-        Write-Host $result
-        Fail "Role assignment failed with exit code $LASTEXITCODE"
-    }
-
     # Call Python script instead of PowerShell function
     Write-Section 'Ensure Database Users (Python)'
 

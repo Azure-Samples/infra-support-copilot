@@ -3,12 +3,10 @@
 import logging
 import asyncio
 import struct
-import os
 from typing import List, Any, Dict
 
 import pyodbc  # type: ignore
 from azure.identity import DefaultAzureCredential, get_bearer_token_provider
-from azure.core.exceptions import ClientAuthenticationError
 from openai import AsyncAzureOpenAI
 from app.config import settings
 
@@ -16,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 class SQLQueryService:
     """
-    Service that provides SQL query capabilities with Azure Managed Identity authentication
+    Service that provides SQL query capabilities
     """
     
     def __init__(self):
@@ -24,7 +22,10 @@ class SQLQueryService:
         self.openai_endpoint = settings.azure_openai_endpoint
         self.gpt_deployment = settings.azure_openai_gpt_deployment
         self.azure_openai_api_version = settings.azure_openai_api_version
-        self.credential = DefaultAzureCredential()     
+
+        # Create Azure credentials for managed identity
+        # This allows secure, passwordless authentication to Azure services
+        self.credential = DefaultAzureCredential()
         token_provider = get_bearer_token_provider(
             self.credential,
             "https://cognitiveservices.azure.com/.default"
@@ -125,62 +126,29 @@ class SQLQueryService:
 
     # --- SQL Execution helpers -------------------------------------------------
     def _build_connection(self) -> pyodbc.Connection:
-        """Create a new ODBC connection using Azure Managed Identity (short-lived)."""
-        try:
-            server = self.sql_server.replace("tcp:", "")
-            conn_str = (
-                "DRIVER={ODBC Driver 18 for SQL Server};"
-                f"SERVER=tcp:{server},1433;"
-                f"DATABASE={self.sql_database};"
-                "Encrypt=yes;"
-                "TrustServerCertificate=no;"
-                "Connection Timeout=30;"
-            )
-            
-            if self.use_aad:
-                try:
-                    # Get access token for Azure SQL Database
-                    token = self.credential.get_token(self._sql_scope)
-                    
-                    # Encode token for ODBC connection (required format for SQL Server)
-                    token_bytes = token.token.encode("UTF-16-LE")
-                    token_struct = struct.pack(f'<I{len(token_bytes)}s', len(token_bytes), token_bytes)
-                    attrs_before = {1256: token_struct}  # SQL_COPT_SS_ACCESS_TOKEN
-                    
-                    connection = pyodbc.connect(conn_str, attrs_before=attrs_before)
-                    return connection
-                    
-                except ClientAuthenticationError as e:
-                    logger.error(f"Azure authentication failed: {e}")
-                    raise RuntimeError(f"Failed to authenticate with Azure SQL using Managed Identity: {e}")
-                except Exception as e:
-                    logger.error(f"Failed to get access token for Azure SQL: {e}")
-                    raise RuntimeError(f"Token acquisition failed for Azure SQL connection: {e}")
-            else:
-                logger.error("SQL Server connection failed: AAD authentication is disabled but required for Managed Identity")
-                raise RuntimeError("AAD authentication must be enabled to use Managed Identity with Azure SQL Server")
-                
-        except Exception as e:
-            logger.error(f"Failed to create SQL Server connection: {e}")
-            raise
+        """Create a new ODBC connection (short-lived)."""
+        server = self.sql_server.replace("tcp:", "")
+        conn_str = (
+            "DRIVER={ODBC Driver 18 for SQL Server};"
+            f"SERVER=tcp:{server},1433;DATABASE={self.sql_database};Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;"
+        )
+        if self.use_aad:
+            token = self.credential.get_token(self._sql_scope)
+            token_bytes = token.token.encode("utf-16-le")
+            token_struct = struct.pack("=i", len(token_bytes)) + token_bytes
+            attrs_before = {1256: token_struct}  # SQL_COPT_SS_ACCESS_TOKEN
+            return pyodbc.connect(conn_str, attrs_before=attrs_before)
+        raise RuntimeError("Azure SQL connection failed: AAD enabled but token acquisition failed or SQL Auth credentials missing")
 
     async def _execute_sql(self, sql: str) -> List[Dict[str, Any]]:
         """Execute SQL synchronously in a thread and return list of dict rows."""
         def _work() -> List[Dict[str, Any]]:
-            try:
-                with self._build_connection() as conn:
-                    cur = conn.cursor()
-                    logger.debug(f"Executing SQL query: {sql}")
-                    cur.execute(sql)
-                    cols = [c[0] for c in cur.description] if cur.description else []
-                    rows = cur.fetchall() if cols else []
-                    result = [dict(zip(cols, r)) for r in rows]
-                    return result
-            except Exception as e:
-                logger.error(f"SQL execution failed: {e}")
-                logger.error(f"Failed SQL query: {sql}")
-                raise
-                
+            with self._build_connection() as conn:
+                cur = conn.cursor()
+                cur.execute(sql)
+                cols = [c[0] for c in cur.description] if cur.description else []
+                rows = cur.fetchall() if cols else []
+                return [dict(zip(cols, r)) for r in rows]
         return await asyncio.to_thread(_work)
 
     # --- Safety / formatting ---------------------------------------------------
@@ -215,7 +183,7 @@ class SQLQueryService:
         return "\n".join(lines)
 
     async def get_chat_completion(self, effective_query: str):
-        """End-to-end chat completion with Azure SQL retrieval using Managed Identity."""
+        """End-to-end chat completion with Azure SQL retrieval."""
         try:
             if effective_query.upper().startswith(";;SQL;;"):     
                 sql_part = effective_query.split(";;SQL;;", 1)[1]
@@ -227,26 +195,24 @@ class SQLQueryService:
                     WHERE TABLE_NAME IN ({','.join(quoted_items)})
                     ORDER BY TABLE_NAME, ORDINAL_POSITION;
                 """
+                logger.info(f"Executing SQL for columns: {sql}")
                 rows = await self._execute_sql(sql)
                 columns = self._rows_to_sources(rows)
                 return [{"title": "COLUMNS", "content": f";;COLUMNS;;{columns}"}]
             elif effective_query.upper().startswith(";;EXECUTE;;"):
                 [wanted_columns, user_query] = effective_query.split("|||")
                 sql = await self._generate_sql(wanted_columns, user_query)
-                
                 if not self._is_safe_sql(sql):
                     logger.warning(f"Unsafe SQL blocked: {sql}")
                     sql = f"SELECT TOP {self._default_row_limit} name, location, vm_size, power_state FROM dbo.virtual_machines ORDER BY name;"  # safe fallback
 
                 rows = await self._execute_sql(sql)
+
                 sources = self._rows_to_sources(rows)
 
                 return [{"title": "SQL Query", "content": f"## SQL Query:\n{sql}\n\n## Results:\n{sources}"}]
             else:
                 return [{'title': 'SELECTABLE', 'content': f';;SELECTABLE;;{",".join("dbo." + table for table in self._allowed_tables)}'}]
-        except ClientAuthenticationError as e:
-            logger.error(f"Azure authentication error in get_chat_completion: {e}")
-            raise RuntimeError(f"Failed to authenticate with Azure using Managed Identity: {e}")
         except Exception as e:
             logger.error(f"Error in get_chat_completion: {e}")
             raise
