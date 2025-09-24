@@ -4,7 +4,7 @@ This project is an Azure-based Retrieval-Augmented Generation (RAG) web applicat
 
 ![structure](structure.png)
 
-## Important Security Notice
+## Important
 
 We strongly advise users of this demo not to use this code in their production environments without implementing or enabling additional well-architected (e.g., security, resiliency) features. See the [Azure Well-Architected Framework guidance](https://learn.microsoft.com/azure/well-architected/what-is-well-architected-framework) for tips and consult the [Azure OpenAI Landing Zone reference architecture](https://techcommunity.microsoft.com/blog/azurearchitectureblog/azure-openai-landing-zone-reference-architecture/3882102) for additional best practices.
 
@@ -117,7 +117,7 @@ azd env get-values
 
 Logs (App Service via Log Analytics): Use the Portal or `az monitor log-analytics query` (workspace defined in Bicep).
 
-## Quick Start (GitHub Environments & Multi-subscription CI)
+## Quick Start (GitHub Environments & Multi-subscription CI/CD)
 
 This repository includes a GitHub Actions workflow that can deploy the same `azd` project to multiple Azure subscriptions in parallel by using a matrix of GitHub Environments. To use it safely and predictably, create one GitHub Environment per target subscription and set subscription-scoped secrets/variables into those environments.
 
