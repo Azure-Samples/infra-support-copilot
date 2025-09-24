@@ -51,6 +51,8 @@ app = FastAPI(
     version="1.0.0",
 )
 
+FastAPIInstrumentor.instrument_app(app)
+
 # Mount static files
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
@@ -117,8 +119,6 @@ async def health_check():
     Health check endpoint
     """
     return {"status": "ok"}
-
-FastAPIInstrumentor.instrument_app(app)
 
 if __name__ == "__main__":
     # This lets you test the application locally with Uvicorn
