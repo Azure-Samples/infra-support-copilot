@@ -10,9 +10,8 @@ import sys
 import argparse
 import logging
 import subprocess
-import json
 from pathlib import Path
-from typing import Optional, Dict
+from typing import Dict
 import struct
 from azure.identity import AzureCliCredential, DefaultAzureCredential
 
@@ -123,6 +122,7 @@ def get_conn(connection_string):
         ci_indicators = ['CI', 'GITHUB_ACTIONS', 'TF_BUILD']
         is_ci_or_local = any(os.getenv(indicator) == 'true' for indicator in ci_indicators) or os.getenv('WEBSITE_INSTANCE_ID') is None
         
+        # 強い権限が必要だったので  <- 改善
         if is_ci_or_local:
             logger.debug("Using AzureCliCredential for database connection")
             credential = AzureCliCredential()
