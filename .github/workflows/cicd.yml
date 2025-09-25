@@ -115,7 +115,7 @@ jobs:
       - name: Down Infrastructure
         if: always()  # Ensure this step runs even if previous steps fail
         run: |
-          azd down --force --no-prompt
+          azd down --force --purge --no-prompt
         shell: pwsh
         env:
           AZURE_ENV_NAME: ${{ secrets.AZURE_ENV_NAME }}
