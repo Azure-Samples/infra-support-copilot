@@ -3,9 +3,6 @@ on:
   pull_request:
     branches: 
       - main
-  push:
-    branches:
-      - main
   workflow_dispatch:
 
 permissions:
@@ -98,8 +95,7 @@ jobs:
 
       - name: Provision Infrastructure
         run: |
-          azd provision --no-prompt > provision.log 2>&1
-          Write-Host "Provisioning completed successfully"
+          azd provision --no-prompt
         shell: pwsh
         env:
           AZURE_ENV_NAME: ${{ secrets.AZURE_ENV_NAME }}
@@ -111,8 +107,20 @@ jobs:
 
       - name: Deploy Application
         run: |
-          azd deploy --no-prompt > deploy.log 2>&1
-          Write-Host "Deployment completed successfully"
+          azd deploy --no-prompt
+        shell: pwsh
+        env:
+          AZURE_ENV_NAME: ${{ secrets.AZURE_ENV_NAME }}
+          AZURE_LOCATION: ${{ secrets.AZURE_LOCATION }}
+          AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          AZURE_RESOURCE_GROUP: ${{ secrets.AZURE_RESOURCE_GROUP }}
+          AZURE_PRINCIPAL_TYPE: ${{ secrets.AZURE_PRINCIPAL_TYPE }}
+          AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+
+      - name: Down Infrastructure
+        if: always()  # Ensure this step runs even if previous steps fail
+        run: |
+          azd down --force --no-prompt
         shell: pwsh
         env:
           AZURE_ENV_NAME: ${{ secrets.AZURE_ENV_NAME }}
