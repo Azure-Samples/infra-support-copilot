@@ -1,6 +1,4 @@
 name: Build and deploy Python app to Azure Web App
-on:
-  workflow_dispatch:
 
 permissions:
   id-token: write
