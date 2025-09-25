@@ -1,8 +1,5 @@
 name: Build and deploy Python app to Azure Web App
 on:
-  pull_request:
-    branches: 
-      - main
   workflow_dispatch:
 
 permissions:
