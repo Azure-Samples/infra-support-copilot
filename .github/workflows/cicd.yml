@@ -1,12 +1,4 @@
 name: Build and deploy Python app to Azure Web App
-on:
-  pull_request:
-    branches: 
-      - main
-  push:
-    branches:
-      - main
-  workflow_dispatch:
 
 permissions:
   id-token: write
@@ -111,6 +103,19 @@ jobs:
       - name: Deploy Application
         run: |
           azd deploy --no-prompt
+        shell: pwsh
+        env:
+          AZURE_ENV_NAME: ${{ secrets.AZURE_ENV_NAME }}
+          AZURE_LOCATION: ${{ secrets.AZURE_LOCATION }}
+          AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          AZURE_RESOURCE_GROUP: ${{ secrets.AZURE_RESOURCE_GROUP }}
+          AZURE_PRINCIPAL_TYPE: ${{ secrets.AZURE_PRINCIPAL_TYPE }}
+          AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+
+      - name: Down Infrastructure
+        if: always()  # Ensure this step runs even if previous steps fail
+        run: |
+          azd down --force --purge --no-prompt
         shell: pwsh
         env:
           AZURE_ENV_NAME: ${{ secrets.AZURE_ENV_NAME }}
