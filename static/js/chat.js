@@ -14,6 +14,9 @@
  * 4. Responsive design for various screen sizes
  */
 document.addEventListener('DOMContentLoaded', function() {
+    // Language settings
+    let currentLanguage = localStorage.getItem('language') || 'ja';
+    
     // Elements
     const chatForm = document.getElementById('chat-form');
     const chatInput = document.getElementById('chat-input');
@@ -24,6 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const errorContainer = document.getElementById('error-container');
     const errorMessage = document.getElementById('error-message');
     const promptSuggestionContainer = document.getElementById('prompt-suggestion');
+    const languageToggle = document.getElementById('language-toggle');
     
     // Centered form elements
     const centeredInputForm = document.getElementById('centered-input-form');
@@ -47,11 +51,20 @@ document.addEventListener('DOMContentLoaded', function() {
     centeredChatForm.addEventListener('submit', handleCenteredChatSubmit);
     centeredChatInput.addEventListener('keydown', handleCenteredKeyDown);
 
+    // Language toggle event listener
+    if (languageToggle) {
+        languageToggle.addEventListener('click', () => {
+            currentLanguage = currentLanguage === 'ja' ? 'en' : 'ja';
+            localStorage.setItem('language', currentLanguage);
+            updateLanguage();
+        });
+    }
+
     // Attach handlers for prompt buttons (fills input with fixed sentence)
     if (promptButtons && promptButtons.length > 0) {
         promptButtons.forEach(btn => {
             btn.addEventListener('click', () => {
-                const text = btn.getAttribute('data-text') || btn.textContent.trim();
+                const text = btn.getAttribute(`data-text-${currentLanguage}`) || btn.textContent.trim();
                 const activeInput = getCurrentActiveInput();
                 activeInput.value = text;
                 activeInput.focus();
@@ -59,9 +72,75 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Initialize language
+    updateLanguage();
+    
     // Hide prompt suggestions if history already has items (e.g., persisted state)
     updatePromptSuggestionVisibility();
     
+    /**
+     * Updates the language for all text elements
+     */
+    function updateLanguage() {
+        // Update all elements with data-ja and data-en attributes
+        document.querySelectorAll('[data-ja]').forEach(element => {
+            const text = element.getAttribute(`data-${currentLanguage}`);
+            if (text) {
+                if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                    element.placeholder = text;
+                } else {
+                    element.textContent = text;
+                }
+            }
+        });
+
+        // Update prompt button labels and data-text attributes
+        document.querySelectorAll('.prompt-btn').forEach(btn => {
+            const text = btn.getAttribute(`data-${currentLanguage}`);
+            if (text) {
+                btn.textContent = text;
+                btn.setAttribute('aria-label', text);
+            }
+        });
+
+        // Update language toggle button text
+        if (languageToggle) {
+            const toggleSpan = languageToggle.querySelector('span');
+            if (toggleSpan) {
+                const toggleText = toggleSpan.getAttribute(`data-${currentLanguage}`);
+                if (toggleText) {
+                    toggleSpan.textContent = toggleText;
+                }
+            }
+        }
+
+        // Update selectable list titles if they exist
+        updateSelectableListTitles();
+    }
+
+    /**
+     * Updates selectable list titles based on current language
+     */
+    function updateSelectableListTitles() {
+        const tableTitle = currentLanguage === 'ja' ? 'どのテーブルを検索しますか？' : 'Which tables do you want to search?';
+        const columnTitle = currentLanguage === 'ja' ? 'どのカラムを検索しますか？' : 'Which columns do you want to search?';
+        const confirmText = currentLanguage === 'ja' ? '決定' : 'Confirm';
+
+        document.querySelectorAll('.selectable-options .fw-semibold').forEach(title => {
+            if (title.textContent.includes('テーブル') || title.textContent.includes('tables')) {
+                title.textContent = tableTitle;
+            } else if (title.textContent.includes('カラム') || title.textContent.includes('columns')) {
+                title.textContent = columnTitle;
+            }
+        });
+
+        document.querySelectorAll('.selectable-options .btn').forEach(btn => {
+            if (btn.textContent === '決定' || btn.textContent === 'Confirm') {
+                btn.textContent = confirmText;
+            }
+        });
+    }
+
     /**
      * Get the currently active input field based on visibility
      */
@@ -274,7 +353,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 const title = document.createElement('span');
                 title.className = 'fw-semibold';
-                title.textContent = 'どのテーブルを検索しますか？';
+                title.textContent = currentLanguage === 'ja' ? 'どのテーブルを検索しますか？' : 'Which tables do you want to search?';
 
                 const toggleIcon = document.createElement('span');
                 toggleIcon.className = 'toggle-icon';
@@ -329,7 +408,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 applyBtn.style.backgroundColor = '#000';
                 applyBtn.style.borderColor = '#000';
                 applyBtn.style.color = '#fff';
-                applyBtn.textContent = '決定';
+                applyBtn.textContent = currentLanguage === 'ja' ? '決定' : 'Confirm';
 
                 applyBtn.disabled = true;
                 list.addEventListener('change', () => {
@@ -407,7 +486,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 const title = document.createElement('span');
                 title.className = 'fw-semibold';
-                title.textContent = 'どのカラムを検索しますか？';
+                title.textContent = currentLanguage === 'ja' ? 'どのカラムを検索しますか？' : 'Which columns do you want to search?';
 
                 const toggleIcon = document.createElement('span');
                 toggleIcon.className = 'toggle-icon';
@@ -462,7 +541,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 applyBtn.style.backgroundColor = '#000';
                 applyBtn.style.borderColor = '#000';
                 applyBtn.style.color = '#fff';
-                applyBtn.textContent = '決定';
+                applyBtn.textContent = currentLanguage === 'ja' ? '決定' : 'Confirm';
 
                 applyBtn.disabled = true;
                 list.addEventListener('change', () => {
