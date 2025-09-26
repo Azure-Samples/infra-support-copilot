@@ -1,13 +1,13 @@
 [
   {
-    "id": "/subscriptions/8f6373c8-1684-4965-b4b4-2a64e6d41d3b/resourceGroups/Arc01-Southeast-Work-RG/providers/Microsoft.HybridCompute/machines/ntp-rhel8-01.ms.lab.com",
+    "id": "/subscriptions/subscrip-cccc-cccc-cccc-cccccccccccc/resourceGroups/Arc01-Southeast-Work-RG/providers/Microsoft.HybridCompute/machines/ntp-rhel8-01.ms.lab.com",
     "name": "ntp-rhel8-01.ms.lab.com",
     "type": "microsoft.hybridcompute/machines",
-    "tenantId": "b21220c9-8507-4fc3-b7f4-8d4c63265d26",
+    "tenantId": "tenantid-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
     "kind": "",
     "location": "southeastasia",
     "resourceGroup": "arc01-southeast-work-rg",
-    "subscriptionId": "8f6373c8-1684-4965-b4b4-2a64e6d41d3b",
+    "subscriptionId": "subscrip-cccc-cccc-cccc-cccccccccccc",
     "managedBy": "",
     "sku": null,
     "plan": null,
@@ -174,21 +174,21 @@
     },
     "identity": {
       "principalId": "2d00b763-0ff4-4dc1-8235-31b47310f0c9",
-      "tenantId": "b21220c9-8507-4fc3-b7f4-8d4c63265d26",
+      "tenantId": "tenantid-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
       "type": "SystemAssigned"
     },
     "zones": null,
     "extendedLocation": null
   },
   {
-    "id": "/subscriptions/8f6373c8-1684-4965-b4b4-2a64e6d41d3b/resourceGroups/Arc01-Southeast-Work-RG/providers/Microsoft.HybridCompute/machines/Onp-AdcsVM01",
+    "id": "/subscriptions/subscrip-cccc-cccc-cccc-cccccccccccc/resourceGroups/Arc01-Southeast-Work-RG/providers/Microsoft.HybridCompute/machines/Onp-AdcsVM01",
     "name": "Onp-AdcsVM01",
     "type": "microsoft.hybridcompute/machines",
-    "tenantId": "b21220c9-8507-4fc3-b7f4-8d4c63265d26",
+    "tenantId": "tenantid-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
     "kind": "",
     "location": "southeastasia",
     "resourceGroup": "arc01-southeast-work-rg",
-    "subscriptionId": "8f6373c8-1684-4965-b4b4-2a64e6d41d3b",
+    "subscriptionId": "subscrip-cccc-cccc-cccc-cccccccccccc",
     "managedBy": "",
     "sku": null,
     "plan": null,
@@ -352,21 +352,21 @@
     },
     "identity": {
       "principalId": "52deca7f-8618-4a12-b4a0-9d9bf748928f",
-      "tenantId": "b21220c9-8507-4fc3-b7f4-8d4c63265d26",
+      "tenantId": "tenantid-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
       "type": "SystemAssigned"
     },
     "zones": null,
     "extendedLocation": null
   },
   {
-    "id": "/subscriptions/8f6373c8-1684-4965-b4b4-2a64e6d41d3b/resourceGroups/Arc01-Southeast-Work-RG/providers/Microsoft.HybridCompute/machines/Onp-SqlsVM01",
+    "id": "/subscriptions/subscrip-cccc-cccc-cccc-cccccccccccc/resourceGroups/Arc01-Southeast-Work-RG/providers/Microsoft.HybridCompute/machines/Onp-SqlsVM01",
     "name": "Onp-SqlsVM01",
     "type": "microsoft.hybridcompute/machines",
-    "tenantId": "b21220c9-8507-4fc3-b7f4-8d4c63265d26",
+    "tenantId": "tenantid-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
     "kind": "",
     "location": "japaneast",
     "resourceGroup": "arc01-southeast-work-rg",
-    "subscriptionId": "8f6373c8-1684-4965-b4b4-2a64e6d41d3b",
+    "subscriptionId": "subscrip-cccc-cccc-cccc-cccccccccccc",
     "managedBy": "",
     "sku": null,
     "plan": null,
@@ -546,7 +546,7 @@
     },
     "identity": {
       "principalId": "f883830f-66b6-4c3a-9b97-5092226e0d51",
-      "tenantId": "b21220c9-8507-4fc3-b7f4-8d4c63265d26",
+      "tenantId": "tenantid-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
       "type": "SystemAssigned"
     },
     "zones": null,
