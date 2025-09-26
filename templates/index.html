@@ -10,11 +10,19 @@
 </head>
 <body>
     <div class="main-container">
+        <!-- Language Toggle Button -->
+        <div class="language-toggle-container">
+            <button id="language-toggle" class="btn btn-outline-primary btn-sm">
+                <i class="fas fa-language me-1"></i>
+                <span data-ja="English" data-en="日本語"></span>
+            </button>
+        </div>
+        
         <div class="d-flex flex-column vh-100 w-100">   
             <div class="flex-grow-1 overflow-auto bg-light w-100" id="chat-container" style="scroll-behavior: smooth;">
                 <div class="content-wrapper px-3">
                     <div id="prompt-suggestion" class="d-flex justify-content-center">
-                        <h3>インフラのことなら何でも聞いてください</h3>
+                        <h3 data-ja="インフラのことなら何でも聞いてください" data-en="Ask me anything about infrastructure"></h3>
 
                 <div id="centered-input-form" class="d-none" style="margin-bottom: 50px;">
                     <div id="centered-error-container" class="alert alert-danger mt-3 d-none" role="alert">
@@ -29,7 +37,8 @@
                             <div style="border: 1px solid black; border-radius: 1.5rem; width: 100%; display: flex; align-items: flex-end; background: #fff; position: relative; padding-right: 50px;">
                                 <textarea class="form-control border-0 py-2" 
                                     id="centered-chat-input" 
-                                    placeholder="入力してください..." 
+                                    data-ja="入力してください..." 
+                                    data-en="Please enter your message..."
                                     rows="3"
                                     style="border-radius: 1.5rem; box-shadow: none; outline: none; background: transparent; resize: none; width: 100%;"></textarea>
                                 <button class="btn btn-link p-0" type="submit" id="centered-send-button" style="border: none; background: none; position: absolute; right: 5px; bottom: 5px;">
@@ -48,38 +57,42 @@
                         type="button"
                         id="btn-srv001-inquiry"
                         class="btn btn-outline-secondary text-start prompt-btn"
-                        data-text="SRV001に関する問い合わせはどこに行えばよいでしょうか？"
+                        data-text-ja="SRV001に関する問い合わせはどこに行えばよいでしょうか？"
+                        data-text-en="Where should I make inquiries about SRV001?"
+                        data-ja="SRV001に関する問い合わせはどこに行えばよいでしょうか？"
+                        data-en="Where should I make inquiries about SRV001?"
                         aria-label="SRV001に関する問い合わせはどこに行えばよいでしょうか？"
-                    >
-                        SRV001に関する問い合わせはどこに行えばよいでしょうか？
-                    </button>
+                    ></button>
                     <button
                         type="button"
                         id="btn-srv003-incidents"
                         class="btn btn-outline-secondary text-start prompt-btn"
-                        data-text="SRV003に関する過去のインシデントについての情報を提供してください"
+                        data-text-ja="SRV003に関する過去のインシデントについての情報を提供してください"
+                        data-text-en="Please provide information about past incidents related to SRV003"
+                        data-ja="SRV003に関する過去のインシデントについての情報を提供してください"
+                        data-en="Please provide information about past incidents related to SRV003"
                         aria-label="SRV003に関する過去のインシデントについての情報を提供してください"
-                    >
-                        SRV003に関する過去のインシデントについての情報を提供してください
-                    </button>
+                    ></button>
                     <button
                         type="button"
                         id="btn-list-resources"
                         class="btn btn-outline-secondary text-start prompt-btn"
-                        data-text="ログを参照して、SQLにエラーが発生していないか報告してください"
+                        data-text-ja="ログを参照して、SQLにエラーが発生していないか報告してください"
+                        data-text-en="Please check the logs and report if there are any SQL errors"
+                        data-ja="ログを参照して、SQLにエラーが発生していないか報告してください"
+                        data-en="Please check the logs and report if there are any SQL errors"
                         aria-label="ログを参照して、SQLにエラーが発生していないか報告してください"
-                    >
-                        ログを参照して、SQLにエラーが発生していないか報告してください
-                    </button>
+                    ></button>
                     <button
                         type="button"
                         id="btn-count-vms"
                         class="btn btn-outline-secondary text-start prompt-btn"
-                        data-text="ネットワークインターフェースのプライベートIPが10.100.1.100、10.100.0.5の仮想マシンにインストールされているソフトウェア一覧をクエリしてください"
+                        data-text-ja="ネットワークインターフェースのプライベートIPが10.100.1.100、10.100.0.5の仮想マシンにインストールされているソフトウェア一覧をクエリしてください"
+                        data-text-en="Please query the list of software installed on virtual machines with network interface private IPs 10.100.1.100 and 10.100.0.5"
+                        data-ja="ネットワークインターフェースのプライベートIPが10.100.1.100、10.100.0.5の仮想マシンにインストールされているソフトウェア一覧をクエリしてください"
+                        data-en="Please query the list of software installed on virtual machines with network interface private IPs 10.100.1.100 and 10.100.0.5"
                         aria-label="ネットワークインターフェースのプライベートIPが10.100.1.100、10.100.0.5の仮想マシンにインストールされているソフトウェア一覧をクエリしてください"
-                    >
-                        ネットワークインターフェースのプライベートIPが10.100.1.100、10.100.0.5の仮想マシンにインストールされているソフトウェア一覧をクエリしてください
-                    </button>
+                    ></button>
                 </div>
             </div>
             
@@ -126,7 +139,8 @@
                         <div style="border: 1px solid black; border-radius: 1.5rem; width: calc(100% - 60px); display: flex; align-items: center; background: #fff;">
                             <input type="text" class="form-control border-0 py-2" 
                                 id="chat-input" 
-                                placeholder="入力してください..." 
+                                data-ja="入力してください..." 
+                                data-en="Please enter your message..."
                                 style="border-top-left-radius: 1.5rem; border-bottom-left-radius: 1.5rem; box-shadow: none; outline: none; background: transparent;" />
                         </div>
                         <button class="btn btn-link p-0" type="submit" id="send-button" style="border: none; background: none; margin-left: 10px;">
