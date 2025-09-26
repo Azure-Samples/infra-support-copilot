@@ -1,13 +1,13 @@
 [
   {
-    "id": "/subscriptions/aaa/resourceGroups/Work02-Southeast-Work-RG/providers/Microsoft.Network/networkInterfaces/work02-apvm01973",
+    "id": "/subscriptions/subscrip-aaaa-aaaa-aaaa-aaaaaaaaaaaa/resourceGroups/Work02-Southeast-Work-RG/providers/Microsoft.Network/networkInterfaces/work02-apvm01973",
     "name": "work02-apvm01973",
     "type": "microsoft.network/networkinterfaces",
-    "tenantId": "ddd",
+    "tenantId": "tenantid-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
     "kind": "Regular",
     "location": "southeastasia",
     "resourceGroup": "work02-southeast-work-rg",
-    "subscriptionId": "aaa",
+    "subscriptionId": "subscrip-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
     "managedBy": "",
     "sku": null,
     "plan": null,
@@ -30,11 +30,11 @@
             "primary": true,
             "privateIPAddress": "10.102.0.4",
             "subnet": {
-              "id": "/subscriptions/aaa/resourceGroups/Work02-Southeast-Work-RG/providers/Microsoft.Network/virtualNetworks/Work02-Southeast-VNET/subnets/Work02-Southeast-VNET-vmsubnet"
+              "id": "/subscriptions/subscrip-aaaa-aaaa-aaaa-aaaaaaaaaaaa/resourceGroups/Work02-Southeast-Work-RG/providers/Microsoft.Network/virtualNetworks/Work02-Southeast-VNET/subnets/Work02-Southeast-VNET-vmsubnet"
             }
           },
           "name": "ipconfig1",
-          "id": "/subscriptions/aaa/resourceGroups/Work02-Southeast-Work-RG/providers/Microsoft.Network/networkInterfaces/work02-apvm01973/ipConfigurations/ipconfig1",
+          "id": "/subscriptions/subscrip-aaaa-aaaa-aaaa-aaaaaaaaaaaa/resourceGroups/Work02-Southeast-Work-RG/providers/Microsoft.Network/networkInterfaces/work02-apvm01973/ipConfigurations/ipconfig1",
           "etag": "W/\"61185dbd-abe9-44e0-a674-46cf9e0dbc18\""
         }
       ],
@@ -50,7 +50,7 @@
       },
       "auxiliarySku": "None",
       "virtualMachine": {
-        "id": "/subscriptions/aaa/resourceGroups/Work02-Southeast-Work-RG/providers/Microsoft.Compute/virtualMachines/Work02-ApVM01"
+        "id": "/subscriptions/subscrip-aaaa-aaaa-aaaa-aaaaaaaaaaaa/resourceGroups/Work02-Southeast-Work-RG/providers/Microsoft.Compute/virtualMachines/Work02-ApVM01"
       },
       "nicType": "Standard"
     },
@@ -60,14 +60,14 @@
     "extendedLocation": null
   },
   {
-    "id": "/subscriptions/aaa/resourceGroups/Work02-Southeast-Work-RG/providers/Microsoft.Network/networkInterfaces/work02-apvm02414",
+    "id": "/subscriptions/subscrip-aaaa-aaaa-aaaa-aaaaaaaaaaaa/resourceGroups/Work02-Southeast-Work-RG/providers/Microsoft.Network/networkInterfaces/work02-apvm02414",
     "name": "work02-apvm02414",
     "type": "microsoft.network/networkinterfaces",
-    "tenantId": "ddd",
+    "tenantId": "tenantid-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
     "kind": "Regular",
     "location": "southeastasia",
     "resourceGroup": "work02-southeast-work-rg",
-    "subscriptionId": "aaa",
+    "subscriptionId": "subscrip-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
     "managedBy": "",
     "sku": null,
     "plan": null,
@@ -89,10 +89,10 @@
             "primary": true,
             "privateIPAddress": "10.102.0.5",
             "subnet": {
-              "id": "/subscriptions/aaa/resourceGroups/Work02-Southeast-Work-RG/providers/Microsoft.Network/virtualNetworks/Work02-Southeast-VNET/subnets/Work02-Southeast-VNET-vmsubnet"
+              "id": "/subscriptions/subscrip-aaaa-aaaa-aaaa-aaaaaaaaaaaa/resourceGroups/Work02-Southeast-Work-RG/providers/Microsoft.Network/virtualNetworks/Work02-Southeast-VNET/subnets/Work02-Southeast-VNET-vmsubnet"
             }
           },
-          "id": "/subscriptions/aaa/resourceGroups/Work02-Southeast-Work-RG/providers/Microsoft.Network/networkInterfaces/work02-apvm02414/ipConfigurations/ipconfig1",
+          "id": "/subscriptions/subscrip-aaaa-aaaa-aaaa-aaaaaaaaaaaa/resourceGroups/Work02-Southeast-Work-RG/providers/Microsoft.Network/networkInterfaces/work02-apvm02414/ipConfigurations/ipconfig1",
           "name": "ipconfig1",
           "type": "Microsoft.Network/networkInterfaces/ipConfigurations",
           "etag": "W/\"cf36f4e4-f7a0-4ab0-b601-cbcc423701b0\""
@@ -110,7 +110,7 @@
       },
       "auxiliarySku": "None",
       "virtualMachine": {
-        "id": "/subscriptions/aaa/resourceGroups/Work02-Southeast-Work-RG/providers/Microsoft.Compute/virtualMachines/Work02-ApVM02"
+        "id": "/subscriptions/subscrip-aaaa-aaaa-aaaa-aaaaaaaaaaaa/resourceGroups/Work02-Southeast-Work-RG/providers/Microsoft.Compute/virtualMachines/Work02-ApVM02"
       },
       "nicType": "Standard"
     },
@@ -120,14 +120,14 @@
     "extendedLocation": null
   },
   {
-    "id": "/subscriptions/aaa/resourceGroups/Work02-Southeast-Work-RG/providers/Microsoft.Network/networkInterfaces/work02-dbvm01623",
+    "id": "/subscriptions/subscrip-aaaa-aaaa-aaaa-aaaaaaaaaaaa/resourceGroups/Work02-Southeast-Work-RG/providers/Microsoft.Network/networkInterfaces/work02-dbvm01623",
     "name": "work02-dbvm01623",
     "type": "microsoft.network/networkinterfaces",
-    "tenantId": "ddd",
+    "tenantId": "tenantid-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
     "kind": "Regular",
     "location": "southeastasia",
     "resourceGroup": "work02-southeast-work-rg",
-    "subscriptionId": "aaa",
+    "subscriptionId": "subscrip-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
     "managedBy": "",
     "sku": null,
     "plan": null,
@@ -149,10 +149,10 @@
             "primary": true,
             "privateIPAddress": "10.102.0.6",
             "subnet": {
-              "id": "/subscriptions/aaa/resourceGroups/Work02-Southeast-Work-RG/providers/Microsoft.Network/virtualNetworks/Work02-Southeast-VNET/subnets/Work02-Southeast-VNET-vmsubnet"
+              "id": "/subscriptions/subscrip-aaaa-aaaa-aaaa-aaaaaaaaaaaa/resourceGroups/Work02-Southeast-Work-RG/providers/Microsoft.Network/virtualNetworks/Work02-Southeast-VNET/subnets/Work02-Southeast-VNET-vmsubnet"
             }
           },
-          "id": "/subscriptions/aaa/resourceGroups/Work02-Southeast-Work-RG/providers/Microsoft.Network/networkInterfaces/work02-dbvm01623/ipConfigurations/ipconfig1",
+          "id": "/subscriptions/subscrip-aaaa-aaaa-aaaa-aaaaaaaaaaaa/resourceGroups/Work02-Southeast-Work-RG/providers/Microsoft.Network/networkInterfaces/work02-dbvm01623/ipConfigurations/ipconfig1",
           "name": "ipconfig1",
           "type": "Microsoft.Network/networkInterfaces/ipConfigurations",
           "etag": "W/\"a1feb5b7-b897-4c7d-880d-ec6a0e0349f1\""
@@ -170,7 +170,7 @@
       },
       "auxiliarySku": "None",
       "virtualMachine": {
-        "id": "/subscriptions/aaa/resourceGroups/work02-southeast-work-rg/providers/Microsoft.Compute/virtualMachines/Work02-DbVM01"
+        "id": "/subscriptions/subscrip-aaaa-aaaa-aaaa-aaaaaaaaaaaa/resourceGroups/work02-southeast-work-rg/providers/Microsoft.Compute/virtualMachines/Work02-DbVM01"
       },
       "nicType": "Standard"
     },
@@ -180,14 +180,14 @@
     "extendedLocation": null
   },
   {
-    "id": "/subscriptions/bbb/resourceGroups/Hub-Southeast-Work-RG/providers/Microsoft.Network/networkInterfaces/hub-addcvm0170",
+    "id": "/subscriptions/subscrip-bbbb-bbbb-bbbb-bbbbbbbbbbbb/resourceGroups/Hub-Southeast-Work-RG/providers/Microsoft.Network/networkInterfaces/hub-addcvm0170",
     "name": "hub-addcvm0170",
     "type": "microsoft.network/networkinterfaces",
-    "tenantId": "ddd",
+    "tenantId": "tenantid-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
     "kind": "Regular",
     "location": "southeastasia",
     "resourceGroup": "hub-southeast-work-rg",
-    "subscriptionId": "bbb",
+    "subscriptionId": "subscrip-bbbb-bbbb-bbbb-bbbbbbbbbbbb",
     "managedBy": "",
     "sku": null,
     "plan": null,
@@ -205,14 +205,14 @@
             "privateIPAddressVersion": "IPv4",
             "privateIPAllocationMethod": "Static",
             "subnet": {
-              "id": "/subscriptions/bbb/resourceGroups/Hub-Southeast-Work-RG/providers/Microsoft.Network/virtualNetworks/Hub-Southeast-VNET/subnets/Hub-Southeast-VNET-pesubnet"
+              "id": "/subscriptions/subscrip-bbbb-bbbb-bbbb-bbbbbbbbbbbb/resourceGroups/Hub-Southeast-Work-RG/providers/Microsoft.Network/virtualNetworks/Hub-Southeast-VNET/subnets/Hub-Southeast-VNET-pesubnet"
             },
             "privateIPAddress": "10.100.1.100",
             "primary": true
           },
           "name": "ipconfig1",
           "type": "Microsoft.Network/networkInterfaces/ipConfigurations",
-          "id": "/subscriptions/bbb/resourceGroups/Hub-Southeast-Work-RG/providers/Microsoft.Network/networkInterfaces/hub-addcvm0170/ipConfigurations/ipconfig1",
+          "id": "/subscriptions/subscrip-bbbb-bbbb-bbbb-bbbbbbbbbbbb/resourceGroups/Hub-Southeast-Work-RG/providers/Microsoft.Network/networkInterfaces/hub-addcvm0170/ipConfigurations/ipconfig1",
           "etag": "W/\"addfe0c3-719f-4273-8423-ebad4e9b642f\""
         }
       ],
@@ -230,7 +230,7 @@
       "auxiliarySku": "None",
       "macAddress": "60-45-BD-1E-C6-C6",
       "virtualMachine": {
-        "id": "/subscriptions/bbb/resourceGroups/HUB-SOUTHEAST-WORK-RG/providers/Microsoft.Compute/virtualMachines/Hub-AddcVM01"
+        "id": "/subscriptions/subscrip-bbbb-bbbb-bbbb-bbbbbbbbbbbb/resourceGroups/HUB-SOUTHEAST-WORK-RG/providers/Microsoft.Compute/virtualMachines/Hub-AddcVM01"
       },
       "nicType": "Standard"
     },
@@ -240,14 +240,14 @@
     "extendedLocation": null
   },
   {
-    "id": "/subscriptions/bbb/resourceGroups/Hub-Southeast-Work-RG/providers/Microsoft.Network/networkInterfaces/hub-workvm01121",
+    "id": "/subscriptions/subscrip-bbbb-bbbb-bbbb-bbbbbbbbbbbb/resourceGroups/Hub-Southeast-Work-RG/providers/Microsoft.Network/networkInterfaces/hub-workvm01121",
     "name": "hub-workvm01121",
     "type": "microsoft.network/networkinterfaces",
-    "tenantId": "ddd",
+    "tenantId": "tenantid-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
     "kind": "Regular",
     "location": "southeastasia",
     "resourceGroup": "hub-southeast-work-rg",
-    "subscriptionId": "bbb",
+    "subscriptionId": "subscrip-bbbb-bbbb-bbbb-bbbbbbbbbbbb",
     "managedBy": "",
     "sku": null,
     "plan": null,
@@ -269,10 +269,10 @@
             "primary": true,
             "privateIPAddress": "10.100.0.5",
             "subnet": {
-              "id": "/subscriptions/bbb/resourceGroups/Hub-Southeast-Work-RG/providers/Microsoft.Network/virtualNetworks/Hub-Southeast-VNET/subnets/Hub-Southeast-VNET-vmsubnet"
+              "id": "/subscriptions/subscrip-bbbb-bbbb-bbbb-bbbbbbbbbbbb/resourceGroups/Hub-Southeast-Work-RG/providers/Microsoft.Network/virtualNetworks/Hub-Southeast-VNET/subnets/Hub-Southeast-VNET-vmsubnet"
             }
           },
-          "id": "/subscriptions/bbb/resourceGroups/Hub-Southeast-Work-RG/providers/Microsoft.Network/networkInterfaces/hub-workvm01121/ipConfigurations/ipconfig1",
+          "id": "/subscriptions/subscrip-bbbb-bbbb-bbbb-bbbbbbbbbbbb/resourceGroups/Hub-Southeast-Work-RG/providers/Microsoft.Network/networkInterfaces/hub-workvm01121/ipConfigurations/ipconfig1",
           "name": "ipconfig1",
           "type": "Microsoft.Network/networkInterfaces/ipConfigurations",
           "etag": "W/\"ccbfb80f-27d9-48d0-9ef2-fe08b660ba0e\""
@@ -294,7 +294,7 @@
       },
       "nicType": "Standard",
       "virtualMachine": {
-        "id": "/subscriptions/bbb/resourceGroups/hub-southeast-work-rg/providers/Microsoft.Compute/virtualMachines/Hub-WorkVM01"
+        "id": "/subscriptions/subscrip-bbbb-bbbb-bbbb-bbbbbbbbbbbb/resourceGroups/hub-southeast-work-rg/providers/Microsoft.Compute/virtualMachines/Hub-WorkVM01"
       },
       "macAddress": "00-0D-3A-08-74-14"
     },
@@ -304,14 +304,14 @@
     "extendedLocation": null
   },
   {
-    "id": "/subscriptions/bbb/resourceGroups/Hub-Southeast-Work-RG/providers/Microsoft.Network/networkInterfaces/hub-workvm0292",
+    "id": "/subscriptions/subscrip-bbbb-bbbb-bbbb-bbbbbbbbbbbb/resourceGroups/Hub-Southeast-Work-RG/providers/Microsoft.Network/networkInterfaces/hub-workvm0292",
     "name": "hub-workvm0292",
     "type": "microsoft.network/networkinterfaces",
-    "tenantId": "ddd",
+    "tenantId": "tenantid-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
     "kind": "Regular",
     "location": "southeastasia",
     "resourceGroup": "hub-southeast-work-rg",
-    "subscriptionId": "bbb",
+    "subscriptionId": "subscrip-bbbb-bbbb-bbbb-bbbbbbbbbbbb",
     "managedBy": "",
     "sku": null,
     "plan": null,
@@ -329,14 +329,14 @@
             "privateIPAddressVersion": "IPv4",
             "privateIPAllocationMethod": "Dynamic",
             "subnet": {
-              "id": "/subscriptions/bbb/resourceGroups/Hub-Southeast-Work-RG/providers/Microsoft.Network/virtualNetworks/Hub-Southeast-VNET/subnets/Hub-Southeast-VNET-vmsubnet"
+              "id": "/subscriptions/subscrip-bbbb-bbbb-bbbb-bbbbbbbbbbbb/resourceGroups/Hub-Southeast-Work-RG/providers/Microsoft.Network/virtualNetworks/Hub-Southeast-VNET/subnets/Hub-Southeast-VNET-vmsubnet"
             },
             "privateIPAddress": "10.100.0.6",
             "primary": true
           },
           "name": "ipconfig1",
           "type": "Microsoft.Network/networkInterfaces/ipConfigurations",
-          "id": "/subscriptions/bbb/resourceGroups/Hub-Southeast-Work-RG/providers/Microsoft.Network/networkInterfaces/hub-workvm0292/ipConfigurations/ipconfig1",
+          "id": "/subscriptions/subscrip-bbbb-bbbb-bbbb-bbbbbbbbbbbb/resourceGroups/Hub-Southeast-Work-RG/providers/Microsoft.Network/networkInterfaces/hub-workvm0292/ipConfigurations/ipconfig1",
           "etag": "W/\"26e3d070-87a7-4587-b234-30cc4a247e2d\""
         }
       ],
@@ -358,7 +358,7 @@
       "auxiliarySku": "None",
       "macAddress": "60-45-BD-1F-49-33",
       "virtualMachine": {
-        "id": "/subscriptions/bbb/resourceGroups/HUB-SOUTHEAST-WORK-RG/providers/Microsoft.Compute/virtualMachines/Hub-WorkVM02"
+        "id": "/subscriptions/subscrip-bbbb-bbbb-bbbb-bbbbbbbbbbbb/resourceGroups/HUB-SOUTHEAST-WORK-RG/providers/Microsoft.Compute/virtualMachines/Hub-WorkVM02"
       },
       "nicType": "Standard"
     },
@@ -368,14 +368,14 @@
     "extendedLocation": null
   },
   {
-    "id": "/subscriptions/bbb/resourceGroups/Mgmt-Southeast-Mgmt-RG/providers/Microsoft.Network/networkInterfaces/hub-slogvm01619",
+    "id": "/subscriptions/subscrip-bbbb-bbbb-bbbb-bbbbbbbbbbbb/resourceGroups/Mgmt-Southeast-Mgmt-RG/providers/Microsoft.Network/networkInterfaces/hub-slogvm01619",
     "name": "hub-slogvm01619",
     "type": "microsoft.network/networkinterfaces",
-    "tenantId": "ddd",
+    "tenantId": "tenantid-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
     "kind": "Regular",
     "location": "southeastasia",
     "resourceGroup": "mgmt-southeast-mgmt-rg",
-    "subscriptionId": "bbb",
+    "subscriptionId": "subscrip-bbbb-bbbb-bbbb-bbbbbbbbbbbb",
     "managedBy": "",
     "sku": null,
     "plan": null,
@@ -397,10 +397,10 @@
             "primary": true,
             "privateIPAddress": "10.100.0.4",
             "subnet": {
-              "id": "/subscriptions/bbb/resourceGroups/Hub-Southeast-Work-RG/providers/Microsoft.Network/virtualNetworks/Hub-Southeast-VNET/subnets/Hub-Southeast-VNET-vmsubnet"
+              "id": "/subscriptions/subscrip-bbbb-bbbb-bbbb-bbbbbbbbbbbb/resourceGroups/Hub-Southeast-Work-RG/providers/Microsoft.Network/virtualNetworks/Hub-Southeast-VNET/subnets/Hub-Southeast-VNET-vmsubnet"
             }
           },
-          "id": "/subscriptions/bbb/resourceGroups/Mgmt-Southeast-Mgmt-RG/providers/Microsoft.Network/networkInterfaces/hub-slogvm01619/ipConfigurations/ipconfig1",
+          "id": "/subscriptions/subscrip-bbbb-bbbb-bbbb-bbbbbbbbbbbb/resourceGroups/Mgmt-Southeast-Mgmt-RG/providers/Microsoft.Network/networkInterfaces/hub-slogvm01619/ipConfigurations/ipconfig1",
           "name": "ipconfig1",
           "type": "Microsoft.Network/networkInterfaces/ipConfigurations",
           "etag": "W/\"ec622c86-2502-4733-a7b6-2fbe5026b02b\""
@@ -417,7 +417,7 @@
       },
       "auxiliarySku": "None",
       "virtualMachine": {
-        "id": "/subscriptions/bbb/resourceGroups/mgmt-southeast-mgmt-rg/providers/Microsoft.Compute/virtualMachines/Hub-SlogVM01"
+        "id": "/subscriptions/subscrip-bbbb-bbbb-bbbb-bbbbbbbbbbbb/resourceGroups/mgmt-southeast-mgmt-rg/providers/Microsoft.Compute/virtualMachines/Hub-SlogVM01"
       },
       "macAddress": "60-45-BD-22-4B-9E",
       "nicType": "Standard"
