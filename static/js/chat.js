@@ -124,6 +124,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function updateSelectableListTitles() {
         const tableTitle = currentLanguage === 'ja' ? 'どのテーブルを検索しますか？' : 'Which tables do you want to search?';
         const columnTitle = currentLanguage === 'ja' ? 'どのカラムを検索しますか？' : 'Which columns do you want to search?';
+        const sqlMethodTitle = currentLanguage === 'ja' ? 'どのようにSQL Databaseを検索しますか？' : 'How would you like to search the SQL Database?';
         const confirmText = currentLanguage === 'ja' ? '決定' : 'Confirm';
 
         document.querySelectorAll('.selectable-options .fw-semibold').forEach(title => {
@@ -131,6 +132,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 title.textContent = tableTitle;
             } else if (title.textContent.includes('カラム') || title.textContent.includes('columns')) {
                 title.textContent = columnTitle;
+            } else if (title.textContent.includes('SQL Database') || title.textContent.includes('どのようにSQL')) {
+                title.textContent = sqlMethodTitle;
+            }
+        });
+
+        // Update radio button labels
+        document.querySelectorAll('.selectable-options .form-check-label').forEach(label => {
+            const input = document.querySelector(`#${label.getAttribute('for')}`);
+            if (input && input.getAttribute('data-ja') && input.getAttribute('data-en')) {
+                const jaText = input.getAttribute('data-ja');
+                const enText = input.getAttribute('data-en');
+                label.textContent = currentLanguage === 'ja' ? jaText : enText;
             }
         });
 
@@ -257,7 +270,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (chatHistory.querySelector('.text-center')) {
             chatHistory.innerHTML = '';
         }
-        if (!((text.startsWith(";;SQL;;") || text.startsWith(";;EXECUTE;;")))) {
+        if (!(text.startsWith(";;SQL;;") || text.startsWith(";;EXECUTE;;") || text.startsWith(";;SQL_QUERY_OPTION;;"))) {
             // Create user message DOM directly
             const wrapper = document.createElement('div');
             wrapper.className = 'd-flex mb-4 justify-content-end align-items-end';
@@ -329,10 +342,147 @@ document.addEventListener('DOMContentLoaded', function() {
         messageContent.style.wordBreak = 'break-word';
         messageContent.style.overflowWrap = 'anywhere';
 
+        const messageId = 'msg-' + Date.now();
+
+        // Detect special selectable list format: ";;SELECTABLE;;item1,item2,..."
+        const sqlQueryOptionPrefix = ';;SQL_QUERY_OPTION;;';
+        const isSqlQueryOption = typeof content === 'string' && content.trim().startsWith(sqlQueryOptionPrefix);
+
+        if (isSqlQueryOption) {
+            const items = [
+                {
+                    ja: "手動でテーブル・項目を選択する",
+                    en: "Manually select tables and items"
+                },
+                {
+                    ja: "自動でテーブル・項目を選択する", 
+                    en: "Automatically select tables and items"
+                }
+            ];
+            // Build checkbox list UI
+            const container = document.createElement('div');
+            container.className = 'selectable-options';
+
+            // Create collapsible header
+            const header = document.createElement('div');
+            header.className = 'collapsible-header d-flex justify-content-between align-items-center mb-2 p-2';
+            header.style.cursor = 'pointer';
+            header.style.backgroundColor = '#f8f9fa';
+            header.style.borderRadius = '0.375rem';
+            header.style.border = '1px solid #dee2e6';
+
+            const title = document.createElement('span');
+            title.className = 'fw-semibold';
+            title.textContent = currentLanguage === 'ja' ? 'どのようにSQL Databaseを検索しますか？' : 'How would you like to search the SQL Database?';
+
+            const toggleIcon = document.createElement('span');
+            toggleIcon.className = 'toggle-icon';
+            toggleIcon.innerHTML = '▼';
+            toggleIcon.style.transition = 'transform 0.2s ease';
+
+            header.appendChild(title);
+            header.appendChild(toggleIcon);
+            container.appendChild(header);
+
+            // Create collapsible content
+            const content = document.createElement('div');
+            content.className = 'collapsible-content';
+            content.style.display = 'block'; // Start expanded
+
+            const list = document.createElement('div');
+            list.className = 'd-flex flex-column gap-2';
+
+            items.forEach((item, idx) => {
+                const id = `${messageId}-opt-${idx + 1}`;
+                const row = document.createElement('div');
+                row.className = 'form-check';
+
+                const input = document.createElement('input');
+                input.type = 'radio';
+                input.className = 'form-check-input';
+                input.id = id;
+                input.name = `${messageId}-sql-query-option`; // 同じnameでグループ化
+                input.value = item.ja; // 常に日本語の値を保存（バックエンドとの互換性のため）
+                input.setAttribute('data-ja', item.ja);
+                input.setAttribute('data-en', item.en);
+
+                const lbl = document.createElement('label');
+                lbl.className = 'form-check-label';
+                lbl.setAttribute('for', id);
+                lbl.textContent = item[currentLanguage];
+
+                row.appendChild(input);
+                row.appendChild(lbl);
+                list.appendChild(row);
+            });
+
+            content.appendChild(list);
+
+            // Action buttons (apply selection to input, clear selection)
+            const actions = document.createElement('div');
+            actions.className = 'd-flex gap-2 mt-3 justify-content-end';
+
+            let selectColumnInput = '';
+
+            const applyBtn = document.createElement('button');
+            applyBtn.type = 'button';
+            applyBtn.className = 'btn btn-dark btn-sm';
+            // Ensure pure black styling regardless of theme
+            applyBtn.style.backgroundColor = '#000';
+            applyBtn.style.borderColor = '#000';
+            applyBtn.style.color = '#fff';
+            applyBtn.textContent = currentLanguage === 'ja' ? '決定' : 'Confirm';
+
+            applyBtn.disabled = true;
+            list.addEventListener('change', () => {
+                const anyChecked = list.querySelectorAll('input[type="radio"]:checked').length > 0;
+                applyBtn.disabled = !anyChecked;
+            });
+
+            applyBtn.addEventListener('click', () => {
+                const selected = Array.from(list.querySelectorAll('input[type="radio"]:checked'))
+                    .map(el => el.value)
+                    .filter(Boolean);
+                if (selected.length > 0) {
+                    const selectedMethod = selected[0] == "手動でテーブル・項目を選択する" ? "manual" : "auto"; 
+                    selectColumnInput = ';;SQL_QUERY_OPTION;;' + selectedMethod; // 1つだけ選択
+                    sendMessage(selectColumnInput, conversation_id);
+                    scrollToBottom();
+                }
+            });
+
+            actions.appendChild(applyBtn);
+            content.appendChild(actions);
+            container.appendChild(content);
+
+            // Add toggle functionality
+            header.addEventListener('click', () => {
+                const isCollapsed = content.style.display === 'none';
+                content.style.display = isCollapsed ? 'block' : 'none';
+                toggleIcon.style.transform = isCollapsed ? 'rotate(0deg)' : 'rotate(-90deg)';
+                toggleIcon.innerHTML = isCollapsed ? '▼' : '▶';
+            });
+
+            messageContent.appendChild(container);
+            cardBody.appendChild(messageContent);
+            card.appendChild(cardBody);
+            card.setAttribute('id', messageId);
+            // No citations processing for selectable lists
+
+            // Add avatar next to the message card (assistant on the left)
+            const avatar = createAssistantAvatar();
+            wrapper.appendChild(avatar);
+            wrapper.appendChild(card);
+            chatHistory.appendChild(wrapper);
+
+            updatePromptSuggestionVisibility();
+            scrollToBottom();
+            return; // Done for selectable content
+        }
+
         // Detect special selectable list format: ";;SELECTABLE;;item1,item2,..."
         const selectablePrefix = ';;SELECTABLE;;';
         const isSelectable = typeof content === 'string' && content.trim().startsWith(selectablePrefix);
-        const messageId = 'msg-' + Date.now();
 
         if (isSelectable) {
             const itemsRaw = content.trim().slice(selectablePrefix.length).trim();
