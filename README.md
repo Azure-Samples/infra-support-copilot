@@ -54,7 +54,6 @@ Managed Identities | Secure inter-service auth (no secrets)
 * Latest Azure Developer CLI (`azd`)
 * Git
 * ODBC Driver 18 for SQL Server
-* [SQL Server PowerShell module](https://learn.microsoft.com/en-us/powershell/sql-server/download-sql-server-ps-module?view=sqlserver-ps)
 * [Microsoft Visual C++ Redistributable](https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170)
 
 Dev Container (optional):
