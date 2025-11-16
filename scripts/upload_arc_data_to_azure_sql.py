@@ -166,7 +166,7 @@ ELSE
 		resource_id,name,subscription_id,resource_group,location,vm_size,os_type,os_name,os_version,
 		provisioning_state,priority,time_created,power_state,admin_username,server_type_tag,tags_json,identity_principal_id
 	) VALUES (
-		?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?
+		?, ?, TRY_CONVERT(uniqueidentifier, ?), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, TRY_CONVERT(uniqueidentifier, ?)
 	);
 """,
 			row.get("id"),  # for UPDATE match
@@ -227,7 +227,7 @@ IF EXISTS (SELECT 1 FROM dbo.network_interfaces WHERE resource_id = ?)
 ELSE
 	INSERT INTO dbo.network_interfaces (
 		resource_id,name,subscription_id,resource_group,location,mac_address,private_ip,allocation_method,accelerated,primary_flag,vm_resource_id
-	) VALUES (?,?,?,?,?,?,?,?,?,?,?);
+	) VALUES (?, ?, TRY_CONVERT(uniqueidentifier, ?), ?, ?, ?, ?, ?, ?, ?, ?);
 """,
 			row.get("id"),
 			row.get("name"),
