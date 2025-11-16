@@ -10,47 +10,46 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 
-from opencensus.ext.azure.log_exporter import AzureLogHandler
-from opencensus.trace import config_integration
+from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
+from azure.monitor.opentelemetry import configure_azure_monitor
 
 from app.models.chat_models import ChatRequest
 from app.services.decide_tool import decide_tool
 
 load_dotenv()
-
-# Application Insightsの設定
-connection_string = os.getenv('APPLICATIONINSIGHTS_CONNECTION_STRING')
-if connection_string:
-    azure_log_handler = AzureLogHandler(connection_string=connection_string)
-    azure_log_handler.setLevel(logging.INFO)
-
-    root_logger = logging.getLogger()
-    root_logger.addHandler(azure_log_handler)
-    root_logger.setLevel(logging.INFO)
-
-    config_integration.trace_integrations(['requests', 'httplib'])
-
-# Configure logging
+ 
+# ----------------------------------------------------------------------------------
+# Telemetry / Logging initialization
+# ----------------------------------------------------------------------------------
+ai_connection_string = os.getenv("APPLICATIONINSIGHTS_CONNECTION_STRING")
+root_logger = logging.getLogger()
+ 
 logging.basicConfig(
     level=logging.INFO,
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-    handlers=[
-        logging.StreamHandler(),
-    ]
+    format="%(asctime)s - %(levelname)s - %(name)s - %(message)s",
+    handlers=[logging.StreamHandler()]
 )
-
-if connection_string:
-    logging.getLogger().addHandler(azure_log_handler)
-
-
-logger = logging.getLogger(__name__)
-
+ 
+if ai_connection_string:
+    configure_azure_monitor(
+        connection_string=ai_connection_string,
+        logger_name="app"
+    )
+else:
+    logging.warning(
+        "APPLICATIONINSIGHTS_CONNECTION_STRING is not set. Logs/traces will NOT be sent to Azure Monitor."
+    )
+ 
+logger = logging.getLogger("app.telemetry")
+ 
 # Create FastAPI app
 app = FastAPI(
     title="FastAPI RAG with Azure OpenAI and Azure AI Search",
     description="A FastAPI application that demonstrates retrieval augmented generation using Azure OpenAI and Azure AI Search.",
     version="1.0.0",
 )
+
+FastAPIInstrumentor.instrument_app(app)
 
 # Mount static files
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -118,7 +117,6 @@ async def health_check():
     Health check endpoint
     """
     return {"status": "ok"}
-
 
 if __name__ == "__main__":
     # This lets you test the application locally with Uvicorn
