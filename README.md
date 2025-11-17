@@ -48,12 +48,16 @@ Managed Identities | Secure inter-service auth (no secrets)
 ```
 
 ## Prerequisites
+
+> **Note**: This project currently supports **Windows only**. The setup scripts and tooling are Windows-specific. Support for macOS and Linux may be added in the future.
+
+* **Windows** operating system
 * An Azure subscription with **Owner** role, or **Contributor** + **User Access Administrator** roles (needed for resource provisioning and Managed Identity role assignments)
 * Python 3.11+ (App Service uses 3.12; local 3.11/3.12 are fine)
 * Azure CLI (`az`) and a signed-in subscription
 * Latest Azure Developer CLI (`azd`)
 * Git
-* ODBC Driver 18 for SQL Server
+* ODBC Driver 18 for SQL Server (Windows)
 * [Microsoft Visual C++ Redistributable](https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170)
 
 Dev Container (optional):
@@ -64,10 +68,9 @@ Dev Container (optional):
 # 1. Clone
 git clone https://github.com/Azure-Samples/infra-support-copilot && cd infra-support-copilot
 
-# 2. Python venv
+# 2. Python venv (Windows)
 python -m venv .venv
-./.venv/Scripts/Activate.ps1   # Windows
-# source .venv/bin/activate    # Linux/Mac
+./.venv/Scripts/Activate.ps1
 
 # 3. Install deps
 pip install -r requirements.txt
