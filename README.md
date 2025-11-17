@@ -48,6 +48,10 @@ Managed Identities | Secure inter-service auth (no secrets)
 ```
 
 ## Prerequisites
+
+> [!IMPORTANT]
+> This project currently supports **Windows only**. macOS and Linux are not supported at this time.
+
 * An Azure subscription with **Owner** role, or **Contributor** + **User Access Administrator** roles (needed for resource provisioning and Managed Identity role assignments)
 * Python 3.11+ (App Service uses 3.12; local 3.11/3.12 are fine)
 * Azure CLI (`az`) and a signed-in subscription
@@ -66,8 +70,7 @@ git clone https://github.com/Azure-Samples/infra-support-copilot && cd infra-sup
 
 # 2. Python venv
 python -m venv .venv
-./.venv/Scripts/Activate.ps1   # Windows
-# source .venv/bin/activate    # Linux/Mac
+./.venv/Scripts/Activate.ps1
 
 # 3. Install deps
 pip install -r requirements.txt
