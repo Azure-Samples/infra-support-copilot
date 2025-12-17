@@ -141,11 +141,13 @@ Recommended setup:
   
   **Environment Variables** (non-sensitive identifiers, visible in logs):
   - AZURE_CLIENT_ID (service principal client ID)
-  - AZURE_PRINCIPAL_ID (principal ID, typically same as AZURE_CLIENT_ID)
+  - AZURE_PRINCIPAL_ID (principal object ID - for service principals, use the same value as AZURE_CLIENT_ID)
   - AZURE_PRINCIPAL_TYPE (principal type, e.g., `ServicePrincipal`)
   - AZURE_RESOURCE_GROUP (resource group name to deploy into)
   - AZURE_ENV_NAME (azd environment name, e.g. `rukasakurai-env`)
   - AZURE_LOCATION (region, e.g. `japaneast`)
+  
+  See [SECURITY.md](SECURITY.md) for detailed rationale on secrets vs variables classification.
   
 3. Assign `Directory Readers` role to the SQL server's principal id.
 
