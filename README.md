@@ -147,8 +147,6 @@ Recommended setup:
   - AZURE_ENV_NAME (azd environment name, e.g. `rukasakurai-env`)
   - AZURE_LOCATION (region, e.g. `japaneast`)
   
-  See [SECURITY.md](SECURITY.md) for detailed rationale on secrets vs variables classification.
-  
 3. Assign `Directory Readers` role to the SQL server's principal id.
 
 Notes:
