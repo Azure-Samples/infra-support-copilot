@@ -16,6 +16,17 @@ This guide configures GitHub Actions to deploy to Azure using Microsoft Entra wo
 az account show --output table
 ```
 
+> [!IMPORTANT]
+> Your GitHub Actions workflow must have OIDC permissions enabled:
+>
+> ```yaml
+> permissions:
+>   id-token: write
+>   contents: read
+> ```
+>
+> If you bind the federated credential to a GitHub Environment (recommended), the workflow job must also set `environment: <name>` and the `<name>` must match the federated credential `subject`.
+
 ## Step 1: Get your Azure information
 
 ```bash
@@ -24,11 +35,15 @@ AZURE_TENANT_ID=$(az account show --query tenantId -o tsv)
 
 # Choose or create your deployment resource group
 AZURE_RESOURCE_GROUP="your-resource-group-name"  # e.g., infra-support-copilot-rg
-AZURE_LOCATION="eastus2"  # e.g., eastus2, japaneast, westeurope
+AZURE_LOCATION="japaneast"  # e.g., japaneast, eastus2, westeurope
 az group create -n "$AZURE_RESOURCE_GROUP" -l "$AZURE_LOCATION"
 
-# Name the azd/GitHub environment (per subscription)
-AZURE_ENV_NAME="your-env-name"  # e.g., infra-support-copilot-env
+# Name the azd environment (per subscription)
+AZURE_ENV_NAME="your-azd-env-name"  # e.g., infra-support-copilot-env
+
+# Name of the GitHub Environment used by the workflow job `environment:`.
+# In this repo's workflow, this is the matrix entry (see .github/workflows/cicd.yml).
+GITHUB_ENVIRONMENT="your-github-environment-name"  # e.g., rukasakurai-env
 ```
 
 ## Step 2: Create (or use existing) Microsoft Entra app registration
@@ -39,6 +54,9 @@ APP_DISPLAY_NAME="infra-support-copilot-gha"  # Use any unique display name
 # Create the app registration (or fetch existing appId)
 AZURE_CLIENT_ID=$(az ad app create --display-name "$APP_DISPLAY_NAME" --query appId -o tsv)
 # If reusing an existing app: AZURE_CLIENT_ID=$(az ad app list --display-name "$APP_DISPLAY_NAME" --query "[0].appId" -o tsv)
+
+# App registration object ID (different from client/app ID)
+AZURE_APP_OBJECT_ID=$(az ad app show --id "$AZURE_CLIENT_ID" --query id -o tsv)
 
 # Ensure a service principal exists (idempotent)
 az ad sp show --id "$AZURE_CLIENT_ID" --only-show-errors >/dev/null 2>&1 || az ad sp create --id "$AZURE_CLIENT_ID"
@@ -53,8 +71,8 @@ Grant least privilege at the subscription or resource-group scope. The sample be
 ```bash
 SCOPE="/subscriptions/$AZURE_SUBSCRIPTION_ID/resourceGroups/$AZURE_RESOURCE_GROUP"
 
-az role assignment create --assignee-object-id "$AZURE_PRINCIPAL_ID" --role "Contributor" --scope "$SCOPE"
-az role assignment create --assignee-object-id "$AZURE_PRINCIPAL_ID" --role "User Access Administrator" --scope "$SCOPE"
+az role assignment create --assignee-object-id "$AZURE_PRINCIPAL_ID" --assignee-principal-type ServicePrincipal --role "Contributor" --scope "$SCOPE"
+az role assignment create --assignee-object-id "$AZURE_PRINCIPAL_ID" --assignee-principal-type ServicePrincipal --role "User Access Administrator" --scope "$SCOPE"
 ```
 
 ## Step 4: Configure federated credentials
@@ -64,7 +82,7 @@ Create a federated credential that binds the app registration to a GitHub Enviro
 ```bash
 GITHUB_ORG="Azure-Samples"       # Use your fork org if different
 GITHUB_REPO="infra-support-copilot"  # Use your fork repo name if different
-GITHUB_ENVIRONMENT="$AZURE_ENV_NAME"
+GITHUB_ENVIRONMENT="$GITHUB_ENVIRONMENT"
 
 cat <<EOF > fc.json
 {
@@ -75,7 +93,7 @@ cat <<EOF > fc.json
 }
 EOF
 
-az ad app federated-credential create --id "$AZURE_CLIENT_ID" --parameters @fc.json
+az ad app federated-credential create --id "$AZURE_APP_OBJECT_ID" --parameters @fc.json
 ```
 
 ## Step 5: Configure GitHub environment variables and secrets
@@ -84,6 +102,9 @@ Set these on `Settings → Environments → <GITHUB_ENVIRONMENT>`:
 
 - **Secrets** (kept masked): `AZURE_SUBSCRIPTION_ID`, `AZURE_TENANT_ID`
 - **Variables** (non-confidential values): `AZURE_CLIENT_ID`, `AZURE_PRINCIPAL_ID` (service principal `object ID`, not `client ID`), `AZURE_PRINCIPAL_TYPE` (value: `ServicePrincipal`), `AZURE_RESOURCE_GROUP`, `AZURE_ENV_NAME`, `AZURE_LOCATION`
+
+> [!NOTE]
+> `AZURE_APP_OBJECT_ID` is only needed when creating/listing the federated credential via Azure CLI. You typically do not need to store it in GitHub.
 
 Protect the environment if you require approvals before variable use.
 Subscription and tenant IDs are kept as secrets so they stay masked in logs and are not exposed to forks.
@@ -104,7 +125,7 @@ Example login step for workflows:
 
 ```bash
 # Federated credential is present
-az ad app federated-credential list --id "$AZURE_CLIENT_ID" --query "[].{name:name,subject:subject}" -o table
+az ad app federated-credential list --id "$AZURE_APP_OBJECT_ID" --query "[].{name:name,subject:subject}" -o table
 
 # Role assignments are in place
 az role assignment list --assignee-object-id "$AZURE_PRINCIPAL_ID" --scope "$SCOPE" -o table

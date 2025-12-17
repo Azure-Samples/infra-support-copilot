@@ -80,15 +80,16 @@ jobs:
         shell: bash
         env:
           AZURE_PRINCIPAL_ID_VAR: ${{ vars.AZURE_PRINCIPAL_ID }}
-          AZURE_CLIENT_ID_VAR: ${{ vars.AZURE_CLIENT_ID }}
         run: |
-          # Prefer the service principal object ID; fall back to client ID for backward compatibility
-          # GUID/UUID regex keeps us on object IDs when provided
-          if [ -n "$AZURE_PRINCIPAL_ID_VAR" ] && [[ "$AZURE_PRINCIPAL_ID_VAR" =~ ^[0-9a-fA-F-]{36}$ ]]; then
-            echo "principal_id=$AZURE_PRINCIPAL_ID_VAR" >> "$GITHUB_OUTPUT"
-          else
-            echo "principal_id=$AZURE_CLIENT_ID_VAR" >> "$GITHUB_OUTPUT"
+          # The Bicep template expects the service principal *object ID*.
+          # Fail fast if the GitHub Environment variable is missing.
+          if [ -z "$AZURE_PRINCIPAL_ID_VAR" ]; then
+            echo "AZURE_PRINCIPAL_ID is required (service principal object ID)." >&2
+            echo "Set it as an Environment variable in GitHub (see docs/oidc-setup-github-actions.md Step 5)." >&2
+            exit 1
           fi
+
+          echo "principal_id=$AZURE_PRINCIPAL_ID_VAR" >> "$GITHUB_OUTPUT"
 
       - name: azd login
         run: |
@@ -100,7 +101,7 @@ jobs:
           azd env new ${{ vars.AZURE_ENV_NAME }} --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }} --location ${{ vars.AZURE_LOCATION }} --no-prompt
           azd env set AZURE_RESOURCE_GROUP ${{ vars.AZURE_RESOURCE_GROUP }}
           azd env set AZURE_PRINCIPAL_TYPE ${{ vars.AZURE_PRINCIPAL_TYPE }}
-          azd env set AZURE_PRINCIPAL_ID ${{ steps.principal.outputs.principal_id }} # Prefer service principal object ID; fallback to client ID for compatibility
+          azd env set AZURE_PRINCIPAL_ID ${{ steps.principal.outputs.principal_id }}
         shell: pwsh
 
       - name: Provision Infrastructure
