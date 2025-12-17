@@ -34,7 +34,7 @@ AZURE_SUBSCRIPTION_ID=$(az account show --query id -o tsv)
 AZURE_TENANT_ID=$(az account show --query tenantId -o tsv)
 
 # Choose or create your deployment resource group
-AZURE_RESOURCE_GROUP="your-resource-group-name"  # e.g., infra-support-copilot-rg
+AZURE_RESOURCE_GROUP="your-resource-group-name"  # e.g., rg-infra-support-copilot
 AZURE_LOCATION="japaneast"  # e.g., japaneast, eastus2, westeurope
 az group create -n "$AZURE_RESOURCE_GROUP" -l "$AZURE_LOCATION"
 
@@ -67,6 +67,9 @@ AZURE_PRINCIPAL_TYPE="ServicePrincipal"
 ## Step 3: Assign Azure permissions
 
 Grant least privilege at the subscription or resource-group scope. The sample below scopes to the resource group.
+
+> [!IMPORTANT]
+> To assign the **User Access Administrator** role, you must have elevated privileges such as **Owner** at the target scope (resource group or subscription), or **Global Administrator** / **Privileged Role Administrator** at the tenant level. If you cannot assign this role, ask an administrator with sufficient permissions to run these commands on your behalf, or to grant you temporary elevated access.
 
 ```bash
 SCOPE="/subscriptions/$AZURE_SUBSCRIPTION_ID/resourceGroups/$AZURE_RESOURCE_GROUP"
