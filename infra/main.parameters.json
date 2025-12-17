@@ -6,7 +6,7 @@
       "value": "${AZURE_ENV_NAME}"
     },
     "location": {
-      "value": "eastus2"
+      "value": "${AZURE_LOCATION}"
     },
     "appServicePlanSku": {
       "value": "P2v2"

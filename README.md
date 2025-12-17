@@ -42,6 +42,7 @@ Managed Identities | Secure inter-service auth (no secrets)
 ├── sample-data/  # Sample data sources
 │   ├── incidents/  # Incident markdown sample data
 │   └── arc/        # Azure Arc sample data
+├── docs/         # Additional guides (e.g., GitHub Actions OIDC setup)
 ├── requirements.txt
 ├── azure.yaml     # azd project definition
 └── README.md
@@ -133,13 +134,16 @@ This repository includes a GitHub Actions workflow that can deploy the same `azd
 Recommended setup:
 
 1. In the repo settings, go to Settings → Environments and create an environment for each target subscription (for example: `rukasakurai-env`, `<github-username>-env`).
-2. For each environment, add the following secrets/variables (Repository Settings → Environments → <env>):
-  - AZURE_CLIENT_ID (service principal client ID)
-  - AZURE_TENANT_ID (tenant ID)
-  - AZURE_SUBSCRIPTION_ID (target subscription ID)
-  - AZURE_RESOURCE_GROUP (resource group name to deploy into)
-  - AZURE_ENV_NAME (azd environment name, e.g. `rukasakurai-env`)
-  - AZURE_LOCATION (region, e.g. `japaneast`)
+2. For each environment, set:
+   - **Secrets:** `AZURE_SUBSCRIPTION_ID`, `AZURE_TENANT_ID`
+   - **Variables:** set the following non-confidential values:
+     - `AZURE_CLIENT_ID`
+     - `AZURE_PRINCIPAL_ID`
+     - `AZURE_PRINCIPAL_TYPE` (value: `ServicePrincipal`)
+     - `AZURE_RESOURCE_GROUP`
+     - `AZURE_ENV_NAME`
+     - `AZURE_LOCATION`
+   - Protect the environment if you require approvals before variable use. See [docs/oidc-setup-github-actions.md](docs/oidc-setup-github-actions.md) for CLI-first setup steps.
 3. Assign `Directory Readers` role to the SQL server's principal id.
 
 Notes:
