@@ -133,13 +133,20 @@ This repository includes a GitHub Actions workflow that can deploy the same `azd
 Recommended setup:
 
 1. In the repo settings, go to Settings → Environments and create an environment for each target subscription (for example: `rukasakurai-env`, `<github-username>-env`).
-2. For each environment, add the following secrets/variables (Repository Settings → Environments → <env>):
-  - AZURE_CLIENT_ID (service principal client ID)
+2. For each environment, add the following secrets and variables (Repository Settings → Environments → <env>):
+  
+  **Environment Secrets** (sensitive data, masked in logs):
   - AZURE_TENANT_ID (tenant ID)
   - AZURE_SUBSCRIPTION_ID (target subscription ID)
+  
+  **Environment Variables** (non-sensitive identifiers, visible in logs):
+  - AZURE_CLIENT_ID (service principal client ID)
+  - AZURE_PRINCIPAL_ID (principal ID, typically same as AZURE_CLIENT_ID)
+  - AZURE_PRINCIPAL_TYPE (principal type, e.g., `ServicePrincipal`)
   - AZURE_RESOURCE_GROUP (resource group name to deploy into)
   - AZURE_ENV_NAME (azd environment name, e.g. `rukasakurai-env`)
   - AZURE_LOCATION (region, e.g. `japaneast`)
+  
 3. Assign `Directory Readers` role to the SQL server's principal id.
 
 Notes:

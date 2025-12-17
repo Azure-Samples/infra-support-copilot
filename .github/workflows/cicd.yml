@@ -71,21 +71,21 @@ jobs:
       - name: Azure login
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
       - name: azd login
         run: |
-          azd auth login --client-id ${{ secrets.AZURE_CLIENT_ID }} --tenant-id ${{ secrets.AZURE_TENANT_ID }} --federated-credential-provider github
+          azd auth login --client-id ${{ vars.AZURE_CLIENT_ID }} --tenant-id ${{ secrets.AZURE_TENANT_ID }} --federated-credential-provider github
         shell: pwsh
 
       - name: Create and configure azd environment
         run: |
-          azd env new ${{ secrets.AZURE_ENV_NAME }} --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }} --location ${{ secrets.AZURE_LOCATION }} --no-prompt
-          azd env set AZURE_RESOURCE_GROUP ${{ secrets.AZURE_RESOURCE_GROUP }}
-          azd env set AZURE_PRINCIPAL_TYPE ${{ secrets.AZURE_PRINCIPAL_TYPE }}
-          azd env set AZURE_PRINCIPAL_ID ${{ secrets.AZURE_CLIENT_ID }}
+          azd env new ${{ vars.AZURE_ENV_NAME }} --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }} --location ${{ vars.AZURE_LOCATION }} --no-prompt
+          azd env set AZURE_RESOURCE_GROUP ${{ vars.AZURE_RESOURCE_GROUP }}
+          azd env set AZURE_PRINCIPAL_TYPE ${{ vars.AZURE_PRINCIPAL_TYPE }}
+          azd env set AZURE_PRINCIPAL_ID ${{ vars.AZURE_CLIENT_ID }}
         shell: pwsh
 
       - name: Provision Infrastructure
@@ -93,24 +93,24 @@ jobs:
           azd provision --no-prompt
         shell: pwsh
         env:
-          AZURE_ENV_NAME: ${{ secrets.AZURE_ENV_NAME }}
-          AZURE_LOCATION: ${{ secrets.AZURE_LOCATION }}
+          AZURE_ENV_NAME: ${{ vars.AZURE_ENV_NAME }}
+          AZURE_LOCATION: ${{ vars.AZURE_LOCATION }}
           AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          AZURE_RESOURCE_GROUP: ${{ secrets.AZURE_RESOURCE_GROUP }}
-          AZURE_PRINCIPAL_TYPE: ${{ secrets.AZURE_PRINCIPAL_TYPE }}
-          AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          AZURE_RESOURCE_GROUP: ${{ vars.AZURE_RESOURCE_GROUP }}
+          AZURE_PRINCIPAL_TYPE: ${{ vars.AZURE_PRINCIPAL_TYPE }}
+          AZURE_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}
 
       - name: Deploy Application
         run: |
           azd deploy --no-prompt
         shell: pwsh
         env:
-          AZURE_ENV_NAME: ${{ secrets.AZURE_ENV_NAME }}
-          AZURE_LOCATION: ${{ secrets.AZURE_LOCATION }}
+          AZURE_ENV_NAME: ${{ vars.AZURE_ENV_NAME }}
+          AZURE_LOCATION: ${{ vars.AZURE_LOCATION }}
           AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          AZURE_RESOURCE_GROUP: ${{ secrets.AZURE_RESOURCE_GROUP }}
-          AZURE_PRINCIPAL_TYPE: ${{ secrets.AZURE_PRINCIPAL_TYPE }}
-          AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          AZURE_RESOURCE_GROUP: ${{ vars.AZURE_RESOURCE_GROUP }}
+          AZURE_PRINCIPAL_TYPE: ${{ vars.AZURE_PRINCIPAL_TYPE }}
+          AZURE_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}
 
       - name: Down Infrastructure
         if: always()  # Ensure this step runs even if previous steps fail
@@ -118,9 +118,9 @@ jobs:
           azd down --force --purge --no-prompt
         shell: pwsh
         env:
-          AZURE_ENV_NAME: ${{ secrets.AZURE_ENV_NAME }}
-          AZURE_LOCATION: ${{ secrets.AZURE_LOCATION }}
+          AZURE_ENV_NAME: ${{ vars.AZURE_ENV_NAME }}
+          AZURE_LOCATION: ${{ vars.AZURE_LOCATION }}
           AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          AZURE_RESOURCE_GROUP: ${{ secrets.AZURE_RESOURCE_GROUP }}
-          AZURE_PRINCIPAL_TYPE: ${{ secrets.AZURE_PRINCIPAL_TYPE }}
-          AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          AZURE_RESOURCE_GROUP: ${{ vars.AZURE_RESOURCE_GROUP }}
+          AZURE_PRINCIPAL_TYPE: ${{ vars.AZURE_PRINCIPAL_TYPE }}
+          AZURE_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}
