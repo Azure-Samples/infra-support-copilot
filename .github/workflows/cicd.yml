@@ -80,16 +80,25 @@ jobs:
         shell: bash
         env:
           AZURE_PRINCIPAL_ID_VAR: ${{ vars.AZURE_PRINCIPAL_ID }}
+          AZURE_CLIENT_ID_VAR: ${{ vars.AZURE_CLIENT_ID }}
         run: |
           # The Bicep template expects the service principal *object ID*.
-          # Fail fast if the GitHub Environment variable is missing.
-          if [ -z "$AZURE_PRINCIPAL_ID_VAR" ]; then
-            echo "AZURE_PRINCIPAL_ID is required (service principal object ID)." >&2
-            echo "Set it as an Environment variable in GitHub (see docs/oidc-setup-github-actions.md Step 5)." >&2
+          # Prefer AZURE_PRINCIPAL_ID (object ID); fall back to client ID if unavailable.
+          principal_id="$AZURE_CLIENT_ID_VAR"
+          if [ -n "$AZURE_PRINCIPAL_ID_VAR" ]; then
+            if [[ "$AZURE_PRINCIPAL_ID_VAR" =~ ^[0-9a-fA-F-]{36}$ ]]; then
+              principal_id="$AZURE_PRINCIPAL_ID_VAR"
+            else
+              echo "AZURE_PRINCIPAL_ID is set but not a GUID; falling back to client ID." >&2
+            fi
+          fi
+
+          if [ -z "$principal_id" ]; then
+            echo "AZURE_CLIENT_ID is required. Set it as a GitHub Environment variable." >&2
             exit 1
           fi
 
-          echo "principal_id=$AZURE_PRINCIPAL_ID_VAR" >> "$GITHUB_OUTPUT"
+          echo "principal_id=$principal_id" >> "$GITHUB_OUTPUT"
 
       - name: azd login
         run: |

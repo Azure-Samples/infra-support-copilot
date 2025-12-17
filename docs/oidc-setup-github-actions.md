@@ -85,7 +85,7 @@ Create a federated credential that binds the app registration to a GitHub Enviro
 ```bash
 GITHUB_ORG="Azure-Samples"       # Use your fork org if different
 GITHUB_REPO="infra-support-copilot"  # Use your fork repo name if different
-GITHUB_ENVIRONMENT="$GITHUB_ENVIRONMENT"
+GITHUB_ENVIRONMENT="your-github-environment-name"  # Matches your GitHub Environment and workflow matrix entry
 
 cat <<EOF > fc.json
 {
@@ -112,6 +112,7 @@ Set these on `Settings → Environments → <GITHUB_ENVIRONMENT>`:
 Protect the environment if you require approvals before variable use.
 Subscription and tenant IDs are kept as secrets so they stay masked in logs and are not exposed to forks.
 Use the service principal object ID from Step 2 (`az ad sp show --id "$AZURE_CLIENT_ID" --query id -o tsv`). Role assignments and the Bicep template expect the object ID, while the client ID is used by login.
+If you do not have the object ID, the workflow falls back to the client ID, but providing the object ID is recommended for clarity.
 
 Example login step for workflows:
 
