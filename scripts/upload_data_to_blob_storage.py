@@ -43,7 +43,7 @@ doc = "Sample_Server_Inventories.json"
 container_client = blob_service_client.get_container_client(container)
 log(f"Got container client for '{container}'")
 docid = hashlib.sha256(doc.encode("utf-8")).hexdigest()
-doc_path = os.path.join("docs", doc)
+doc_path = os.path.join("sample-data", doc)
 size = os.path.getsize(doc_path) if os.path.isfile(doc_path) else None
 if size is None:
     log(f"Warning: file not found -> {doc_path}")
@@ -66,7 +66,7 @@ else:
         traceback.print_exc()
 
 container = "incidents"
-folder = "docs/incidents"
+folder = "sample-data/incidents"
 container_client = blob_service_client.get_container_client(container)
 log(f"Got container client for '{container}' (folder={folder})")
 

@@ -39,7 +39,7 @@ Managed Identities | Secure inter-service auth (no secrets)
 ├── app/          # FastAPI application (entry: app/main.py)
 ├── infra/        # Bicep IaC (main.bicep provisions Azure OpenAI, Search, SQL, Storage, App Service, Log Analytics)
 ├── scripts/      # Data & index bootstrap, Arc→SQL ingest, env setup
-├── docs/         # Sample data sources
+├── sample-data/  # Sample data sources
 │   ├── incidents/  # Incident markdown sample data
 │   └── arc/        # Azure Arc sample data
 ├── requirements.txt
@@ -159,7 +159,7 @@ environment: ${{ matrix.env }}
 This makes it easy to add more environments (rows) for handover, staging, or multi-tenant deployments. Ensure each GitHub Environment has the correct secrets for its target subscription before running the workflow.
 
 ## Sample Data
-Sample data is stored under the `/docs` directory. `/scripts` contains scripts for inserting the sample data, which are executed automatically by `azd up` / `azd provision`. The following are steps for manually running the scripts
+Sample data is stored under the `/sample-data` directory. `/scripts` contains scripts for inserting the sample data, which are executed automatically by `azd up` / `azd provision`. The following are steps for manually running the scripts
 
 ### Data & Index Bootstrapping
 
@@ -171,8 +171,8 @@ python scripts/create_index.py
 
 Details:
 * [scripts/upload_data_to_blob_storage.py](scripts/upload_data_to_blob_storage.py) uploads:
-  * inventories: [docs/Sample_Server_Inventories.json](docs/Sample_Server_Inventories.json)
-  * incidents: docs/incidents/*.md (excludes inc_format.md)
+  * inventories: [sample-data/Sample_Server_Inventories.json](sample-data/Sample_Server_Inventories.json)
+  * incidents: sample-data/incidents/*.md (excludes inc_format.md)
 * [scripts/create_index.py](scripts/create_index.py) creates/updates Azure AI Search indexes (idempotent).
 
 ### Azure Arc Data → Azure SQL
