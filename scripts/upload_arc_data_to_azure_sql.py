@@ -13,7 +13,7 @@ import pyodbc  # type: ignore
 from azure.identity import DefaultAzureCredential
 
 ROOT = Path(__file__).resolve().parents[1]
-ARC_DIR = ROOT / "docs" / "arc"
+ARC_DIR = ROOT / "sample-data" / "arc"
 
 VM_FILE = ARC_DIR / "rscgrf_get_azure_virtual_machines.json"
 NIC_FILE = ARC_DIR / "rscgrf_get_azure_network_interfaces.json"
@@ -283,7 +283,7 @@ IF NOT EXISTS (
 
 def main() -> None:
 	if not VM_FILE.exists() and not NIC_FILE.exists() and not SW_FILE.exists():
-		print("There is no ARC data JSON found (docs/arc/*.json)", file=sys.stderr)
+		print("There is no ARC data JSON found (sample-data/arc/*.json)", file=sys.stderr)
 		sys.exit(1)
 
 	with get_connection() as conn:
