@@ -46,6 +46,27 @@ The following values are stored as **Environment Variables** because they are no
 - Values are already visible in Azure Portal and other public locations
 - No security benefit from encrypting them as secrets
 
+### Migration Guide
+
+If you have existing GitHub Environments with all values stored as secrets, follow these steps to migrate:
+
+1. **Go to Repository Settings → Environments → [Your Environment Name]**
+
+2. **Add the following as Environment Variables** (not secrets):
+   - Click "Add variable" for each:
+     - `AZURE_CLIENT_ID` (copy value from existing secret)
+     - `AZURE_PRINCIPAL_ID` (copy value from AZURE_CLIENT_ID)
+     - `AZURE_PRINCIPAL_TYPE` (enter `ServicePrincipal`)
+     - `AZURE_RESOURCE_GROUP` (copy value from existing secret)
+     - `AZURE_ENV_NAME` (copy value from existing secret)
+     - `AZURE_LOCATION` (copy value from existing secret)
+
+3. **Keep these as Environment Secrets**:
+   - `AZURE_TENANT_ID` (no changes needed)
+   - `AZURE_SUBSCRIPTION_ID` (no changes needed)
+
+4. **Optional cleanup**: After confirming workflows run successfully with the new variables, you can delete the old secret versions of the converted values.
+
 ### Best Practices
 
 1. **Never store credentials as variables**: Client secrets, passwords, tokens, and connection strings must always be stored as secrets
